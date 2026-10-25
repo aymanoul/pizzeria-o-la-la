@@ -9,7 +9,15 @@
 <meta property="og:title" content="Pizzeria O la la – Ratingen">
 <meta property="og:description" content="Pizza aus dem Steinofen, Pasta, Salate und mehr. 100 % Halal.">
 <meta property="og:image" content="img/logo-900.png">
-<link rel="icon" href="img/favicon.png">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32">
+<link rel="icon" href="img/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="application-name" content="O La La">
+<meta name="apple-mobile-web-app-title" content="O La La">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -974,6 +982,8 @@ dbody.addEventListener('focusin', e => { if (e.target.id === 'f-time') { const r
 addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('lock')) closeAll(); });
 
 renderCtls(); updateBars();
+
+if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 </script>
 </body>
 </html>
