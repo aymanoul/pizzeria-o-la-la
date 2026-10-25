@@ -61,12 +61,28 @@ Ein Gericht ist eine Zeile:
 - Kategorien haben `id`, `name`, `icon` (Emoji) und `note` (Hinweis unter der Überschrift).
 - Neue Kategorie: ein neuer Block im Array. Die Kategorie-Leiste und die Suche aktualisieren sich automatisch.
 
-### Bestellsystem einbinden
-In `index.html` steht im Script ganz oben:
+### Online-Bestellung mit Warenkorb (seit 25.10.2026)
+Die Seite hat einen eigenen Warenkorb, ohne fremdes System:
+- Jedes Gericht hat einen roten **+**-Button. Nach dem ersten Tippen wird daraus ein Zähler **− 2 +**.
+- Tippt man auf die Karte selbst, öffnet sich ein Fenster mit Menge und **Anmerkung** (z. B. „ohne Zwiebeln“).
+- Unten erscheint die Leiste **„Warenkorb ansehen“** mit Anzahl und Summe; oben rechts ein Warenkorb-Button mit Zähler.
+- Ablauf: **Warenkorb** (Lieferung/Abholung, Mengen ändern) → **Kasse** (Name, Telefon, Adresse, Zeit, Zahlung, Anmerkung, mit Prüfung der Pflichtfelder) → **Fertig** (Bestell-Nr. und Übersicht).
+- Warenkorb und Kundendaten bleiben im Browser gespeichert (localStorage).
+
+**Wichtig:** Eine statische Seite kann die Bestellung nicht selbst an den Laden schicken. Deshalb gibt es im Script ganz oben die Einstellungen `SHOP`:
 ```js
-const ORDER_URL = "";
+whatsapp: "",   // Nummer eintragen, z. B. "4917612345678" → „Per WhatsApp senden“ mit fertiger Nachricht
+email: "",      // alternativ: Bestellung als E-Mail
+minOrder: 0, deliveryFee: 0,   // Mindestbestellwert / Liefergebühr
+payments: ["Barzahlung"],      // weitere Zahlungsarten ergänzen
+delivery: true, pickup: true
 ```
-Hier den Link des Bestellsystems eintragen. Danach führen **alle** Buttons mit der Klasse `order-link` dorthin: Header, Hero, rotes Banner, Kontakt und die mobile Leiste. Leer bedeutet: Die Buttons rufen an.
+Solange `whatsapp` und `email` leer sind, zeigt die letzte Seite den Hinweis „Online-Übermittlung wird eingerichtet“ und einen Anruf-Button.
+Für echten Empfang mit Tablet/Drucker im Laden später ein Bestellsystem (Gloria Food, Foodbooking …) oder ein kleiner Server nötig.
+
+`ORDER_URL` gibt es weiterhin: Wird dort ein externes Bestellsystem eingetragen, führen die Buttons mit der Klasse `order-link` (rotes Banner, Kontakt, mobile Anruf-Leiste) dorthin.
+
+**Sicherung:** Der Stand vor dem Warenkorb liegt im Branch `vor-warenkorb`.
 
 ---
 

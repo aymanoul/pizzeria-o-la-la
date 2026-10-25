@@ -143,6 +143,139 @@ dialog h3{font-size:20px;margin-bottom:10px}
 dialog p{color:var(--muted);font-size:15px;margin-bottom:8px}
 dialog .btn{margin-top:14px}
 
+/* ===== Bestellen: Buttons an den Gerichten ===== */
+.item{cursor:pointer}
+.side{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.ctl{display:flex;min-height:36px;align-items:center}
+.add{width:36px;height:36px;border-radius:50%;border:0;background:var(--red);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .15s,background .15s;box-shadow:0 4px 12px rgba(227,6,19,.25)}
+.add:hover{background:var(--red-dark)}
+.add:active{transform:scale(.88)}
+.add svg,.step svg{width:16px;height:16px}
+.step{display:inline-flex;align-items:center;gap:2px;background:var(--red);color:#fff;border-radius:999px;padding:3px;animation:grow .2s ease-out}
+.step button{width:30px;height:30px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;display:grid;place-items:center;cursor:pointer;transition:transform .12s}
+.step button:active{transform:scale(.85)}
+.step .n{min-width:24px;text-align:center;font-weight:700;font-size:15px;display:inline-block}
+.step.lite{background:var(--soft);color:var(--ink);animation:none}
+.step.lite button{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.step.big button{width:40px;height:40px}
+.step.big .n{min-width:34px;font-size:17px}
+.n.bump{animation:nbump .22s ease-out}
+@keyframes nbump{from{transform:translateY(7px);opacity:0}to{transform:none;opacity:1}}
+@keyframes grow{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+.item.inc{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
+.pop.inc{box-shadow:0 0 0 2px var(--red)}
+.pop .row .price{order:-1}
+
+/* Header-Warenkorb */
+.hact{display:flex;align-items:center;gap:8px}
+.hcall{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:border .15s}
+.hcall:hover{border-color:var(--ink)}
+.hcall svg{width:18px;height:18px}
+.hcart{position:relative}
+.badge{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#fff;color:var(--red);font-size:12.5px;font-weight:700;display:none;place-items:center}
+.hcart.has .badge{display:inline-grid}
+.hcart.bump{animation:cbump .35s}
+@keyframes cbump{35%{transform:scale(1.08)}}
+
+/* Warenkorb-Leiste unten */
+.cartbar{position:fixed;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translate(-50%,24px);opacity:0;pointer-events:none;z-index:65;width:min(520px,calc(100% - 24px));transition:opacity .25s,transform .25s}
+.cartbar.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.cartbar .btn{width:100%;padding:10px 20px 10px 10px;justify-content:space-between;font-size:16px;box-shadow:0 12px 30px rgba(227,6,19,.35)}
+.cartbar.bump .btn{animation:cbump .35s}
+.cb-n{background:#fff;color:var(--red);min-width:34px;height:34px;padding:0 9px;border-radius:999px;display:grid;place-items:center;font-weight:700}
+.cb-t{flex:1;text-align:left;padding-left:12px}
+
+/* Overlay, Seitenleiste, Gericht-Fenster */
+body.lock{overflow:hidden}
+.ov{position:fixed;inset:0;background:rgba(20,20,20,.45);z-index:80;opacity:0;pointer-events:none;transition:opacity .25s}
+.ov.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:#fff;z-index:90;display:flex;flex-direction:column;transform:translateX(105%);transition:transform .32s cubic-bezier(.2,.8,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.15)}
+.drawer.on{transform:none}
+.dh{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.dh h3{flex:1;font-size:19px;font-weight:700}
+.ib{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:var(--soft);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+.ib svg{width:18px;height:18px}
+.ib[hidden]{display:none}
+.db{flex:1;overflow-y:auto;padding:6px 20px 20px;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.df{padding:14px 20px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:#fff}
+.df:empty{display:none}
+.df .btn{width:100%;padding:16px 22px;font-size:16px;justify-content:space-between}
+.df .btn[disabled]{background:#cfcac5;cursor:not-allowed}
+.df .small{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px}
+.handle{display:none}
+
+.line{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.line .ln{flex:1;min-width:0}
+.lt{font-weight:600;line-height:1.3}
+.lt small{color:var(--muted);font-weight:500}
+.lnote{font-size:13.5px;color:var(--muted);margin-top:2px}
+.lp{font-weight:700;margin-top:4px;font-size:15px}
+.cempty{text-align:center;padding:48px 10px;color:var(--muted)}
+.cempty .big{font-size:52px;margin-bottom:8px}
+.cempty b{display:block;color:var(--ink);font-size:18px;margin-bottom:4px}
+.cempty .btn{margin-top:20px}
+
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--soft);border-radius:14px;padding:4px;gap:4px;margin:14px 0 6px}
+.seg button{border:0;background:transparent;padding:11px;border-radius:10px;font:600 15px Outfit,sans-serif;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s}
+.seg button svg{width:18px;height:18px}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.sum{margin-top:16px;display:grid;gap:8px;font-size:15px}
+.sum div{display:flex;justify-content:space-between;color:var(--muted)}
+.sum .tot{color:var(--ink);font-weight:700;font-size:18px;padding-top:10px;border-top:1px solid var(--line)}
+.warn{background:#fff4e5;color:#8a4b00;border-radius:12px;padding:11px 14px;font-size:14px;margin-top:14px}
+.hint{background:var(--soft);border-radius:12px;padding:11px 14px;font-size:13.5px;color:#3d3a37;margin-top:14px}
+
+.h4{font-size:15px;font-weight:700;margin:20px 0 10px}
+.fld{display:grid;gap:6px;margin-bottom:12px}
+.fld>span{font-size:13.5px;font-weight:600;color:#3d3a37}
+.fld input,.fld textarea{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;font:400 16px Outfit,sans-serif;color:var(--ink);background:#fff;outline:none;transition:border .15s;resize:vertical}
+.fld input:focus,.fld textarea:focus{border-color:var(--ink)}
+.fld .em{display:none;color:var(--red);font-size:13px}
+.fld.err input{border-color:var(--red)}
+.fld.err .em{display:block}
+.row2{display:grid;grid-template-columns:110px 1fr;gap:10px}
+.opts{display:grid;gap:8px;margin-bottom:6px}
+.opt{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;font-weight:500;transition:all .15s}
+.opt:has(input:checked){border-color:var(--ink);background:var(--soft)}
+.opt input[type=radio]{accent-color:var(--red);width:18px;height:18px;flex:none}
+.opt input[type=time]{margin-left:auto;border:1.5px solid var(--line);border-radius:10px;padding:6px 8px;font:500 15px Outfit,sans-serif}
+
+.done{text-align:center;padding:14px 0 4px}
+.ok{width:76px;height:76px;border-radius:50%;background:#e8f6ed;color:var(--green);display:grid;place-items:center;margin:8px auto 12px;animation:grow .35s ease-out}
+.ok svg{width:38px;height:38px}
+.done h3{font-family:"Kaushan Script",cursive;font-size:34px;font-weight:400;line-height:1.2}
+.done p{color:var(--muted);margin-top:6px}
+.ordno{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;margin-top:12px;letter-spacing:.03em}
+.recap{text-align:left;background:var(--soft);border-radius:16px;padding:14px 16px;margin-top:18px;font-size:14px;line-height:1.55}
+.recap .rl{display:flex;justify-content:space-between;gap:12px}
+.recap .rl span:last-child{white-space:nowrap;font-weight:600}
+.recap hr{border:0;border-top:1px solid var(--line);margin:8px 0}
+.recap .rn{color:var(--muted);font-size:13px;margin:-2px 0 4px}
+.acts{display:grid;gap:10px;margin-top:18px}
+.acts .btn{width:100%;padding:15px}
+
+.sheet{position:fixed;left:50%;top:50%;width:min(460px,calc(100% - 32px));background:#fff;border-radius:22px;z-index:90;padding:24px;transform:translate(-50%,-46%);opacity:0;pointer-events:none;transition:opacity .22s,transform .28s cubic-bezier(.2,.8,.2,1);box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.sheet.on{opacity:1;transform:translate(-50%,-50%);pointer-events:auto}
+.sheet .ib{position:absolute;right:16px;top:16px}
+.sheet .nr{display:inline-grid}
+.sheet h3{font-size:22px;font-weight:700;margin:10px 40px 4px 0;line-height:1.25}
+.sheet .desc{font-size:15px}
+.sheet .sp{font-weight:700;font-size:18px;margin-top:8px}
+.sheet .fld{margin-top:18px}
+.sh-row{display:flex;gap:12px;align-items:center;margin-top:6px}
+.sh-row .btn{flex:1;padding:15px 18px;justify-content:space-between;font-size:16px}
+
+@media (max-width:760px){
+  .drawer{top:auto;left:0;width:100%;height:92vh;height:92dvh;border-radius:22px 22px 0 0;transform:translateY(105%)}
+  .handle{display:block;width:40px;height:5px;border-radius:5px;background:#d9d5d0;margin:8px auto 0}
+  .dh{padding:10px 20px 14px}
+  .sheet{left:0;right:0;top:auto;bottom:0;width:100%;border-radius:22px 22px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom));transform:translateY(105%);opacity:1}
+  .sheet.on{transform:none}
+  .hcart .lbl{display:none}
+  .hcart{padding:10px 14px}
+  .hcall{width:40px;height:40px}
+}
+
 @media (max-width:760px){
   html{scroll-padding-top:124px}
   .hbar nav{display:none}
@@ -176,10 +309,16 @@ dialog .btn{margin-top:14px}
       <a href="#anfahrt">Anfahrt</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
-    <a class="btn btn-red order-link" href="tel:+4921171000977">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
-      <span>Bestellen</span>
-    </a>
+    <div class="hact">
+      <a class="hcall" href="tel:+4921171000977" aria-label="Anrufen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+      </a>
+      <button class="btn btn-red hcart" data-act="cart" aria-label="Warenkorb öffnen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="lbl">Warenkorb</span>
+        <span class="badge" id="hbadge">0</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -189,8 +328,8 @@ dialog .btn{margin-top:14px}
     <p class="tag">Pizza, Pasta, Burger &amp; mehr – <b>100 % Halal</b></p>
     <p class="addr">Rather Broich 4 · 40472 Düsseldorf</p>
     <div class="cta">
-      <a class="btn btn-red order-link" href="tel:+4921171000977">Jetzt bestellen</a>
-      <a class="btn btn-line" href="#speisekarte">Zur Speisekarte</a>
+      <a class="btn btn-red" href="#speisekarte">Jetzt online bestellen</a>
+      <a class="btn btn-line" href="tel:+4921171000977">0211 71000977 anrufen</a>
     </div>
     <div class="chips">
       <span class="chip halal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>100 % Halal</span>
@@ -222,7 +361,7 @@ dialog .btn{margin-top:14px}
   <div class="order">
     <div>
       <h3>Hunger bekommen?</h3>
-      <p>Ruf uns an – wir bereiten deine Bestellung frisch zu. Online-Bestellung folgt in Kürze.</p>
+      <p>Online bestellen oder anrufen – wir bereiten alles frisch für dich zu.</p>
     </div>
     <a class="btn order-link" href="tel:+4921171000977">0211 71000977 anrufen</a>
   </div>
@@ -245,7 +384,7 @@ dialog .btn{margin-top:14px}
       <div class="card" id="kontakt">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Kontakt</h3>
         <p>Telefon: <a href="tel:+4921171000977"><b>0211 71000977</b></a></p>
-        <p class="muted">Bestellungen gerne telefonisch.</p>
+        <p class="muted">Bestellungen online oder telefonisch.</p>
         <a class="lnk order-link" href="tel:+4921171000977">Jetzt anrufen →</a>
       </div>
     </div>
@@ -276,6 +415,36 @@ dialog .btn{margin-top:14px}
   </a>
 </div>
 
+<div class="cartbar" id="cartbar">
+  <button class="btn btn-red" data-act="cart"><span class="cb-n" id="cbn">0</span><span class="cb-t">Warenkorb ansehen</span><span id="cbs"></span></button>
+</div>
+
+<div class="ov" id="ov" data-act="close"></div>
+
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dtitle">
+  <div class="handle"></div>
+  <div class="dh">
+    <button class="ib" id="dback" data-act="back" aria-label="Zurück" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <h3 id="dtitle">Warenkorb</h3>
+    <button class="ib" data-act="close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="db" id="dbody"></div>
+  <div class="df" id="dfoot"></div>
+</aside>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shname">
+  <button class="ib" data-act="close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  <span class="nr" id="shnr"></span>
+  <h3 id="shname"></h3>
+  <p class="desc" id="shdesc"></p>
+  <p class="sp" id="shprice"></p>
+  <label class="fld"><span>Anmerkung (optional)</span><textarea id="shnote" rows="2" maxlength="120" placeholder="z. B. ohne Zwiebeln, gut durchgebacken"></textarea></label>
+  <div class="sh-row">
+    <span class="step lite big"><button data-act="shdec" aria-label="Weniger"></button><span class="n" id="shq">1</span><button data-act="shinc" aria-label="Mehr"></button></span>
+    <button class="btn btn-red" data-act="shadd"><span>Hinzufügen</span><span id="shtot"></span></button>
+  </div>
+</div>
+
 <dialog id="dlg"><h3 id="dlg-t"></h3><div id="dlg-b"></div><button class="btn btn-red" onclick="dlg.close()">Schließen</button></dialog>
 
 <script src="menu.js"></script>
@@ -286,14 +455,43 @@ if (ORDER_URL) document.querySelectorAll('.order-link').forEach(a => { a.href = 
 
 const eur = n => n.toFixed(2).replace('.', ',') + ' €';
 const TAG = { v:['v','Vegetarisch'], s:['s','Scharf'], b:['b','Beliebt'] };
-const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* =========================================================
+   ONLINE-BESTELLUNG – Einstellungen (hier anpassen)
+   ========================================================= */
+const SHOP = {
+  name: "Pizzeria O la la",
+  phone: "+4921171000977", phoneText: "0211 71000977",
+  whatsapp: "",      // z. B. "4917612345678" → Bestellung wird als fertige WhatsApp-Nachricht geschickt
+  email: "",         // z. B. "bestellung@…" → alternativ als E-Mail (wird nur genutzt, wenn whatsapp leer ist)
+  delivery: true,    // Lieferung anbieten
+  pickup: true,      // Abholung anbieten
+  minOrder: 0,       // Mindestbestellwert für Lieferung in €, 0 = keiner
+  deliveryFee: 0,    // Liefergebühr in €, 0 = wird nicht angezeigt
+  payments: ["Barzahlung"]   // z. B. ["Barzahlung", "EC-Karte", "PayPal"]
+};
+
+/* Warenkorb-Daten */
+const ITEMS = {};
+MENU.forEach(c => c.items.forEach(([nr,name,desc,price]) => ITEMS[nr] = {nr,name,desc,price,icon:c.icon}));
+const store = {
+  get(k, d){ try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+let cart = store.get('olala-cart', []);
+if (!Array.isArray(cart)) cart = [];
+cart = cart.filter(l => l && ITEMS[l.nr] && l.qty > 0);
+const count = () => cart.reduce((s,l) => s + l.qty, 0);
+const subtotal = () => cart.reduce((s,l) => s + l.qty * ITEMS[l.nr].price, 0);
+const qtyOf = nr => cart.filter(l => l.nr == nr).reduce((s,l) => s + l.qty, 0);
 
 function itemHTML([nr, name, desc, price, tags]) {
   const t = (tags || '').split(' ').filter(Boolean).map(k => `<span class="t ${TAG[k][0]}">${TAG[k][1]}</span>`).join('');
-  return `<article class="item" data-s="${esc((nr+' '+name+' '+desc).toLowerCase())}">
+  return `<article class="item" data-nr="${nr}" data-s="${esc((nr+' '+name+' '+desc).toLowerCase())}">
     <span class="nr">${nr}</span>
     <div class="body"><div class="name">${esc(name)}</div>${desc ? `<div class="desc">${esc(desc)}</div>` : ''}${t ? `<div class="tags">${t}</div>` : ''}</div>
-    <span class="price">${eur(price)}</span></article>`;
+    <div class="side"><span class="price">${eur(price)}</span><span class="ctl" data-nr="${nr}"></span></div></article>`;
 }
 
 const cats = document.getElementById('cats'), menu = document.getElementById('menu');
@@ -305,7 +503,7 @@ menu.innerHTML = MENU.map(c => `<section class="section" id="${c.id}">
 
 const pops = MENU.flatMap(c => c.items.filter(i => (i[4]||'').includes('b')));
 document.getElementById('popgrid').innerHTML = pops.map(([nr,name,desc,price]) =>
-  `<article class="item pop"><span class="star">★</span><span class="nr">${nr}</span><div class="name">${esc(name)}</div>${desc?`<div class="desc">${esc(desc)}</div>`:''}<div class="row"><span></span><span class="price">${eur(price)}</span></div></article>`).join('');
+  `<article class="item pop" data-nr="${nr}"><span class="star">★</span><span class="nr">${nr}</span><div class="name">${esc(name)}</div>${desc?`<div class="desc">${esc(desc)}</div>`:''}<div class="row"><span class="price">${eur(price)}</span><span class="ctl" data-nr="${nr}"></span></div></article>`).join('');
 
 /* Aktive Kategorie beim Scrollen */
 const links = [...cats.querySelectorAll('a')];
@@ -321,7 +519,7 @@ function spy(){
   }
 }
 const mbar=document.querySelector('.mbar'), heroCta=document.querySelector('.hero .cta');
-function bar(){ mbar.classList.toggle('show', heroCta.getBoundingClientRect().bottom < 0); }
+function bar(){ mbar.classList.toggle('show', heroCta.getBoundingClientRect().bottom < 0 && !count()); }
 addEventListener('scroll', () => { spy(); bar(); }, {passive:true}); spy(); bar();
 
 /* Suche */
@@ -350,6 +548,277 @@ document.querySelectorAll('[data-dlg]').forEach(a => a.addEventListener('click',
   document.getElementById('dlg-t').textContent = t; document.getElementById('dlg-b').innerHTML = b; dlg.showModal();
 }));
 document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* =========================================================
+   WARENKORB & BESTELLVORGANG
+   ========================================================= */
+const I = {
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  minus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',
+  bike: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h-2v-11a1 1 0 0 1 1-1h9v12m-4 0h6m4 0h2v-6h-8m0-5h5l3 5"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+  bag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>'
+};
+document.querySelectorAll('[data-act=shdec]').forEach(b => b.innerHTML = I.minus);
+document.querySelectorAll('[data-act=shinc]').forEach(b => b.innerHTML = I.plus);
+
+const order = Object.assign({ mode: SHOP.delivery ? 'liefer' : 'abhol', when: 'asap', time: '', pay: SHOP.payments[0],
+  name: '', phone: '', street: '', zip: '', city: 'Düsseldorf', extra: '', note: '' }, store.get('olala-kunde', {}));
+if (order.mode === 'liefer' && !SHOP.delivery) order.mode = 'abhol';
+if (order.mode === 'abhol' && !SHOP.pickup) order.mode = 'liefer';
+if (!SHOP.payments.includes(order.pay)) order.pay = SHOP.payments[0];
+const fee = () => (order.mode === 'liefer' ? SHOP.deliveryFee : 0);
+const total = () => subtotal() + fee();
+const belowMin = () => order.mode === 'liefer' && SHOP.minOrder > 0 && subtotal() < SHOP.minOrder;
+
+/* Gerichte-Buttons */
+function renderCtl(el){
+  const nr = +el.dataset.nr, q = qtyOf(nr), prev = +(el.dataset.q || 0);
+  el.dataset.q = q;
+  el.closest('.item').classList.toggle('inc', q > 0);
+  el.innerHTML = q
+    ? `<span class="step"><button data-act="dec" data-nr="${nr}" aria-label="Eins weniger">${I.minus}</button><span class="n${prev && prev !== q ? ' bump' : ''}">${q}</span><button data-act="inc" data-nr="${nr}" aria-label="Eins mehr">${I.plus}</button></span>`
+    : `<button class="add" data-act="inc" data-nr="${nr}" aria-label="${esc(ITEMS[nr].name)} in den Warenkorb">${I.plus}</button>`;
+}
+const renderCtls = nr => document.querySelectorAll(nr == null ? '.ctl' : `.ctl[data-nr="${nr}"]`).forEach(renderCtl);
+
+function addItem(nr, qty = 1, note = ''){
+  note = note.trim();
+  const l = cart.find(l => l.nr == nr && l.note === note);
+  if (l) l.qty += qty; else cart.push({ nr, qty, note });
+  changed(nr, true);
+}
+function decItem(nr){
+  for (let i = cart.length - 1; i >= 0; i--) if (cart[i].nr == nr) { if (!--cart[i].qty) cart.splice(i, 1); break; }
+  changed(nr);
+}
+function changed(nr, added){
+  store.set('olala-cart', cart);
+  renderCtls(nr); updateBars(added);
+  if (drawer.classList.contains('on') && view === 'cart') renderDrawer();
+}
+
+/* Leisten (Header-Badge + untere Warenkorb-Leiste) */
+const cartbar = document.getElementById('cartbar'), hcart = document.querySelector('.hcart');
+function updateBars(added){
+  const n = count();
+  document.getElementById('hbadge').textContent = n;
+  document.getElementById('cbn').textContent = n;
+  document.getElementById('cbs').textContent = eur(subtotal());
+  hcart.classList.toggle('has', n > 0);
+  cartbar.classList.toggle('show', n > 0 && !document.body.classList.contains('lock'));
+  if (added) [cartbar, hcart].forEach(e => { e.classList.remove('bump'); void e.offsetWidth; e.classList.add('bump'); });
+  bar();
+}
+
+/* Overlay öffnen / schließen */
+const ov = document.getElementById('ov'), drawer = document.getElementById('drawer'), sheet = document.getElementById('sheet');
+let view = 'cart';
+function lock(on){
+  document.body.classList.toggle('lock', on); ov.classList.toggle('on', on);
+  if (!on) { drawer.classList.remove('on'); sheet.classList.remove('on'); }
+  updateBars();
+}
+function openDrawer(v = 'cart'){ sheet.classList.remove('on'); view = v; renderDrawer(); lock(true); drawer.classList.add('on'); }
+function closeAll(){ if (view === 'done') view = 'cart'; lock(false); }
+
+/* Gericht-Fenster */
+let shNr = null, shQty = 1;
+function openSheet(nr){
+  shNr = nr; shQty = 1; const it = ITEMS[nr];
+  document.getElementById('shnr').textContent = 'Nr. ' + nr;
+  document.getElementById('shname').textContent = it.icon + ' ' + it.name;
+  const d = document.getElementById('shdesc'); d.textContent = it.desc; d.style.display = it.desc ? '' : 'none';
+  document.getElementById('shprice').textContent = eur(it.price);
+  document.getElementById('shnote').value = '';
+  shRender(); lock(true); sheet.classList.add('on');
+}
+function shRender(){
+  const n = document.getElementById('shq'); n.textContent = shQty; n.classList.remove('bump'); void n.offsetWidth; n.classList.add('bump');
+  document.getElementById('shtot').textContent = eur(shQty * ITEMS[shNr].price);
+}
+
+/* Seitenleiste: Warenkorb → Kasse → Fertig */
+const dbody = document.getElementById('dbody'), dfoot = document.getElementById('dfoot');
+function renderDrawer(){
+  document.getElementById('dback').hidden = view !== 'checkout';
+  document.getElementById('dtitle').textContent = { cart: 'Warenkorb', checkout: 'Kasse', done: 'Bestellung' }[view];
+  ({ cart: viewCart, checkout: viewCheckout, done: viewDone })[view]();
+}
+
+function modeToggle(){
+  if (!(SHOP.delivery && SHOP.pickup)) return `<p class="hint">${SHOP.delivery ? 'Nur Lieferung' : 'Nur Abholung'}</p>`;
+  return `<div class="seg" role="tablist">
+    <button class="${order.mode === 'liefer' ? 'on' : ''}" data-act="mode" data-v="liefer">${I.bike}Lieferung</button>
+    <button class="${order.mode === 'abhol' ? 'on' : ''}" data-act="mode" data-v="abhol">${I.bag}Abholung</button></div>`;
+}
+function sumHTML(){
+  return `<div class="sum">
+    <div><span>Zwischensumme</span><span>${eur(subtotal())}</span></div>
+    ${fee() > 0 ? `<div><span>Liefergebühr</span><span>${eur(fee())}</span></div>` : ''}
+    <div class="tot"><span>Gesamt</span><span>${eur(total())}</span></div></div>`;
+}
+
+function viewCart(){
+  if (!cart.length) {
+    dbody.innerHTML = `<div class="cempty"><div class="big">🍕</div><b>Dein Warenkorb ist leer</b>Such dir etwas Leckeres aus der Speisekarte aus.<br><button class="btn btn-red" data-act="tomenu">Zur Speisekarte</button></div>`;
+    dfoot.innerHTML = ''; return;
+  }
+  dbody.innerHTML = modeToggle() + cart.map((l, i) => { const it = ITEMS[l.nr]; return `
+    <div class="line">
+      <div class="ln"><div class="lt">${esc(it.name)} <small>Nr. ${it.nr}</small></div>
+        ${l.note ? `<div class="lnote">„${esc(l.note)}“</div>` : ''}
+        <div class="lp">${eur(l.qty * it.price)}</div></div>
+      <span class="step lite"><button data-act="ldec" data-i="${i}" aria-label="${l.qty > 1 ? 'Eins weniger' : 'Entfernen'}">${l.qty > 1 ? I.minus : I.trash}</button><span class="n">${l.qty}</span><button data-act="linc" data-i="${i}" aria-label="Eins mehr">${I.plus}</button></span>
+    </div>`; }).join('') + sumHTML()
+    + (belowMin() ? `<div class="warn">Der Mindestbestellwert für Lieferung liegt bei ${eur(SHOP.minOrder)}. Es fehlen noch ${eur(SHOP.minOrder - subtotal())}.</div>` : '');
+  dfoot.innerHTML = `<button class="btn btn-red" data-act="checkout" ${belowMin() ? 'disabled' : ''}><span>Zur Kasse</span><span>${eur(total())}</span></button>`;
+}
+
+const fld = (id, label, attrs = '', err = 'Bitte ausfüllen') =>
+  `<label class="fld" data-f="${id}"><span>${label}</span><input id="f-${id}" value="${esc(order[id] || '')}" ${attrs}><span class="em">${err}</span></label>`;
+
+function viewCheckout(){
+  const liefer = order.mode === 'liefer';
+  dbody.innerHTML = modeToggle()
+    + `<div class="h4">Deine Daten</div>`
+    + fld('name', 'Name *', 'autocomplete="name" placeholder="Vor- und Nachname"')
+    + fld('phone', 'Telefon *', 'type="tel" inputmode="tel" autocomplete="tel" placeholder="Für Rückfragen"', 'Bitte eine gültige Telefonnummer eingeben')
+    + (liefer ? `<div class="h4">Lieferadresse</div>`
+      + fld('street', 'Straße und Hausnummer *', 'autocomplete="street-address"')
+      + `<div class="row2">${fld('zip', 'PLZ *', 'inputmode="numeric" maxlength="5" autocomplete="postal-code"', '5 Ziffern')}${fld('city', 'Ort *', 'autocomplete="address-level2"')}</div>`
+      + fld('extra', 'Etage, Klingel, Hinweis (optional)', 'placeholder="z. B. 2. OG, bei Müller klingeln"') : '')
+    + `<div class="h4">${liefer ? 'Lieferzeit' : 'Abholzeit'}</div><div class="opts">
+        <label class="opt"><input type="radio" name="when" value="asap" ${order.when === 'asap' ? 'checked' : ''}>So schnell wie möglich</label>
+        <label class="opt"><input type="radio" name="when" value="time" ${order.when === 'time' ? 'checked' : ''}>Zu einer Uhrzeit <input type="time" id="f-time" value="${esc(order.time)}" step="900" aria-label="Uhrzeit"></label></div>`
+    + `<div class="h4">Bezahlung</div><div class="opts">${SHOP.payments.map(p =>
+        `<label class="opt"><input type="radio" name="pay" value="${esc(p)}" ${order.pay === p ? 'checked' : ''}>${esc(p)}${p === 'Barzahlung' ? (liefer ? ' bei Lieferung' : ' bei Abholung') : ''}</label>`).join('')}</div>`
+    + `<label class="fld" style="margin-top:14px"><span>Anmerkung zur Bestellung (optional)</span><textarea id="f-note" rows="2" maxlength="300">${esc(order.note)}</textarea></label>`
+    + sumHTML();
+  dfoot.innerHTML = `<button class="btn btn-red" data-act="submit"><span>Bestellung abschicken</span><span>${eur(total())}</span></button>`
+    + `<p class="small">${SHOP.whatsapp ? 'Im nächsten Schritt wird deine Bestellung per WhatsApp an uns gesendet.' : SHOP.email ? 'Im nächsten Schritt wird deine Bestellung per E-Mail an uns gesendet.' : 'Im nächsten Schritt siehst du deine Bestellübersicht.'}</p>`;
+  dbody.scrollTop = 0;
+}
+
+function readForm(){
+  ['name', 'phone', 'street', 'zip', 'city', 'extra'].forEach(k => { const e = document.getElementById('f-' + k); if (e) order[k] = e.value.trim(); });
+  const t = document.getElementById('f-time'); if (t) order.time = t.value;
+  const n = document.getElementById('f-note'); if (n) order.note = n.value.trim();
+  const w = document.querySelector('input[name=when]:checked'); if (w) order.when = w.value;
+  const p = document.querySelector('input[name=pay]:checked'); if (p) order.pay = p.value;
+  const { note, ...keep } = order; store.set('olala-kunde', keep);
+}
+function validate(){
+  const bad = [];
+  if (order.name.length < 2) bad.push('name');
+  if (order.phone.replace(/\D/g, '').length < 6) bad.push('phone');
+  if (order.mode === 'liefer') {
+    if (order.street.length < 3) bad.push('street');
+    if (!/^\d{5}$/.test(order.zip)) bad.push('zip');
+    if (order.city.length < 2) bad.push('city');
+  }
+  document.querySelectorAll('.fld[data-f]').forEach(f => f.classList.toggle('err', bad.includes(f.dataset.f)));
+  if (order.when === 'time' && !order.time) { bad.push('time'); const t = document.getElementById('f-time'); t.style.borderColor = 'var(--red)'; t.focus(); }
+  if (bad.length && bad[0] !== 'time') document.getElementById('f-' + bad[0]).focus();
+  return !bad.length;
+}
+
+let last = null;
+function placeOrder(){
+  const d = new Date(), p = n => String(n).padStart(2, '0');
+  last = {
+    no: `OL-${p(d.getDate())}${p(d.getMonth() + 1)}-${p(d.getHours())}${p(d.getMinutes())}`,
+    lines: cart.map(l => ({ ...l, name: ITEMS[l.nr].name, price: ITEMS[l.nr].price })),
+    sub: subtotal(), fee: fee(), total: total(), o: { ...order }
+  };
+  cart = []; store.set('olala-cart', cart); order.note = '';
+  renderCtls(); updateBars();
+  view = 'done'; renderDrawer();
+}
+function orderText(b){
+  const o = b.o, L = [];
+  L.push(`Neue Bestellung – ${SHOP.name}`, `Bestell-Nr.: ${b.no}`, '');
+  L.push(`Art: ${o.mode === 'liefer' ? 'Lieferung' : 'Abholung'}`);
+  L.push(`Zeit: ${o.when === 'time' && o.time ? o.time + ' Uhr' : 'So schnell wie möglich'}`, '');
+  b.lines.forEach(l => { L.push(`${l.qty}× ${l.name} (Nr. ${l.nr}) – ${eur(l.qty * l.price)}`); if (l.note) L.push(`   Hinweis: ${l.note}`); });
+  L.push('', `Zwischensumme: ${eur(b.sub)}`);
+  if (b.fee) L.push(`Liefergebühr: ${eur(b.fee)}`);
+  L.push(`Gesamt: ${eur(b.total)}`, `Zahlung: ${o.pay}`, '', `Name: ${o.name}`, `Telefon: ${o.phone}`);
+  if (o.mode === 'liefer') { L.push(`Adresse: ${o.street}, ${o.zip} ${o.city}`); if (o.extra) L.push(`Hinweis: ${o.extra}`); }
+  if (o.note) L.push(`Anmerkung: ${o.note}`);
+  return L.join('\n');
+}
+
+function viewDone(){
+  const b = last; if (!b) { view = 'cart'; return renderDrawer(); }
+  const o = b.o, txt = encodeURIComponent(orderText(b));
+  let info, acts;
+  if (SHOP.whatsapp) {
+    info = 'Fast geschafft! Tippe auf „Per WhatsApp senden“ und schick die vorbereitete Nachricht ab. Erst dann ist die Bestellung bei uns.';
+    acts = `<a class="btn btn-red" target="_blank" rel="noopener" href="https://wa.me/${SHOP.whatsapp.replace(/\D/g, '')}?text=${txt}">Per WhatsApp senden</a>`;
+  } else if (SHOP.email) {
+    info = 'Fast geschafft! Tippe auf „Per E-Mail senden“ und schick die vorbereitete E-Mail ab. Erst dann ist die Bestellung bei uns.';
+    acts = `<a class="btn btn-red" href="mailto:${SHOP.email}?subject=${encodeURIComponent('Bestellung ' + b.no)}&body=${txt}">Per E-Mail senden</a>`;
+  } else {
+    info = `Die Online-Übermittlung wird gerade eingerichtet. Bitte ruf uns kurz an und gib deine Bestellung durch – die Übersicht hast du hier.`;
+    acts = `<a class="btn btn-red" href="tel:${SHOP.phone}">${I.phone} ${SHOP.phoneText} anrufen</a>`;
+  }
+  dbody.innerHTML = `<div class="done">
+      <div class="ok">${I.check}</div>
+      <h3>Danke, ${esc(o.name.split(' ')[0])}!</h3>
+      <span class="ordno">${b.no}</span>
+      <p>${info}</p>
+    </div>
+    <div class="recap">
+      ${b.lines.map(l => `<div class="rl"><span>${l.qty}× ${esc(l.name)}</span><span>${eur(l.qty * l.price)}</span></div>${l.note ? `<div class="rn">„${esc(l.note)}“</div>` : ''}`).join('')}
+      <hr>${b.fee ? `<div class="rl"><span>Liefergebühr</span><span>${eur(b.fee)}</span></div>` : ''}
+      <div class="rl"><b>Gesamt</b><span>${eur(b.total)}</span></div>
+      <hr><div>${o.mode === 'liefer' ? `Lieferung an ${esc(o.street)}, ${esc(o.zip)} ${esc(o.city)}` : 'Abholung: Rather Broich 4'}</div>
+      <div>${o.when === 'time' && o.time ? esc(o.time) + ' Uhr' : 'So schnell wie möglich'} · ${esc(o.pay)}</div>
+    </div>
+    <div class="acts">${acts}<button class="btn btn-line" data-act="copy">Bestellung kopieren</button></div>`;
+  dfoot.innerHTML = `<button class="btn btn-line" data-act="new" style="justify-content:center">Neue Bestellung</button>`;
+  dbody.scrollTop = 0;
+}
+
+/* Klicks */
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-act]');
+  if (!a) {
+    const card = e.target.closest('.item[data-nr]');
+    if (card) openSheet(+card.dataset.nr);
+    return;
+  }
+  const act = a.dataset.act, nr = +a.dataset.nr, i = +a.dataset.i;
+  switch (act) {
+    case 'inc': addItem(nr); break;
+    case 'dec': decItem(nr); break;
+    case 'cart': openDrawer(view === 'done' ? 'done' : 'cart'); break;
+    case 'close': closeAll(); break;
+    case 'back': view = 'cart'; renderDrawer(); break;
+    case 'tomenu': closeAll(); document.getElementById('speisekarte').scrollIntoView(); break;
+    case 'linc': cart[i].qty++; changed(cart[i].nr, false); break;
+    case 'ldec': { const n = cart[i].nr; if (!--cart[i].qty) cart.splice(i, 1); changed(n, false); break; }
+    case 'mode': if (view === 'checkout') readForm(); order.mode = a.dataset.v; renderDrawer(); break;
+    case 'checkout': view = 'checkout'; renderDrawer(); break;
+    case 'submit': readForm(); if (validate()) placeOrder(); break;
+    case 'new': last = null; view = 'cart'; closeAll(); break;
+    case 'copy': {
+      const t = orderText(last), done = () => { a.textContent = 'Kopiert ✓'; setTimeout(() => a.textContent = 'Bestellung kopieren', 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => {}); break;
+    }
+    case 'shinc': if (shQty < 50) { shQty++; shRender(); } break;
+    case 'shdec': if (shQty > 1) { shQty--; shRender(); } break;
+    case 'shadd': addItem(shNr, shQty, document.getElementById('shnote').value); closeAll(); break;
+  }
+});
+dbody.addEventListener('input', e => { const f = e.target.closest('.fld.err'); if (f) f.classList.remove('err'); });
+dbody.addEventListener('focusin', e => { if (e.target.id === 'f-time') { const r = document.querySelector('input[name=when][value=time]'); if (r) r.checked = true; e.target.style.borderColor = ''; } });
+addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('lock')) closeAll(); });
+
+renderCtls(); updateBars();
 </script>
 </body>
 </html>
