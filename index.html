@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pizzeria O la la</title>
+<meta name="description" content="Pizzeria O la la in Düsseldorf-Rath – Pizza, Pasta, Burger und mehr. 100 % Halal. Abholung und Lieferung.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="Pizzeria O la la – Düsseldorf">
+<meta property="og:description" content="Pizza, Pasta, Burger und mehr. 100 % Halal.">
+<meta property="og:image" content="img/logo-900.png">
+<link rel="icon" href="img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --soft:#f6f5f3; --line:#ebe8e4;
+  --ink:#141414; --muted:#6b6763;
+  --red:#e30613; --red-dark:#b8000c; --green:#0f9d3f;
+  --radius:18px;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:132px}
+body{background:var(--bg);color:var(--ink);font-family:Outfit,system-ui,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.flag{height:4px;background:linear-gradient(90deg,var(--green) 0 33.3%,#fff 33.3% 66.6%,var(--red) 66.6%);border-bottom:1px solid var(--line)}
+
+/* Header */
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.hbar{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.hbar .logo img{height:44px;width:auto}
+.hbar nav{display:flex;gap:28px;font-weight:500}
+.hbar nav a:hover{color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 15px/1 Outfit,sans-serif;padding:13px 22px;border-radius:999px;border:0;cursor:pointer;transition:transform .15s,background .15s}
+.btn:active{transform:scale(.97)}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-dark)}
+.btn-line{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+.btn-line:hover{background:var(--ink);color:#fff}
+.btn svg{width:18px;height:18px}
+.hbar .btn{padding:10px 18px;font-size:14px}
+
+/* Hero */
+.hero{padding:56px 0 40px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:auto -10% -60% -10%;height:80%;background:radial-gradient(ellipse at center,rgba(227,6,19,.06),transparent 65%);pointer-events:none}
+.hero-logo{width:min(560px,86%);margin:0 auto}
+.hero .tag{margin:22px auto 0;font-size:clamp(18px,2.4vw,22px);font-weight:500;color:var(--muted)}
+.hero .tag b{color:var(--ink);font-weight:700}
+.hero .addr{margin-top:8px;color:var(--muted);font-size:15px}
+.hero .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:30px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:var(--soft);font-size:14px;font-weight:500}
+.chip svg{width:17px;height:17px;color:var(--red)}
+.chip.halal svg{color:var(--green)}
+
+/* Category bar */
+.catbar{position:sticky;top:64px;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.catrow{display:flex;align-items:center;gap:12px;height:64px}
+.cats{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;flex:1;padding:2px 0;scroll-behavior:smooth}
+.cats::-webkit-scrollbar{display:none}
+.cats a{flex:none;display:inline-flex;align-items:center;gap:7px;padding:9px 15px;border-radius:999px;border:1.5px solid var(--line);font-size:14.5px;font-weight:500;white-space:nowrap;transition:all .15s}
+.cats a:hover{border-color:var(--ink)}
+.cats a.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.search{flex:none;position:relative}
+.search input{width:210px;height:42px;border-radius:999px;border:1.5px solid var(--line);padding:0 16px 0 40px;font:400 15px Outfit,sans-serif;color:var(--ink);background:#fff;outline:none;transition:border .15s}
+.search input:focus{border-color:var(--ink)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+
+/* Menu */
+main{padding:28px 0 40px}
+.section{padding-top:28px}
+.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.sec-head h2{font-family:"Kaushan Script",cursive;font-weight:400;font-size:clamp(30px,4vw,38px);line-height:1.15;color:var(--ink)}
+.sec-head h2 .ic{font-size:.8em;margin-right:6px;font-family:system-ui}
+.sec-note{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+.sec-head + .grid{margin-top:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.item{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;transition:box-shadow .2s,border-color .2s}
+.item:hover{box-shadow:var(--shadow);border-color:transparent}
+.nr{flex:none;min-width:38px;height:28px;padding:0 8px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--muted)}
+.body{flex:1;min-width:0}
+.name{font-weight:600;font-size:16.5px;line-height:1.3}
+.desc{color:var(--muted);font-size:14px;margin-top:3px}
+.tags{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.t{font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:999px;letter-spacing:.02em}
+.t.v{background:#e8f6ed;color:#0b7a31}
+.t.s{background:#fdeaea;color:var(--red-dark)}
+.t.b{background:#141414;color:#fff}
+.price{flex:none;font-weight:700;font-size:16.5px;white-space:nowrap}
+.empty{display:none;text-align:center;color:var(--muted);padding:60px 0}
+
+/* Popular */
+.popular .grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.pop{background:var(--ink);color:#fff;border:0;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.pop .desc{color:#bdb8b2}
+.pop .row{display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:auto}
+.pop .price{color:#fff}
+.pop .nr{background:rgba(255,255,255,.1);color:#ddd}
+.pop::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:var(--red);opacity:.9}
+.pop .star{position:absolute;right:14px;top:12px;z-index:1;font-size:13px;font-weight:700}
+
+/* Order banner */
+.order{margin:56px 0 0;border-radius:24px;background:var(--red);color:#fff;padding:36px clamp(22px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden}
+.order h3{font-family:"Kaushan Script",cursive;font-weight:400;font-size:clamp(28px,4vw,40px);line-height:1.1}
+.order p{opacity:.9;margin-top:6px}
+.order .btn{background:#fff;color:var(--red)}
+.order .btn:hover{background:var(--ink);color:#fff}
+
+/* Info */
+.info{padding:64px 0 24px;border-top:1px solid var(--line);margin-top:56px}
+.info h2{font-family:"Kaushan Script",cursive;font-weight:400;font-size:clamp(30px,4vw,38px);margin-bottom:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:var(--soft);border-radius:var(--radius);padding:24px}
+.card h3{font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.card h3 svg{width:20px;height:20px;color:var(--red)}
+.card p,.card li{color:#3d3a37;font-size:15px}
+.card ul{list-style:none;display:grid;gap:6px}
+.card .muted{color:var(--muted);font-size:14px;margin-top:10px}
+.card a.lnk{display:inline-flex;margin-top:14px;font-weight:600;color:var(--red);gap:6px;align-items:center}
+.map{margin-top:16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);height:320px;background:var(--soft)}
+.map iframe{width:100%;height:100%;border:0;display:block}
+
+/* Footer */
+footer{border-top:1px solid var(--line);margin-top:48px;padding:36px 0 110px}
+.fbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.fbar img{height:46px;width:auto}
+.fbar nav{display:flex;gap:22px;font-size:14px;color:var(--muted)}
+.fbar nav a:hover{color:var(--ink)}
+.copy{color:var(--muted);font-size:13px;margin-top:18px}
+
+/* Mobile call bar */
+.mbar{display:none;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity .25s,transform .25s;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60;gap:10px}
+.mbar .btn{flex:1;padding:15px;box-shadow:0 10px 30px rgba(0,0,0,.18)}
+
+/* Dialog */
+dialog{border:0;border-radius:20px;padding:28px;max-width:520px;width:calc(100% - 32px);margin:auto;color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h3{font-size:20px;margin-bottom:10px}
+dialog p{color:var(--muted);font-size:15px;margin-bottom:8px}
+dialog .btn{margin-top:14px}
+
+@media (max-width:760px){
+  html{scroll-padding-top:124px}
+  .hbar nav{display:none}
+  .hbar{height:58px}
+  .hbar .logo img{height:38px}
+  .catbar{top:58px}
+  .catrow{height:auto;flex-direction:column;align-items:stretch;gap:8px;padding:10px 20px}
+  .search input{width:100%}
+  .search{order:-1}
+  .grid{grid-template-columns:1fr}
+  .popular .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .pop{padding:14px}
+  .pop .name{font-size:15px}
+  .hero{padding:36px 0 28px}
+  .mbar{display:flex}
+  .mbar.show{opacity:1;transform:none;pointer-events:auto}
+  .hide-m{display:none}
+}
+@media (max-width:380px){ .popular .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<div class="flag"></div>
+<header>
+  <div class="wrap hbar">
+    <a href="#top" class="logo" aria-label="Pizzeria O la la"><img src="img/logo.png" alt="Pizzeria O la la"></a>
+    <nav>
+      <a href="#speisekarte">Speisekarte</a>
+      <a href="#info">Öffnungszeiten</a>
+      <a href="#anfahrt">Anfahrt</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a class="btn btn-red order-link" href="tel:+4921171000977">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+      <span>Bestellen</span>
+    </a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <img class="hero-logo" src="img/logo.png" alt="Pizzeria O la la">
+    <p class="tag">Pizza, Pasta, Burger &amp; mehr – <b>100 % Halal</b></p>
+    <p class="addr">Rather Broich 4 · 40472 Düsseldorf</p>
+    <div class="cta">
+      <a class="btn btn-red order-link" href="tel:+4921171000977">Jetzt bestellen</a>
+      <a class="btn btn-line" href="#speisekarte">Zur Speisekarte</a>
+    </div>
+    <div class="chips">
+      <span class="chip halal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>100 % Halal</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h-2v-11a1 1 0 0 1 1-1h9v12m-4 0h6m4 0h2v-6h-8m0-5h5l3 5"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>Lieferung</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>Abholung</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 1-3"/><path d="M8 14a4 4 0 0 0 8 0"/><path d="M5 22h14"/></svg>Frisch aus dem Ofen</span>
+    </div>
+  </div>
+</section>
+
+<div class="catbar" id="speisekarte">
+  <div class="wrap catrow">
+    <div class="cats" id="cats"></div>
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Gericht suchen …" autocomplete="off">
+    </label>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="section popular" id="beliebt">
+    <div class="sec-head"><h2><span class="ic">⭐</span>Beliebt</h2></div>
+    <div class="grid" id="popgrid"></div>
+  </section>
+  <div id="menu"></div>
+  <p class="empty" id="empty">Kein Gericht gefunden.</p>
+
+  <div class="order">
+    <div>
+      <h3>Hunger bekommen?</h3>
+      <p>Ruf uns an – wir bereiten deine Bestellung frisch zu. Online-Bestellung folgt in Kürze.</p>
+    </div>
+    <a class="btn order-link" href="tel:+4921171000977">0211 71000977 anrufen</a>
+  </div>
+
+  <section class="info" id="info">
+    <h2>Info</h2>
+    <div class="cards">
+      <div class="card">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Öffnungszeiten</h3>
+        <ul id="hours">
+          <li>Werden in Kürze bekannt gegeben.</li>
+        </ul>
+        <p class="muted">Lieferung und Abholung</p>
+      </div>
+      <div class="card" id="anfahrt">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Anfahrt</h3>
+        <p>Pizzeria O la la<br>Rather Broich 4<br>40472 Düsseldorf-Rath</p>
+        <a class="lnk" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Rather+Broich+4,+40472+D%C3%BCsseldorf">Route planen →</a>
+      </div>
+      <div class="card" id="kontakt">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Kontakt</h3>
+        <p>Telefon: <a href="tel:+4921171000977"><b>0211 71000977</b></a></p>
+        <p class="muted">Bestellungen gerne telefonisch.</p>
+        <a class="lnk order-link" href="tel:+4921171000977">Jetzt anrufen →</a>
+      </div>
+    </div>
+    <div class="map">
+      <iframe title="Karte" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Rather+Broich+4,+40472+D%C3%BCsseldorf&output=embed"></iframe>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fbar">
+      <img src="img/logo.png" alt="Pizzeria O la la">
+      <nav>
+        <a href="#" data-dlg="impressum">Impressum</a>
+        <a href="#" data-dlg="datenschutz">Datenschutz</a>
+        <a href="#" data-dlg="allergene">Allergene &amp; Zusatzstoffe</a>
+      </nav>
+    </div>
+    <p class="copy">© <span id="yr"></span> Pizzeria O la la · Rather Broich 4 · 40472 Düsseldorf · Alle Preise in Euro inkl. MwSt.</p>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="btn btn-red order-link" href="tel:+4921171000977">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+    Anrufen &amp; bestellen
+  </a>
+</div>
+
+<dialog id="dlg"><h3 id="dlg-t"></h3><div id="dlg-b"></div><button class="btn btn-red" onclick="dlg.close()">Schließen</button></dialog>
+
+<script src="menu.js"></script>
+<script>
+/* Bestell-Link: später hier das Bestellsystem eintragen (z. B. "https://…") */
+const ORDER_URL = "";
+if (ORDER_URL) document.querySelectorAll('.order-link').forEach(a => { a.href = ORDER_URL; a.target = "_blank"; });
+
+const eur = n => n.toFixed(2).replace('.', ',') + ' €';
+const TAG = { v:['v','Vegetarisch'], s:['s','Scharf'], b:['b','Beliebt'] };
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function itemHTML([nr, name, desc, price, tags]) {
+  const t = (tags || '').split(' ').filter(Boolean).map(k => `<span class="t ${TAG[k][0]}">${TAG[k][1]}</span>`).join('');
+  return `<article class="item" data-s="${esc((nr+' '+name+' '+desc).toLowerCase())}">
+    <span class="nr">${nr}</span>
+    <div class="body"><div class="name">${esc(name)}</div>${desc ? `<div class="desc">${esc(desc)}</div>` : ''}${t ? `<div class="tags">${t}</div>` : ''}</div>
+    <span class="price">${eur(price)}</span></article>`;
+}
+
+const cats = document.getElementById('cats'), menu = document.getElementById('menu');
+cats.innerHTML = `<a href="#beliebt" data-id="beliebt">⭐ Beliebt</a>` + MENU.map(c => `<a href="#${c.id}" data-id="${c.id}">${c.icon} ${c.name}</a>`).join('');
+menu.innerHTML = MENU.map(c => `<section class="section" id="${c.id}">
+  <div class="sec-head"><h2><span class="ic">${c.icon}</span>${c.name}</h2></div>
+  ${c.note ? `<p class="sec-note">${c.note}</p>` : ''}
+  <div class="grid">${c.items.map(itemHTML).join('')}</div></section>`).join('');
+
+const pops = MENU.flatMap(c => c.items.filter(i => (i[4]||'').includes('b')));
+document.getElementById('popgrid').innerHTML = pops.map(([nr,name,desc,price]) =>
+  `<article class="item pop"><span class="star">★</span><span class="nr">${nr}</span><div class="name">${esc(name)}</div>${desc?`<div class="desc">${esc(desc)}</div>`:''}<div class="row"><span></span><span class="price">${eur(price)}</span></div></article>`).join('');
+
+/* Aktive Kategorie beim Scrollen */
+const links = [...cats.querySelectorAll('a')];
+const secs = links.map(a => document.getElementById(a.dataset.id));
+let cur = null;
+function spy(){
+  const y = window.scrollY + 150; let act = null;
+  secs.forEach((s,i) => { if (s && s.offsetParent !== null && s.offsetTop <= y) act = i; });
+  if (act !== cur) {
+    links.forEach(l => l.classList.remove('on'));
+    if (act !== null) { const l = links[act]; l.classList.add('on'); cats.scrollTo({left: l.offsetLeft - cats.clientWidth/2 + l.clientWidth/2}); }
+    cur = act;
+  }
+}
+const mbar=document.querySelector('.mbar'), heroCta=document.querySelector('.hero .cta');
+function bar(){ mbar.classList.toggle('show', heroCta.getBoundingClientRect().bottom < 0); }
+addEventListener('scroll', () => { spy(); bar(); }, {passive:true}); spy(); bar();
+
+/* Suche */
+const q = document.getElementById('q'), empty = document.getElementById('empty');
+q.addEventListener('input', () => {
+  const v = q.value.trim().toLowerCase(); let any = false;
+  document.getElementById('beliebt').style.display = v ? 'none' : '';
+  document.querySelectorAll('#menu .section').forEach(sec => {
+    let n = 0;
+    sec.querySelectorAll('.item').forEach(it => { const ok = !v || it.dataset.s.includes(v); it.style.display = ok ? '' : 'none'; if (ok) n++; });
+    sec.style.display = n ? '' : 'none'; if (n) any = true;
+  });
+  empty.style.display = any ? 'none' : 'block';
+  if (v) document.getElementById('speisekarte').scrollIntoView();
+});
+
+/* Rechtliches – Platzhalter, später ersetzen */
+const DLG = {
+  impressum: ['Impressum', '<p>Angaben gemäß § 5 DDG folgen in Kürze.</p><p>Pizzeria O la la<br>Rather Broich 4<br>40472 Düsseldorf<br>Telefon: 0211 71000977</p>'],
+  datenschutz: ['Datenschutz', '<p>Die vollständige Datenschutzerklärung folgt in Kürze.</p><p>Diese Website setzt keine Cookies. Beim Laden der Karte werden Daten an Google übertragen.</p>'],
+  allergene: ['Allergene & Zusatzstoffe', '<p>Informationen zu Allergenen und Zusatzstoffen erhältst du telefonisch unter 0211 71000977. Eine vollständige Liste folgt in Kürze.</p>']
+};
+const dlg = document.getElementById('dlg');
+document.querySelectorAll('[data-dlg]').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault(); const [t,b] = DLG[a.dataset.dlg];
+  document.getElementById('dlg-t').textContent = t; document.getElementById('dlg-b').innerHTML = b; dlg.showModal();
+}));
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
