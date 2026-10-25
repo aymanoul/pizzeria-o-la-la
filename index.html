@@ -45,19 +45,15 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdro
 .hbar .btn{padding:10px 18px;font-size:14px}
 
 /* Hero */
-.hero{padding:56px 0 40px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:auto -10% -60% -10%;height:80%;background:radial-gradient(ellipse at center,rgba(227,6,19,.06),transparent 65%);pointer-events:none}
-.hero-logo{width:min(560px,86%);margin:0 auto}
-.hero .tag{margin:22px auto 0;font-size:clamp(18px,2.4vw,22px);font-weight:500;color:var(--muted)}
-.hero .tag b{color:var(--ink);font-weight:700}
-.hero .addr{margin-top:8px;color:var(--muted);font-size:15px}
+.hero{padding:72px 0 64px;text-align:center;position:relative;overflow:hidden;color:#fff;background:#141414 url(img/laden.jpg) center 45%/cover no-repeat}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.45) 0%,rgba(10,10,10,.35) 45%,rgba(10,10,10,.7) 100%);pointer-events:none}
+.hero .wrap{position:relative}
+.hero-logo{width:min(560px,86%);margin:0 auto;filter:drop-shadow(0 6px 24px rgba(0,0,0,.45))}
+.hero .tag{margin:22px auto 0;font-size:clamp(18px,2.4vw,22px);font-weight:500;color:rgba(255,255,255,.85);text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.hero .tag b{color:#fff;font-weight:700}
+.hero .addr{margin-top:8px;color:rgba(255,255,255,.75);font-size:15px}
 .hero .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
 .hero .cta .btn{padding:15px 30px;font-size:16px}
-.usp{display:grid;grid-template-columns:repeat(3,1fr);max-width:520px;margin:34px auto 0}
-.usp div{display:flex;flex-direction:column;align-items:center;gap:2px;padding:2px 8px}
-.usp div+div{border-left:1px solid var(--line)}
-.usp b{font-family:"Kaushan Script",cursive;font-weight:400;font-size:clamp(22px,3vw,26px);line-height:1.2;color:var(--red)}
-.usp span{font-size:13.5px;color:var(--muted);font-weight:500}
 
 /* Category bar */
 .catbar{position:sticky;top:64px;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
@@ -291,7 +287,7 @@ body.lock{overflow:hidden}
   .popular .grid{grid-template-columns:repeat(2,1fr);gap:10px}
   .pop{padding:14px}
   .pop .name{font-size:15px}
-  .hero{padding:36px 0 28px}
+  .hero{padding:48px 0 44px}
   .mbar{display:flex}
   .mbar.show{opacity:1;transform:none;pointer-events:auto}
   .hide-m{display:none}
@@ -326,7 +322,7 @@ body.lock{overflow:hidden}
 
 <section class="hero" id="top">
   <div class="wrap">
-    <img class="hero-logo" src="img/logo.png" alt="Pizzeria O la la">
+    <img class="hero-logo" src="img/logo-hell.png" alt="Pizzeria O la la">
     <p class="tag">Pizza, Pasta, Burger &amp; mehr – <b>100 % Halal</b></p>
     <p class="addr">Rather Broich 4 · 40472 Düsseldorf</p>
     <div class="cta">
@@ -334,11 +330,6 @@ body.lock{overflow:hidden}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
         Jetzt anrufen
       </a>
-    </div>
-    <div class="usp">
-      <div><b>100 %</b><span>Halal</span></div>
-      <div><b>Frisch</b><span>aus dem Ofen</span></div>
-      <div><b>Lieferung</b><span>&amp; Abholung</span></div>
     </div>
   </div>
 </section>
