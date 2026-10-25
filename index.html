@@ -53,13 +53,13 @@ header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdro
 .hbar .btn{padding:10px 18px;font-size:14px}
 
 /* Hero */
-.hero{padding:72px 0 64px;text-align:center;position:relative;overflow:hidden;color:#fff;background:#141414 url(img/laden.jpg) center 62%/cover no-repeat}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,.45) 0%,rgba(10,10,10,.35) 45%,rgba(10,10,10,.7) 100%);pointer-events:none}
+.hero{padding:56px 0 44px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:auto -10% -60% -10%;height:80%;background:radial-gradient(ellipse at center,rgba(227,6,19,.06),transparent 65%);pointer-events:none}
 .hero .wrap{position:relative}
-.hero-logo{width:min(560px,86%);margin:0 auto;filter:drop-shadow(0 6px 24px rgba(0,0,0,.45))}
-.hero .tag{margin:22px auto 0;font-size:clamp(18px,2.4vw,22px);font-weight:500;color:rgba(255,255,255,.85);text-shadow:0 1px 8px rgba(0,0,0,.4)}
-.hero .tag b{color:#fff;font-weight:700}
-.hero .addr{margin-top:8px;color:rgba(255,255,255,.75);font-size:15px}
+.hero-logo{width:min(560px,86%);margin:0 auto}
+.hero .tag{margin:22px auto 0;font-size:clamp(18px,2.4vw,22px);font-weight:500;color:var(--muted)}
+.hero .tag b{color:var(--ink);font-weight:700}
+.hero .addr{margin-top:8px;color:var(--muted);font-size:15px}
 .hero .cta{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
 .hero .cta .btn{padding:15px 30px;font-size:16px}
 
@@ -99,15 +99,6 @@ main{padding:28px 0 40px}
 .price{flex:none;font-weight:700;font-size:16.5px;white-space:nowrap}
 .empty{display:none;text-align:center;color:var(--muted);padding:60px 0}
 
-/* Popular */
-.popular .grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
-.pop{background:var(--ink);color:#fff;border:0;flex-direction:column;gap:10px;position:relative;overflow:hidden}
-.pop .desc{color:#bdb8b2}
-.pop .row{display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:auto}
-.pop .price{color:#fff}
-.pop .nr{background:rgba(255,255,255,.1);color:#ddd}
-.pop::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:var(--red);opacity:.9}
-.pop .star{position:absolute;right:14px;top:12px;z-index:1;font-size:13px;font-weight:700}
 
 /* Order banner */
 .order{margin:56px 0 0;border-radius:24px;background:var(--red);color:#fff;padding:36px clamp(22px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden}
@@ -169,8 +160,6 @@ dialog .btn{margin-top:14px}
 @keyframes nbump{from{transform:translateY(7px);opacity:0}to{transform:none;opacity:1}}
 @keyframes grow{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
 .item.inc{border-color:var(--red);box-shadow:inset 0 0 0 1px var(--red)}
-.pop.inc{box-shadow:0 0 0 2px var(--red)}
-.pop .row .price{order:-1}
 
 /* Header-Warenkorb */
 .hact{display:flex;align-items:center;gap:8px}
@@ -292,7 +281,6 @@ body.lock{overflow:hidden}
 .legend-note{margin-top:32px;font-size:13.5px;color:var(--muted)}
 .legend-note a{color:var(--red);font-weight:600}
 sup{font-size:.62em;font-weight:500;margin-left:2px;color:var(--muted);line-height:0}
-.pop sup{color:#bdb8b2}
 .areas{list-style:none;display:grid;gap:8px}
 .areas li{display:flex;gap:10px;align-items:baseline;font-size:14.5px}
 .areas b{color:var(--red);white-space:nowrap;min-width:64px}
@@ -342,15 +330,11 @@ sup{font-size:.62em;font-weight:500;margin-left:2px;color:var(--muted);line-heig
   .search input{width:100%}
   .search{order:-1}
   .grid{grid-template-columns:1fr}
-  .popular .grid{grid-template-columns:repeat(2,1fr);gap:10px}
-  .pop{padding:14px}
-  .pop .name{font-size:15px}
-  .hero{padding:48px 0 44px}
+  .hero{padding:36px 0 32px}
   .mbar{display:flex}
   .mbar.show{opacity:1;transform:none;pointer-events:auto}
   .hide-m{display:none}
 }
-@media (max-width:380px){ .popular .grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -380,7 +364,7 @@ sup{font-size:.62em;font-weight:500;margin-left:2px;color:var(--muted);line-heig
 
 <section class="hero" id="top">
   <div class="wrap">
-    <img class="hero-logo" src="img/logo-hell.png" alt="Pizzeria O la la">
+    <img class="hero-logo" src="img/logo.png" alt="Pizzeria O la la">
     <p class="tag">Pizza, Pasta, Salate &amp; mehr – <b>100 % Halal</b></p>
     <p class="addr">Volkardeyer Str. 23 · 40878 Ratingen</p>
     <div class="cta">
@@ -403,10 +387,6 @@ sup{font-size:.62em;font-weight:500;margin-left:2px;color:var(--muted);line-heig
 </div>
 
 <main class="wrap">
-  <section class="section popular" id="beliebt">
-    <div class="sec-head"><h2><span class="ic">⭐</span>Beliebt</h2></div>
-    <div class="grid" id="popgrid"></div>
-  </section>
   <div id="menu"></div>
   <p class="empty" id="empty">Kein Gericht gefunden.</p>
 
@@ -539,7 +519,7 @@ const eur = n => n.toFixed(2).replace('.', ',') + ' €';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt = s => esc(s).replace(/\^([0-9A-Z,]+)/g, '<sup>$1</sup>');   // ^1,2 → hochgestellt
 const plain = s => String(s).replace(/\^[0-9A-Z,]+/g, '');
-const TAG = { v:['v','Vegetarisch'], s:['s','Scharf'], b:['b','Beliebt'], h:['h','Haus-Tipp'], n:['n','Neu'] };
+const TAG = { v:['v','Vegetarisch'], s:['s','Scharf'], h:['h','Haus-Tipp'], n:['n','Neu'] };
 
 /* Gerichte-Verzeichnis */
 const ITEMS = {};
@@ -579,7 +559,7 @@ const foodTotal = () => cart.filter(l => !ITEMS[l.nr].drink).reduce((s,l) => s +
 const qtyOf = (nr, s) => cart.filter(l => l.nr == nr && (s == null || l.s == s)).reduce((a,l) => a + l.qty, 0);
 
 /* ---- Speisekarte aufbauen ---- */
-function tagsHTML(t){ return t.split(' ').filter(Boolean).map(k => `<span class="t ${TAG[k][0]}">${TAG[k][1]}</span>`).join(''); }
+function tagsHTML(t){ return t.split(' ').filter(k => TAG[k]).map(k => `<span class="t ${TAG[k][0]}">${TAG[k][1]}</span>`).join(''); }
 function itemHTML([nr]) {
   const it = ITEMS[nr], t = tagsHTML(it.tags);
   const sizes = multi(it) ? `<div class="sizes" data-nr="${nr}"></div>` : '';
@@ -589,17 +569,13 @@ function itemHTML([nr]) {
     ${multi(it) ? '' : `<div class="side"><span class="price">${eur(it.price)}</span><span class="ctl" data-nr="${nr}"></span></div>`}</article>`;
 }
 const cats = document.getElementById('cats'), menu = document.getElementById('menu');
-cats.innerHTML = `<a href="#beliebt" data-id="beliebt">⭐ Beliebt</a>` + MENU.map(c => `<a href="#${c.id}" data-id="${c.id}">${c.icon} ${c.name}</a>`).join('');
+cats.innerHTML = MENU.map(c => `<a href="#${c.id}" data-id="${c.id}">${c.icon} ${c.name}</a>`).join('');
 menu.innerHTML = MENU.map(c => `<section class="section" id="${c.id}">
   <div class="sec-head"><h2><span class="ic">${c.icon}</span>${c.name}</h2></div>
   ${c.note ? `<p class="sec-note">${fmt(c.note)}</p>` : ''}
   <div class="grid">${c.items.map(itemHTML).join('')}</div></section>`).join('')
   + `<p class="legend-note">Hochgestellte Zahlen und Buchstaben = Zusatzstoffe und Allergene. <a href="#" data-dlg="allergene">Übersicht ansehen</a></p>`;
 
-const pops = Object.values(ITEMS).filter(it => it.tags.includes('b'));
-document.getElementById('popgrid').innerHTML = pops.map(it =>
-  `<article class="item pop" data-nr="${it.nr}"><span class="star">★</span><span class="nr">${it.nr}</span><div class="name">${esc(it.full)}</div>${it.desc?`<div class="desc">${fmt(it.desc)}</div>`:''}
-   <div class="row"><span class="price">${multi(it) ? 'ab ' + eur(it.price[firstSize(it)]) : eur(it.price)}</span>${multi(it) ? `<button class="add" data-act="sheet" data-nr="${it.nr}" aria-label="${esc(it.full)} auswählen">+</button>` : `<span class="ctl" data-nr="${it.nr}"></span>`}</div></article>`).join('');
 
 /* Aktive Kategorie beim Scrollen */
 const links = [...cats.querySelectorAll('a')];
@@ -622,7 +598,6 @@ addEventListener('scroll', () => { spy(); bar(); }, {passive:true}); spy();
 const q = document.getElementById('q'), empty = document.getElementById('empty');
 q.addEventListener('input', () => {
   const v = q.value.trim().toLowerCase(); let any = false;
-  document.getElementById('beliebt').style.display = v ? 'none' : '';
   document.querySelectorAll('#menu .section').forEach(sec => {
     let n = 0;
     sec.querySelectorAll('.item').forEach(it => { const ok = !v || it.dataset.s.includes(v); it.style.display = ok ? '' : 'none'; if (ok) n++; });
@@ -664,7 +639,6 @@ const I = {
 };
 document.querySelectorAll('[data-act=shdec]').forEach(b => b.innerHTML = I.minus);
 document.querySelectorAll('[data-act=shinc]').forEach(b => b.innerHTML = I.plus);
-document.querySelectorAll('.pop .add').forEach(b => b.innerHTML = I.plus);
 
 const order = Object.assign({ mode: SHOP.delivery ? 'liefer' : 'abhol', area: -1, when: 'asap', time: '', pay: SHOP.payments[0],
   name: '', phone: '', street: '', zip: '', city: '', extra: '', note: '' }, store.get('olala-kunde', {}));
@@ -702,7 +676,6 @@ function renderCtls(nr){
   const sel = nr == null ? '' : `[data-nr="${nr}"]`;
   document.querySelectorAll('.ctl' + sel).forEach(renderCtl);
   document.querySelectorAll('.sizes' + sel).forEach(renderSizes);
-  if (nr == null || nr in ITEMS) document.querySelectorAll('.pop' + sel).forEach(p => p.classList.toggle('inc', qtyOf(p.dataset.nr) > 0));
 }
 
 function addLine(l, qty = 1){
