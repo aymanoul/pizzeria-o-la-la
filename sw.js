@@ -1,5 +1,5 @@
 /* Service Worker: immer zuerst die aktuelle Version aus dem Netz, offline die zuletzt geladene. */
-const CACHE = 'olala-v4';
+const CACHE = 'olala-v5';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
 self.addEventListener('fetch', e => {

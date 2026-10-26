@@ -561,7 +561,7 @@ const store = {
   get(k, d){ try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch(e){ return d; } },
   set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
 };
-let cart = store.get('olala-cart2', []);
+let cart = store.get('olala-cart3', []);
 if (!Array.isArray(cart)) cart = [];
 cart = cart.filter(l => l && ITEMS[l.nr] && l.qty > 0 && (!multi(ITEMS[l.nr]) || ITEMS[l.nr].price[l.s] != null));
 const count = () => cart.reduce((s,l) => s + l.qty, 0);
@@ -700,7 +700,7 @@ function decItem(nr){
   changed(nr);
 }
 function changed(nr, added){
-  store.set('olala-cart2', cart);
+  store.set('olala-cart3', cart);
   renderCtls(nr); updateBars(added);
   if (drawer.classList.contains('on') && view === 'cart') renderDrawer();
 }
@@ -869,7 +869,7 @@ function placeOrder(){
     lines: cart.map(l => ({ ...l, name: ITEMS[l.nr].full, info: lineInfo(l), unit: unitPrice(l) })),
     sub: subtotal(), fee: fee(), total: total(), o: { ...order, areaName: area() ? area().name : '' }
   };
-  cart = []; store.set('olala-cart2', cart); order.note = '';
+  cart = []; store.set('olala-cart3', cart); order.note = '';
   renderCtls(); updateBars();
   view = 'done'; renderDrawer();
 }
