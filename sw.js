@@ -1,7 +1,10 @@
-/* Service Worker: immer zuerst die aktuelle Version aus dem Netz, offline die zuletzt geladene. */
-const CACHE = 'olala-v5';
+/* Service Worker: immer zuerst die aktuelle Version aus dem Netz, offline die zuletzt geladene.
+   Bei Änderungen die Versionsnummer hochzählen. */
+const CACHE = 'olala-v6';
 self.addEventListener('install', e => self.skipWaiting());
-self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+self.addEventListener('activate', e => e.waitUntil(
+  caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())
+));
 self.addEventListener('fetch', e => {
   const r = e.request;
   if (r.method !== 'GET' || new URL(r.url).origin !== location.origin) return;

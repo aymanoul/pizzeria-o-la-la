@@ -1,0 +1,106 @@
+/* Speisekarte Pizzeria O la la – Inhalt aus der aktuellen Karte übernommen.
+   Format Pizza: [Nr, Name, Kennz., Beschreibung, klein, groß, family]
+   Format sonst: [Nr, Name, Kennz., Beschreibung, Preis]                    */
+window.KARTE = {
+  pizza: [
+    ["01","Margherita","D,G","",6,7,15],
+    ["02","Salami","2,3,D,G","mit Rindersalami",7,8,16],
+    ["03","Hollandaise","D,G","mit Hähnchenbrust, Broccoli und Sauce Hollandaise",8.5,11,20,"neu"],
+    ["04","Prosciutto","D,G","mit Formfleisch-Truthahnschinken<sup>2,5</sup>",7,8,16],
+    ["05","Europa","D,G","mit Formfleisch-Truthahnschinken<sup>2,5</sup> und Champignons",8,9.5,19],
+    ["06","Tonno","D,G,C","mit Thunfisch",7,9,18],
+    ["07","Romana","D,G,C","mit Thunfisch und Zwiebeln",8,10,19],
+    ["08","Spinaci","D,G","mit Spinat",7,8,16],
+    ["09","Funghi","D,G","mit frischen Champignons",7,8,16],
+    ["10","Calzone","D,G","gefüllt mit Formfleisch-Truthahnschinken<sup>2,5</sup>, Champignons und Käse<sup>1,2</sup>",null,9.5,null],
+    ["11","Calzone","D,G,C","gefüllt mit Thunfisch, Champignons und frischer Paprika",null,11,null],
+    ["12","Hawaii","D,G","mit Formfleisch-Truthahnschinken<sup>2,5</sup> und Ananas",8,9.5,20],
+    ["13","Contadina","D,G","mit Formfleisch-Truthahnschinken<sup>2,5</sup> und Broccoli",8,9.5,20],
+    ["14","Buffalina","D,G","mit frischen Tomaten, Mozzarella und Basilikum",8,10,20],
+    ["15","Bolognese","D,G","mit Fleischsauce (Rind)",8,9.5,20],
+    ["16","Napoli","D,G,C","mit Sardellen, Oliven und Kapern",8,10,20],
+    ["17","Italia","D,G","mit frischer Paprika, Zwiebeln und Spinat",8,10,20],
+    ["18","Gyros","D,G","mit Hähnchenfleisch",8,9.5,20],
+    ["19","O la la","D,G,C","mit Thunfisch, Formfleisch-Truthahnschinken<sup>2,5</sup>, Artischocken, Oliven und Spinat",9,12,24,"haus"],
+    ["20","Mare Monti","D,G,C,E","mit Meeresfrüchten",8.5,10,24],
+    ["21","Scampi Special","D,G,E","mit Krabben, Cherrytomaten und Rucola",9,11,24],
+    ["22","Greek Pizza","D,G","mit Gyros, Hirtenkäse und Peperoni",9,11,24],
+    ["23","Sicilia","D,G","mit Spinat, frischer Paprika, Mais und Hirtenkäse",9,12,24],
+    ["24","Sucuk","D,G","mit Knoblauchwurst",8,9,20],
+    ["25","Capricciosa","D,G,A","mit Formfleisch-Truthahnschinken<sup>2,5</sup>, Champignons, Spinat und Ei",8.5,11,24],
+    ["26","Rucola","D,G","mit frischen Tomaten und Mozzarella",9,11,24],
+    ["27","Pollo","D,G","mit Hähnchenbrust, frischer Paprika und Mais",9,11,24],
+    ["28","Diavolo","D,G","mit Salami<sup>2,3</sup> und Peperoni",8,10,20,"scharf"],
+    ["29","Quattro Stagioni","D,G,C","mit Thunfisch, Formfleisch-Truthahnschinken<sup>2,5</sup>, Artischocken und Champignons",8.5,10,22],
+    ["30","Vegetariana","D,G","mit Gemüse",9,11,22,"veg"],
+    ["31","Carciofi","D,G","gegrillte Artischocken und frische Champignons in Olivenöl",9,10,22,"veg"],
+    ["32","Odri","D,G","Napoli-Tomatensauce, Cherrytomaten, Rucola, Parmesan und Olivenöl extra vergine – ohne Gouda, unter 400 kcal",9,11,22,"veg"],
+    ["33","Quattro Formaggi","D,G","mit 4 Käsesorten<sup>1,2</sup>",8.5,11,24],
+    ["34","Gorgonzola","D,G,E","mit Scampi und Spinat",9,11,24],
+    ["35","Mista","D,G","mit Formfleisch-Truthahnschinken<sup>2,5</sup>, Salami<sup>2,3</sup> und frischen Champignons",9,11,24]
+  ],
+  extras: [
+    ["Jede weitere Zutat","",1,1.5,3],
+    ["Käse<sup>G,1,2</sup>, Thunfisch<sup>C</sup>","",2,3,5],
+    ["Scampi<sup>E</sup>, Meeresfrüchte<sup>C,E</sup>, Hirtenkäse<sup>G</sup>, Mozzarella<sup>G</sup>, Bolognese, Hähnchenfilet","",2,3,5],
+    ["Gefüllter Käserand<sup>G,1,2</sup>","",3,4,null]
+  ],
+  pasta: [
+    ["36","Spaghetti Bolognese","D,G","mit Fleischsauce",9.5],
+    ["37","Spaghetti Napoli","D","mit Tomatensauce und Basilikum",8],
+    ["38","Spaghetti Carbonara","D,G,A","mit Formfleisch-Truthahnschinken<sup>2,5</sup>, Ei und Sahnesauce",10],
+    ["39","Spaghetti O la la Spezial","D,E","mit Gambas, Cherrytomaten und Knoblauch in leichter Kräuter-Napolisauce",13,"haus"],
+    ["40","Spaghetti Rimini","D,E,G","mit Krabben, frischen Tomaten, Spinat und Sahnesauce",11],
+    ["41","Spaghetti Mare Monti","D,G,C,E","mit Meeresfrüchten, Knoblauch und Tomatensahnesauce",11],
+    ["42","Rigatoni Scampi","D,G,E","mit Krabben, Broccoli, Knoblauch und Tomatensahnesauce",11],
+    ["43","Rigatoni Campagnola","D,G","mit Cherrytomaten, frischer Paprika, Champignons und Tomatensahnesauce",10],
+    ["44","Rigatoni Arrabbiata","D","mit Peperoni, Zwiebeln und Napolisauce",10,"scharf"],
+    ["45","Rigatoni al Pollo","D,G","mit Putenbrustfilet, frischer Paprika, Cherrytomaten, Zwiebeln und Sahnesauce",11],
+    ["46","Rigatoni Chicken Alfredo","D,G","mit Hähnchenbrustfilet in Kräuterbutter, Parmesan, schwarzem Pfeffer und Sahnesauce",11],
+    ["47","Rigatoni Curry","D,G","mit Hähnchenbrustfilet, Champignons und Curry-Sahnesauce",11],
+    ["48","Tortellini alla Panna","D,G","mit Formfleisch-Truthahnschinken<sup>2,5</sup> und Sahnesauce",10],
+    ["49","Tortellini Carbonara","D,G,A","mit Formfleisch-Truthahnschinken<sup>2,5</sup>, Ei und Sahnesauce",10],
+    ["50","Tortellini della Casa","D,G","mit Formfleisch-Truthahnschinken<sup>2,5</sup> und Champignons in Bolognesesauce, überbacken",11],
+    ["51","Tortellini Salvatore","D,G","mit Spinat, Gorgonzola und Sahnesauce",11],
+    ["52","Tagliatelle al Salmone","D,G,C","mit Lachs, Zwiebeln, Knoblauch und Tomatensahnesauce",11],
+    ["53","Tagliatelle al Pollo","D,G","mit Hähnchenbrust, frischer Paprika, Champignons und Sahnesauce",11]
+  ],
+  forno: [
+    ["54","Lasagne al Forno","D,G","mit Fleischsauce und Formfleisch-Truthahnschinken<sup>2,5</sup>",10],
+    ["55","Cannelloni","D,G","gefüllt mit Spinat und Ricotta in Napolisauce",10],
+    ["56","Tris di Pasta","D,G","Cannelloni, Tortellini und Rigatoni in Tomatensahnesauce",11],
+    ["57","Rigatoni Quattro Formaggi","D,G","mit 4 Käsesorten<sup>1,2</sup>",11],
+    ["58","Rigatoni Tonno","D,G,C","mit Thunfisch und Zwiebeln in Tomatensahnesauce",11],
+    ["59","Tortellini Quattro Formaggi","D,G","mit 4 Käsesorten<sup>1,2</sup>",11],
+    ["60","Verdure al Forno","D,G","Gemüse in Napolisauce mit Knoblauch",11,"veg"]
+  ],
+  antipasti: [
+    ["72","Gebratene Paprika","","in Napoli-Knoblauchsauce",6.5],
+    ["73","Gebratene Auberginen","","in Napoli-Knoblauchsauce",6.5],
+    ["74","Hirtenkäse überbacken","G","mit frischen Tomaten und Zwiebeln in Olivenöl",6.5]
+  ],
+  salate: [
+    ["61","Mista","","grüner Salat, Tomaten, Gurken, Zwiebeln, frische Paprika und Mais",6.5],
+    ["62","Capricciosa","A,C,G","grüner Salat, Tomaten, Gurken, Formfleisch-Truthahnschinken<sup>2,5</sup>, Ei, Thunfisch, frische Paprika, Artischocken und Käse<sup>1,2</sup>",10],
+    ["63","O la la","","grüner Salat, Tomaten, Gurken, frische Paprika, Mais, gebratene Hähnchenbrust und frische Champignons",10,"haus"],
+    ["64","Mediterranea","G","Tomaten, Gurken, Zwiebeln, Oliven<sup>2</sup>, Paprika, Hirtenkäse und Peperoni",10.5],
+    ["65","Caprese","G","Tomaten, Mozzarella und Basilikum in Olivenöl",9],
+    ["66","Smeralda","C,E,G","grüner Salat, Thunfisch, Krabben, Artischocken, Mozzarella, Oliven<sup>2</sup>, Tomaten und Gurken",12],
+    ["67","Verde","","grüner Salat",5],
+    ["68","Cetrioli","","Gurkensalat",6],
+    ["69","Pomodori","","Tomatensalat",6],
+    ["70","Tropicana","G","gemischter Salat mit Formfleisch-Truthahnschinken<sup>2,5</sup>, Käse<sup>1,2</sup> und Ananas",10],
+    ["71","Nizza","C","gemischter Salat mit Thunfisch und Zwiebeln",10]
+  ],
+  broetchen: [
+    ["75","Pizzabrötchen","D","mit Kräuterbutter oder Aioli · 6 Stück",3],
+    ["","Gefüllte Pizzabrötchen","D,G","8 Stück, gefüllt mit …",null],
+    ["76","","","Formfleisch-Truthahnschinken<sup>2,5</sup> und Käse<sup>1,2</sup>",7.5],
+    ["77","","C","Thunfisch, Zwiebeln und Käse<sup>1,2</sup>",8.5],
+    ["78","","","Spinat, Hirtenkäse und Käse<sup>1,2</sup>",8.5],
+    ["79","","","Sucuk und Käse<sup>1,2</sup>",7.5],
+    ["80","","C","Rucola, Thunfisch und Mozzarella",10],
+    ["81","","","Formfleisch-Truthahnschinken<sup>2,5</sup> und Ananas (Hawaii)",8.5],
+    ["82","Focaccine","D","hausgemachtes Fladenbrot aus dem Steinofen mit Knoblauch, Olivenöl und Gewürzen",5]
+  ]
+};
