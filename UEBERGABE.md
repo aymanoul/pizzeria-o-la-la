@@ -141,7 +141,8 @@ Website → Cloudflare Worker (rechnet Preise nach) → Datenbank D1 (EU) → Te
 - Format **180 × 100 mm** (nach Foto vom Moena-Sticker geschätzt – Maße vom Inhaber bestätigen lassen) + 3 mm Beschnitt.
 - Grüner Hintergrund wie das App-Symbol, **QR-Code weiß direkt auf Grün** (Ayman wollte keine weiße Fläche), runde Punkte, Logo frei in der Mitte (11,5 von 33 Modulen, Fehlerkorrektur H; größer = zu wenig Reserve, getestet).
 - Code **OLALA10** (in Großbuchstaben gedruckt; im Shop später in jeder Schreibweise gültig machen).
-- Varianten: A Barlow Condensed kursiv + roter Code · B Bebas Neue + Kaushan Script + gestrichelter Gutschein-Rahmen (Empfehlung) · C Bebas Neue + Courgette.
+- Varianten: A Barlow Condensed kursiv + roter Code · B Bebas Neue + Kaushan Script + gestrichelter Gutschein-Rahmen · C Bebas Neue + Courgette. **Ayman: „B ist am besten“.**
+- Runde 3 im Stil von B (`?v=b1` … `b5`): B1 Oswald + Satisfy · B2 Anton + Yellowtail · B3 Antonio + Damion · B4 League Gothic + Norican · B5 Big Shoulders + Caveat Brush. Größen werden aus der sichtbaren Zeichenhöhe berechnet (Ziffern 24,5 mm, „Rabatt“ 9,6 mm, Code 7 mm), Abstände links automatisch gleich. Logo 48 mm, QR 62 mm.
 - Erste Version (weiße QR-Fläche, roter Coupon) gefiel nicht – nicht wieder so machen.
 - **Vor dem Verteilen:** Domain muss umgezogen sein (sonst landet man auf der alten Seite) und der Code muss im Shop funktionieren. Probedruck mit iPhone und Android scannen (weiße QR-Codes auf dunklem Grund lesen ältere Scanner-Apps manchmal nicht).
 

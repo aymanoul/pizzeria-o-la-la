@@ -5,24 +5,31 @@
 <title>Sticker – 10 % Rabatt – Pizzeria O la la</title>
 <!--
   Druckdatei: Endformat 180 × 100 mm (quer) + 3 mm Beschnitt rundum = 186 × 106 mm.
-  Größe ändern: --w und --h anpassen, dann python3 render.py.
-  Variante über die Adresse wählen: sticker.html?v=a | ?v=b | ?v=c
-  Inhalte bleiben mindestens 9 mm vom Endformat-Rand entfernt.
+  Variante über die Adresse wählen: sticker.html?v=b1 (Liste unten in VARIANTS), &guides zeigt Schnittlinie.
+  Alle Größen werden aus den Schriften selbst berechnet (sichtbare Höhe der Zeichen),
+  damit jede Variante gleich groß wirkt und die Abstände gleich sind.
 -->
 <style>
-/* Schriften (alle lokal, OFL-Lizenz) */
 @font-face{font-family:Outfit;font-weight:400;src:url(../fonts/outfit-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:Outfit;font-weight:500;src:url(../fonts/outfit-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:Outfit;font-weight:600;src:url(../fonts/outfit-latin-600-normal.woff2) format("woff2")}
-@font-face{font-family:Outfit;font-weight:700;src:url(../fonts/outfit-latin-700-normal.woff2) format("woff2")}
 @font-face{font-family:Courgette;src:url(../fonts/courgette-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:Bebas;src:url(fonts/bebas-neue-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:Kaushan;src:url(fonts/kaushan-script-latin-400-normal.woff2) format("woff2")}
-@font-face{font-family:Barlow;font-weight:600;font-style:italic;src:url(fonts/barlow-condensed-latin-600-italic.woff2) format("woff2")}
 @font-face{font-family:Barlow;font-weight:700;font-style:italic;src:url(fonts/barlow-condensed-latin-700-italic.woff2) format("woff2")}
 @font-face{font-family:Barlow;font-weight:800;font-style:italic;src:url(fonts/barlow-condensed-latin-800-italic.woff2) format("woff2")}
+@font-face{font-family:Oswald;font-weight:600;src:url(fonts/oswald-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Satisfy;src:url(fonts/satisfy-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Anton;src:url(fonts/anton-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Yellowtail;src:url(fonts/yellowtail-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Antonio;font-weight:700;src:url(fonts/antonio-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Damion;src:url(fonts/damion-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:LeagueGothic;src:url(fonts/league-gothic-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Norican;src:url(fonts/norican-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:BigShoulders;font-weight:800;src:url(fonts/big-shoulders-display-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:CaveatBrush;src:url(fonts/caveat-brush-latin-400-normal.woff2) format("woff2")}
 
-:root{--w:180mm;--h:100mm;--b:3mm;--m:9mm;--qr:64mm;--red:#e30613}
+:root{--w:180mm;--h:100mm;--b:3mm;--m:9mm;--qr:62mm;--red:#e30613}
 @page{size:calc(var(--w) + 2*var(--b)) calc(var(--h) + 2*var(--b));margin:0}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#fff}
@@ -37,44 +44,24 @@ body{font-family:Outfit,sans-serif;color:#fff;-webkit-print-color-adjust:exact;p
 .grid{position:absolute;inset:var(--m);display:flex;justify-content:space-between}
 .left{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
 .right{width:var(--qr);display:flex;flex-direction:column;align-items:center;justify-content:space-between}
-.logo{width:52mm;display:block}
+.logo{width:48mm;display:block}
 .qr{width:var(--qr);height:var(--qr);display:block}
-.scan{text-align:center;line-height:1.15}
-.scan .cta{display:block}
-.scan .url{display:block;font-family:Outfit;font-weight:500;font-size:3.9mm;letter-spacing:.02em;opacity:.9;margin-top:1.4mm}
+.scan{text-align:center;line-height:1.1}
+.scan .cta{display:block;white-space:nowrap}
+.scan .url{display:block;font-family:Outfit;font-weight:500;font-size:3.9mm;letter-spacing:.02em;opacity:.9;margin-top:1.6mm}
 
-/* Angebot */
-.offer{display:flex;align-items:last baseline;gap:3.5mm}   /* letzte Textzeile steht auf der Grundlinie der „10“ */
-.offer .num{line-height:.74}
-.offer .num small{font-size:.6em}
+.offer{display:flex;align-items:last baseline;gap:3.6mm}
+.offer .num{line-height:.8;white-space:nowrap}
 .offer .side{display:flex;flex-direction:column}
-.offer .sub{font-family:Outfit;font-weight:500;font-size:3.7mm;line-height:1.28;opacity:.92;margin-top:1.6mm}
+.offer .rab{line-height:1.05;white-space:nowrap}
+.offer .sub{font-family:Outfit;font-weight:500;font-size:3.7mm;line-height:1.28;opacity:.92;margin-top:1.8mm}
 
-/* Code */
-.code{display:flex;align-items:center;gap:3.2mm;height:12.5mm;padding:0 5mm 0 4.2mm;border-radius:3mm}
+.code{display:flex;align-items:center;gap:3.4mm;height:12.5mm;padding:0 5mm 0 4.4mm;border-radius:3mm}
 .code .lab{font-family:Outfit;font-weight:600;font-size:2.7mm;letter-spacing:.16em;text-transform:uppercase;opacity:.85;line-height:1.1}
-.code .val{line-height:1}
-
-/* ---------- Variante A: Barlow Condensed kursiv (schräg wie „O la la“) ---------- */
-.v-a .offer .num{font:italic 800 37mm/.74 Barlow;letter-spacing:-.01em}
-.v-a .offer .rab{font:italic 800 13.5mm/.9 Barlow;letter-spacing:.01em}
-.v-a .code{background:var(--red)}
-.v-a .code .val{font:italic 800 9.4mm/1 Barlow;letter-spacing:.07em}
-.v-a .scan .cta{font:italic 700 6.2mm/1 Barlow;letter-spacing:.04em;text-transform:uppercase}
-
-/* ---------- Variante B: Bebas Neue + Kaushan Script (Pinsel wie im Logo) ---------- */
-.v-b .offer .num{font:400 39mm/.74 Bebas;letter-spacing:.01em}
-.v-b .offer .rab{font:400 12.5mm/1 Kaushan;margin-bottom:.6mm}
-.v-b .code{border:.45mm dashed rgba(255,255,255,.85)}
-.v-b .code .val{font:400 10.4mm/1 Bebas;letter-spacing:.12em;padding-top:.6mm}
-.v-b .scan .cta{font:400 6.4mm/1 Kaushan}
-
-/* ---------- Variante C: Bebas Neue + Courgette (Schrift der Website) ---------- */
-.v-c .offer .num{font:400 39mm/.74 Bebas;letter-spacing:.01em}
-.v-c .offer .rab{font:400 12mm/1 Courgette;margin-bottom:.6mm}
-.v-c .code{border:.4mm solid rgba(255,255,255,.9)}
-.v-c .code .val{font:400 10.4mm/1 Bebas;letter-spacing:.12em;padding-top:.6mm}
-.v-c .scan .cta{font:400 6mm/1 Courgette}
+.code .val{line-height:1;white-space:nowrap}
+.frame-dashed .code{border:.45mm dashed rgba(255,255,255,.85)}
+.frame-solid .code{border:.4mm solid rgba(255,255,255,.9)}
+.frame-red .code{background:var(--red)}
 </style>
 </head>
 <body>
@@ -101,33 +88,66 @@ body{font-family:Outfit,sans-serif;color:#fff;-webkit-print-color-adjust:exact;p
   </div>
 </div>
 <script>
-  const P = new URLSearchParams(location.search), v = (P.get('v') || 'b').toLowerCase();
-  document.body.classList.add('v-' + v);
-  if (v === 'a') document.querySelector('.rab').textContent = 'RABATT';
-  if (P.has('guides')) document.body.classList.add('guides');
-  /* Optisch bündig: die große „10“ hat links etwas Leerraum im Zeichen – so weit nach links schieben,
-     dass die Ziffer genau mit Logo und Code-Feld abschließt */
-  window.ready = document.fonts.ready.then(() => {
-    const el = document.querySelector('.offer .num'), cs = getComputedStyle(el);
-    const ctx = document.createElement('canvas').getContext('2d');
-    ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-    const m = ctx.measureText('1');
-    el.style.marginLeft = (m.actualBoundingBoxLeft) + 'px';   // negativ = Leerraum links vom Strich
-    /* Senkrecht ausgleichen: sichtbarer Abstand Logo → „10“ gleich groß wie „10“ → Code-Feld
-       (gemessen an der echten Ziffernhöhe, nicht an der Zeilenhöhe der Schrift) */
-    const bl = document.createElement('span'); bl.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
-    el.prepend(bl);
-    const base = bl.getBoundingClientRect().top, d = ctx.measureText('10');
-    const sub = document.querySelector('.offer .sub'), sb = bl.cloneNode(); sub.append(sb);
-    const scs = getComputedStyle(sub); ctx.font = `${scs.fontWeight} ${scs.fontSize} ${scs.fontFamily}`;
-    const inkTop = base - d.actualBoundingBoxAscent,
-          inkBot = Math.max(base + d.actualBoundingBoxDescent, sb.getBoundingClientRect().top + ctx.measureText('p').actualBoundingBoxDescent);
-    const lr = document.querySelector('.logo').getBoundingClientRect();
-    const logoBot = lr.bottom - lr.height * .03;   // grünes Ende des Schwungs ist auf Grün kaum sichtbar
-    const codeTop = document.querySelector('.code').getBoundingClientRect().top;
-    const gap = (codeTop - logoBot - (inkBot - inkTop)) / 2;
-    document.querySelector('.offer').style.transform = `translateY(${logoBot + gap - inkTop}px)`;
-  });
+/* Varianten: Zahl/Code-Schrift (num), Schreibschrift für „Rabatt“ und „Scannen & bestellen“ (scr) */
+const VARIANTS = {
+  a:  { name: 'A · Barlow Condensed kursiv',     num: ['Barlow', 800, 'italic'], scr: ['Barlow', 800, 'italic'], caps: true, frame: 'red',    ls: .07 },
+  b:  { name: 'B · Bebas Neue + Kaushan Script', num: ['Bebas', 400],            scr: ['Kaushan', 400],                   frame: 'dashed', ls: .12 },
+  c:  { name: 'C · Bebas Neue + Courgette',      num: ['Bebas', 400],            scr: ['Courgette', 400],                 frame: 'solid',  ls: .12 },
+  b1: { name: 'B1 · Oswald + Satisfy',           num: ['Oswald', 600],           scr: ['Satisfy', 400],                   frame: 'dashed', ls: .08 },
+  b2: { name: 'B2 · Anton + Yellowtail',         num: ['Anton', 400],            scr: ['Yellowtail', 400],                frame: 'dashed', ls: .08 },
+  b3: { name: 'B3 · Antonio + Damion',           num: ['Antonio', 700],          scr: ['Damion', 400],                    frame: 'dashed', ls: .1 },
+  b4: { name: 'B4 · League Gothic + Norican',    num: ['LeagueGothic', 400],     scr: ['Norican', 400],                   frame: 'dashed', ls: .12 },
+  b5: { name: 'B5 · Big Shoulders + Caveat Brush', num: ['BigShoulders', 800],   scr: ['CaveatBrush', 400],               frame: 'dashed', ls: .1 }
+};
+/* Zielmaße in mm (sichtbare Höhe der Zeichen) */
+const T = { num: 24.5, rab: 9.6, rabMaxW: 40, code: 7, cta: 5.4, ctaMaxW: 56, offerMaxW: 92 };
+
+const P = new URLSearchParams(location.search), key = (P.get('v') || 'b').toLowerCase(), V = VARIANTS[key];
+if (P.has('guides')) document.body.classList.add('guides');
+document.body.classList.add('frame-' + V.frame);
+const $ = s => document.querySelector(s), mm = v => v * 96 / 25.4;
+const ctx = document.createElement('canvas').getContext('2d');
+const fontStr = (f, px) => `${f[2] || 'normal'} ${f[1]} ${px}px ${f[0]}`;
+const ink = (f, text) => { ctx.font = fontStr(f, 100); const m = ctx.measureText(text);
+  return { up: m.actualBoundingBoxAscent / 100, down: m.actualBoundingBoxDescent / 100, left: m.actualBoundingBoxLeft / 100, w: (m.actualBoundingBoxLeft + m.actualBoundingBoxRight) / 100 }; };
+const apply = (el, f, px, extra = {}) => Object.assign(el.style, { fontFamily: f[0], fontWeight: f[1], fontStyle: f[2] || 'normal', fontSize: px + 'px' }, extra);
+
+window.ready = (async () => {
+  await Promise.all([V.num, V.scr].map(f => document.fonts.load(fontStr(f, 40), 'Rabatt 10% OLALA10 Scannen & bestellen')));
+  await document.fonts.ready;
+  const num = $('.offer .num'), rab = $('.rab'), val = $('.code .val'), cta = $('.cta');
+  if (V.caps) { rab.textContent = 'RABATT'; cta.textContent = 'SCANNEN & BESTELLEN'; }
+  /* 1. Größen aus der sichtbaren Zeichenhöhe */
+  let numPx = mm(T.num) / ink(V.num, '10').up;
+  let r = ink(V.scr, rab.textContent), rabPx = Math.min(mm(T.rab) / r.up, mm(T.rabMaxW) / r.w);
+  const c = ink(V.num, 'OLALA10'), codePx = mm(T.code) / c.up;
+  const k = ink(V.scr, cta.textContent), ctaPx = Math.min(mm(T.cta) / k.up, mm(T.ctaMaxW) / k.w);
+  apply(num, V.num, numPx); apply(rab, V.scr, rabPx);
+  const pct = num.querySelector('small');   // „%“ immer gleich hoch: 62 % der Ziffernhöhe (Schriften zeichnen % sehr unterschiedlich)
+  const pctEm = () => (.62 * ink(V.num, '10').up) / ink(V.num, '%').up;
+  pct.style.fontSize = pctEm() + 'em';
+  apply(val, V.num, codePx, { letterSpacing: V.ls + 'em', marginRight: -V.ls + 'em' });
+  apply(cta, V.scr, ctaPx, V.caps ? { letterSpacing: '.04em' } : {});
+  /* 2. Angebot darf nicht zu breit werden (Abstand zum QR-Code) */
+  const wOffer = $('.offer').getBoundingClientRect().width;
+  if (wOffer > mm(T.offerMaxW)) { const f = mm(T.offerMaxW) / wOffer; numPx *= f; rabPx *= f; num.style.fontSize = numPx + 'px'; rab.style.fontSize = rabPx + 'px'; }
+  /* 3. Optisch bündig links: Leerraum vor der „1“ ausgleichen */
+  num.style.marginLeft = (ink(V.num, '1').left * numPx) + 'px';
+  /* 4. Senkrecht: sichtbarer Abstand Logo → „10“ = „10“ → Code-Feld */
+  const bl = document.createElement('span'); bl.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+  num.prepend(bl); const sb = bl.cloneNode(); $('.offer .sub').append(sb);
+  const base = bl.getBoundingClientRect().top, d = ink(V.num, '10');
+  ctx.font = '500 ' + mm(3.7) + 'px Outfit';
+  const inkTop = base - d.up * numPx, inkBot = Math.max(base + d.down * numPx, sb.getBoundingClientRect().top + ctx.measureText('p').actualBoundingBoxDescent);
+  const lr = $('.logo').getBoundingClientRect(), logoBot = lr.bottom - lr.height * .03;   // grünes Ende des Schwungs kaum sichtbar
+  const codeTop = $('.code').getBoundingClientRect().top, gap = (codeTop - logoBot - (inkBot - inkTop)) / 2;
+  $('.offer').style.transform = `translateY(${logoBot + gap - inkTop}px)`;
+  /* Messwerte für die Prüfung */
+  const qr = $('.qr').getBoundingClientRect(), ctaR = cta.getBoundingClientRect(), k2 = ink(V.scr, cta.textContent);
+  const ctaInkTop = ctaR.top + (ctaR.height - (k2.up) * ctaPx) / 2;   // grob
+  window.metrics = { variant: V.name, gapMM: +(gap * 25.4 / 96).toFixed(1), offerWmm: +($('.offer').getBoundingClientRect().width * 25.4 / 96).toFixed(1),
+    qrToTextMM: +((ctaR.top - qr.bottom) * 25.4 / 96).toFixed(1), leftEndMM: +(($('.offer').getBoundingClientRect().right) * 25.4 / 96).toFixed(1), qrLeftMM: +(qr.left * 25.4 / 96).toFixed(1) };
+})();
 </script>
 </body>
 </html>
