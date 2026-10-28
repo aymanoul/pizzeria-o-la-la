@@ -135,6 +135,18 @@ Website → Cloudflare Worker (rechnet Preise nach) → Datenbank D1 (EU) → Te
 
 ---
 
+## 12. Sticker „10 % Rabatt“ (28.10.2026)
+
+- Quelle: `druck/sticker/` – `qr.py` (QR-Code), `sticker.html` (Gestaltung, `?v=a|b|c`), `render.py` (Druck-PDF + Bilder), Schriften in `druck/sticker/fonts/` (OFL).
+- Format **180 × 100 mm** (nach Foto vom Moena-Sticker geschätzt – Maße vom Inhaber bestätigen lassen) + 3 mm Beschnitt.
+- Grüner Hintergrund wie das App-Symbol, **QR-Code weiß direkt auf Grün** (Ayman wollte keine weiße Fläche), runde Punkte, Logo frei in der Mitte (11,5 von 33 Modulen, Fehlerkorrektur H; größer = zu wenig Reserve, getestet).
+- Code **OLALA10** (in Großbuchstaben gedruckt; im Shop später in jeder Schreibweise gültig machen).
+- Varianten: A Barlow Condensed kursiv + roter Code · B Bebas Neue + Kaushan Script + gestrichelter Gutschein-Rahmen (Empfehlung) · C Bebas Neue + Courgette.
+- Erste Version (weiße QR-Fläche, roter Coupon) gefiel nicht – nicht wieder so machen.
+- **Vor dem Verteilen:** Domain muss umgezogen sein (sonst landet man auf der alten Seite) und der Code muss im Shop funktionieren. Probedruck mit iPhone und Android scannen (weiße QR-Codes auf dunklem Grund lesen ältere Scanner-Apps manchmal nicht).
+
+---
+
 ## 11. Startnachricht für den nächsten Chat
 
 > Hier die Übergabe-Datei zur Pizzeria O la la (Anhang). Bitte häng das Repo **aymanoul/pizzeria-o-la-la** (Zugriff push) an und lies `UEBERGABE.md`. Als Nächstes möchte ich: …

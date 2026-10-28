@@ -5,85 +5,129 @@
 <title>Sticker – 10 % Rabatt – Pizzeria O la la</title>
 <!--
   Druckdatei: Endformat 180 × 100 mm (quer) + 3 mm Beschnitt rundum = 186 × 106 mm.
-  Größe ändern: nur --w und --h unten anpassen, dann python3 render.py.
-  Wichtige Inhalte bleiben mindestens 7 mm vom Rand der Datei entfernt (3 mm Beschnitt + 4 mm Sicherheitsabstand).
+  Größe ändern: --w und --h anpassen, dann python3 render.py.
+  Variante über die Adresse wählen: sticker.html?v=a | ?v=b | ?v=c
+  Inhalte bleiben mindestens 9 mm vom Endformat-Rand entfernt.
 -->
 <style>
-/* statische Outfit-Schnitte → im PDF als echte Schriften eingebettet (nicht Type 3) */
+/* Schriften (alle lokal, OFL-Lizenz) */
 @font-face{font-family:Outfit;font-weight:400;src:url(../fonts/outfit-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:Outfit;font-weight:500;src:url(../fonts/outfit-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:Outfit;font-weight:600;src:url(../fonts/outfit-latin-600-normal.woff2) format("woff2")}
 @font-face{font-family:Outfit;font-weight:700;src:url(../fonts/outfit-latin-700-normal.woff2) format("woff2")}
-@font-face{font-family:Outfit;font-weight:800;src:url(../fonts/outfit-latin-800-normal.woff2) format("woff2")}
-@font-face{font-family:Courgette;src:url(../../fonts/courgette.woff2) format("woff2");font-weight:400}
-:root{--w:180mm;--h:100mm;--b:3mm;--green:#1b5b3d;--green-dk:#0f3b27;--red:#e30613;--ink:#123f2a}
+@font-face{font-family:Courgette;src:url(../fonts/courgette-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Bebas;src:url(fonts/bebas-neue-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Kaushan;src:url(fonts/kaushan-script-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:600;font-style:italic;src:url(fonts/barlow-condensed-latin-600-italic.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:700;font-style:italic;src:url(fonts/barlow-condensed-latin-700-italic.woff2) format("woff2")}
+@font-face{font-family:Barlow;font-weight:800;font-style:italic;src:url(fonts/barlow-condensed-latin-800-italic.woff2) format("woff2")}
+
+:root{--w:180mm;--h:100mm;--b:3mm;--m:9mm;--qr:64mm;--red:#e30613}
 @page{size:calc(var(--w) + 2*var(--b)) calc(var(--h) + 2*var(--b));margin:0}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{background:#fff}
-body{font-family:Outfit,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:Outfit,sans-serif;color:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .page{position:relative;width:calc(var(--w) + 2*var(--b));height:calc(var(--h) + 2*var(--b));overflow:hidden;
-  background:radial-gradient(120% 140% at 18% 0%,#22694a 0%,var(--green) 38%,var(--green-dk) 100%)}
-/* Endformat-Rahmen (nur in der Vorschau sichtbar) */
+  background:radial-gradient(125% 150% at 15% 0%,#246c4c 0%,#1b5b3d 40%,#0f3b27 100%)}
 .trim{position:absolute;left:var(--b);top:var(--b);width:var(--w);height:var(--h)}
-.guides .trim{outline:.25mm dashed rgba(255,255,255,.55)}
+.guides .trim{outline:.25mm dashed rgba(255,255,255,.6)}
 .guides .safe{position:absolute;inset:4mm;outline:.2mm dotted rgba(255,255,255,.35)}
 
-/* linke Seite */
-.logo{position:absolute;left:9mm;top:7mm;width:50mm}
-.offer{position:absolute;left:9mm;top:41mm;display:flex;align-items:center;gap:4mm;color:#fff}
-.offer .pct{font-weight:800;font-size:31mm;line-height:.8;letter-spacing:-.02em}
-.offer .pct small{font-size:.62em;font-weight:700;margin-left:.6mm}
-.offer .txt{display:flex;flex-direction:column;gap:1.4mm;padding-top:1mm}
-.offer .rab{font-family:Courgette,cursive;font-size:12.5mm;line-height:1}
-.offer .sub{font-size:3.9mm;font-weight:500;line-height:1.25;opacity:.92}
+/* Raster: links Angebot, rechts QR-Code – oben und unten bündig */
+.grid{position:absolute;inset:var(--m);display:flex;justify-content:space-between}
+.left{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start}
+.right{width:var(--qr);display:flex;flex-direction:column;align-items:center;justify-content:space-between}
+.logo{width:52mm;display:block}
+.qr{width:var(--qr);height:var(--qr);display:block}
+.scan{text-align:center;line-height:1.15}
+.scan .cta{display:block}
+.scan .url{display:block;font-family:Outfit;font-weight:500;font-size:3.9mm;letter-spacing:.02em;opacity:.9;margin-top:1.4mm}
 
-.ticket{position:absolute;left:9mm;top:73mm;width:92mm;height:17mm;display:flex;align-items:center;color:#fff}
-.ticket svg{position:absolute;inset:0;width:100%;height:100%}
-.ticket .lab{position:relative;width:27mm;text-align:center;font-size:3.3mm;font-weight:600;line-height:1.15;letter-spacing:.02em}
-.ticket .code{position:relative;flex:1;text-align:center;font-weight:800;font-size:9.6mm;letter-spacing:.09em;padding-right:2mm}
+/* Angebot */
+.offer{display:flex;align-items:last baseline;gap:3.5mm}   /* letzte Textzeile steht auf der Grundlinie der „10“ */
+.offer .num{line-height:.74}
+.offer .num small{font-size:.6em}
+.offer .side{display:flex;flex-direction:column}
+.offer .sub{font-family:Outfit;font-weight:500;font-size:3.7mm;line-height:1.28;opacity:.92;margin-top:1.6mm}
 
-/* rechte Seite */
-.qrbox{position:absolute;right:9mm;top:8mm;width:60mm;display:flex;flex-direction:column;align-items:center;color:#fff}
-.qr{width:60mm;height:60mm;background:#fff;border-radius:5mm;padding:2.2mm;box-shadow:0 0 0 1.2mm rgba(255,255,255,.14)}
-.qr img{display:block;width:100%;height:100%}
-.qrbox .cta{margin-top:4.2mm;font-size:4.6mm;font-weight:700;display:flex;align-items:center;gap:1.8mm}
-.qrbox .cta svg{width:4.6mm;height:4.6mm}
-.qrbox .url{margin-top:1.2mm;font-size:4mm;font-weight:500;opacity:.92;letter-spacing:.01em}
-.foot{position:absolute;left:9mm;right:9mm;bottom:4.6mm;font-size:2.6mm;color:rgba(255,255,255,.72);display:flex;justify-content:space-between}
+/* Code */
+.code{display:flex;align-items:center;gap:3.2mm;height:12.5mm;padding:0 5mm 0 4.2mm;border-radius:3mm}
+.code .lab{font-family:Outfit;font-weight:600;font-size:2.7mm;letter-spacing:.16em;text-transform:uppercase;opacity:.85;line-height:1.1}
+.code .val{line-height:1}
+
+/* ---------- Variante A: Barlow Condensed kursiv (schräg wie „O la la“) ---------- */
+.v-a .offer .num{font:italic 800 37mm/.74 Barlow;letter-spacing:-.01em}
+.v-a .offer .rab{font:italic 800 13.5mm/.9 Barlow;letter-spacing:.01em}
+.v-a .code{background:var(--red)}
+.v-a .code .val{font:italic 800 9.4mm/1 Barlow;letter-spacing:.07em}
+.v-a .scan .cta{font:italic 700 6.2mm/1 Barlow;letter-spacing:.04em;text-transform:uppercase}
+
+/* ---------- Variante B: Bebas Neue + Kaushan Script (Pinsel wie im Logo) ---------- */
+.v-b .offer .num{font:400 39mm/.74 Bebas;letter-spacing:.01em}
+.v-b .offer .rab{font:400 12.5mm/1 Kaushan;margin-bottom:.6mm}
+.v-b .code{border:.45mm dashed rgba(255,255,255,.85)}
+.v-b .code .val{font:400 10.4mm/1 Bebas;letter-spacing:.12em;padding-top:.6mm}
+.v-b .scan .cta{font:400 6.4mm/1 Kaushan}
+
+/* ---------- Variante C: Bebas Neue + Courgette (Schrift der Website) ---------- */
+.v-c .offer .num{font:400 39mm/.74 Bebas;letter-spacing:.01em}
+.v-c .offer .rab{font:400 12mm/1 Courgette;margin-bottom:.6mm}
+.v-c .code{border:.4mm solid rgba(255,255,255,.9)}
+.v-c .code .val{font:400 10.4mm/1 Bebas;letter-spacing:.12em;padding-top:.6mm}
+.v-c .scan .cta{font:400 6mm/1 Courgette}
 </style>
 </head>
 <body>
 <div class="page" id="page">
   <div class="trim">
     <div class="safe"></div>
-
-    <img class="logo" src="../../img/logo-hell.png" alt="Pizzeria O la la">
-
-    <div class="offer">
-      <div class="pct">10<small>%</small></div>
-      <div class="txt">
-        <div class="rab">Rabatt</div>
-        <div class="sub">auf deine Bestellung<br>in unserem Webshop</div>
+    <div class="grid">
+      <div class="left">
+        <img class="logo" src="../../img/logo-hell.png" alt="Pizzeria O la la">
+        <div class="offer">
+          <div class="num">10<small>%</small></div>
+          <div class="side">
+            <div class="rab">Rabatt</div>
+            <div class="sub">auf deine Bestellung<br>in unserem Webshop</div>
+          </div>
+        </div>
+        <div class="code"><span class="lab">Code</span><span class="val">OLALA10</span></div>
+      </div>
+      <div class="right">
+        <img class="qr" src="qr-pizzeriaolala-weiss.svg" alt="QR-Code www.pizzeriaolala.de">
+        <div class="scan"><span class="cta">Scannen &amp; bestellen</span><span class="url">www.pizzeriaolala.de</span></div>
       </div>
     </div>
-
-    <div class="ticket">
-      <svg viewBox="0 0 92 17" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M2.5 0H89.5A2.5 2.5 0 0 1 92 2.5V5.5A3 3 0 0 0 92 11.5V14.5A2.5 2.5 0 0 1 89.5 17H2.5A2.5 2.5 0 0 1 0 14.5V11.5A3 3 0 0 0 0 5.5V2.5A2.5 2.5 0 0 1 2.5 0Z" fill="#e30613"/>
-        <line x1="27" y1="2.6" x2="27" y2="14.4" stroke="#fff" stroke-width=".35" stroke-dasharray="1 1" opacity=".75"/>
-      </svg>
-      <div class="lab">Dein<br>Rabatt-Code</div>
-      <div class="code">OLALA10</div>
-    </div>
-
-    <div class="qrbox">
-      <div class="qr"><img src="qr-pizzeriaolala.svg" alt="QR-Code www.pizzeriaolala.de"></div>
-      <div class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>Scannen &amp; bestellen</div>
-      <div class="url">www.pizzeriaolala.de</div>
-    </div>
-
-    <div class="foot"><span>Pizza · Pasta · Salate · 100 % Halal</span><span>Volkardeyer Str. 23 · Ratingen · 02102 44 44 74</span></div>
   </div>
 </div>
+<script>
+  const P = new URLSearchParams(location.search), v = (P.get('v') || 'b').toLowerCase();
+  document.body.classList.add('v-' + v);
+  if (v === 'a') document.querySelector('.rab').textContent = 'RABATT';
+  if (P.has('guides')) document.body.classList.add('guides');
+  /* Optisch bündig: die große „10“ hat links etwas Leerraum im Zeichen – so weit nach links schieben,
+     dass die Ziffer genau mit Logo und Code-Feld abschließt */
+  window.ready = document.fonts.ready.then(() => {
+    const el = document.querySelector('.offer .num'), cs = getComputedStyle(el);
+    const ctx = document.createElement('canvas').getContext('2d');
+    ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+    const m = ctx.measureText('1');
+    el.style.marginLeft = (m.actualBoundingBoxLeft) + 'px';   // negativ = Leerraum links vom Strich
+    /* Senkrecht ausgleichen: sichtbarer Abstand Logo → „10“ gleich groß wie „10“ → Code-Feld
+       (gemessen an der echten Ziffernhöhe, nicht an der Zeilenhöhe der Schrift) */
+    const bl = document.createElement('span'); bl.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+    el.prepend(bl);
+    const base = bl.getBoundingClientRect().top, d = ctx.measureText('10');
+    const sub = document.querySelector('.offer .sub'), sb = bl.cloneNode(); sub.append(sb);
+    const scs = getComputedStyle(sub); ctx.font = `${scs.fontWeight} ${scs.fontSize} ${scs.fontFamily}`;
+    const inkTop = base - d.actualBoundingBoxAscent,
+          inkBot = Math.max(base + d.actualBoundingBoxDescent, sb.getBoundingClientRect().top + ctx.measureText('p').actualBoundingBoxDescent);
+    const lr = document.querySelector('.logo').getBoundingClientRect();
+    const logoBot = lr.bottom - lr.height * .03;   // grünes Ende des Schwungs ist auf Grün kaum sichtbar
+    const codeTop = document.querySelector('.code').getBoundingClientRect().top;
+    const gap = (codeTop - logoBot - (inkBot - inkTop)) / 2;
+    document.querySelector('.offer').style.transform = `translateY(${logoBot + gap - inkTop}px)`;
+  });
+</script>
 </body>
 </html>
