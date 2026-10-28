@@ -1,10 +1,11 @@
 # Pizzeria O la la – Website
 
-Rather Broich 4 · 40472 Düsseldorf · 0211 71000977
+Volkardeyer Str. 23 · 40878 Ratingen · 02102 44 44 74
 
-- `index.html`: Seite (Design und Aufbau)
-- `menu.js`: Speisekarte (Gerichte und Preise hier ändern)
-- `img/`: Logo und Favicon
+- `index.html`: Website mit Warenkorb (Einstellungen oben im Script unter `SHOP`)
+- `druck/daten.js`: Speisekarte – danach `node druck/menu-aus-daten.js` ausführen (erzeugt `menu.js`)
+- `druck/karte.html` + `render.py`: gedruckte Speisekarte (PDF)
+- `dashboard-demo/`: Dashboard-Demo mit Beispieldaten
+- `impressum/`, `datenschutz/`: Rechtstexte
 
-Online-Bestellung mit Warenkorb: Einstellungen (WhatsApp-Nummer, E-Mail, Mindestbestellwert, Liefergebühr, Zahlungsarten) in `index.html` oben im Script unter `SHOP`.
-Gehostet über GitHub Pages (Branch `main`, Ordner `/`).
+Vorschau über GitHub Pages (Branch `main`, Ordner `/`), mit `noindex`. Alles Weitere steht in `UEBERGABE.md`.

@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>O la la Dashboard – Demo</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="../img/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<style>
+@font-face{font-family:Outfit;src:url(../fonts/outfit.woff2) format("woff2");font-weight:100 900;font-display:swap}
+:root{
+  --bg:#f4f3f1; --card:#fff; --soft:#f6f5f3; --line:#ebe8e4;
+  --ink:#141414; --muted:#6b6763; --faint:#9a9590;
+  --brown:#2b2b2b; --acc:#e30613; --acc-dk:#b8000c; --on-acc:#fff; --acc-soft:#fff1f1;
+  --chart:#d0202a; --grid:#eceae6;   /* Balkenfarbe mit dem dataviz-Prüfskript getestet (Helligkeit, Kontrast) */
+  --flag:#0f9d3f;
+  --green:#0f8a3a; --green-soft:#e7f5ec; --red:#c62d1f; --red-soft:#fdecea; --blue:#1d5fae; --blue-soft:#e8f0fb;
+  --r:16px; --shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:Outfit,system-ui,sans-serif;font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1280px;margin:0 auto;padding:0 16px}
+.stripe{height:4px;background:linear-gradient(90deg,var(--flag) 0 33.3%,#fff 33.3% 66.6%,var(--acc) 66.6%)}
+
+/* Kopf */
+.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40}
+.tbar{display:flex;align-items:center;gap:12px;height:60px}
+.tbar img{height:40px;width:auto;display:block}
+.tbar .ttl{font-weight:600;font-size:15px;color:var(--muted);padding-left:12px;border-left:1px solid var(--line)}
+.demo{font-size:11.5px;font-weight:700;letter-spacing:.04em;background:var(--acc-soft);color:#b8000c;border:1px solid #f7c6c8;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-weight:600;font-size:13.5px;white-space:nowrap}
+.pill .dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(15,138,58,.15)}
+.pill.off .dot{background:var(--red);box-shadow:0 0 0 3px rgba(198,45,31,.15)}
+.ibtn{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:#fff;display:grid;place-items:center;flex:none}
+.ibtn svg{width:18px;height:18px}
+.ibtn.on{border-color:var(--acc);background:var(--acc-soft)}
+.tabs{display:flex;gap:4px;height:50px;align-items:center;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;padding:9px 15px;border-radius:999px;font-weight:700;font-size:15px;color:#3a3734;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
+.tab:hover{background:var(--soft)}
+.tab.on{background:var(--brown);color:#fff}
+.tab .cnt{min-width:21px;height:21px;padding:0 6px;border-radius:999px;background:var(--acc);color:var(--on-acc);font-size:12px;display:inline-grid;place-items:center}
+.tab .cnt:empty{display:none}
+
+/* Hinweis */
+.note{margin:16px 0 0;background:#fff;border:1px dashed #d9d5d0;border-radius:var(--r);padding:12px 14px;display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#4a4643}
+.note b{color:var(--ink)}
+.note a{color:var(--acc);font-weight:600}
+.note .x{margin-left:auto;border:0;background:none;color:var(--muted);font-size:20px;line-height:1;padding:0 4px}
+.paused{display:none;margin:16px 0 0;background:var(--red-soft);color:#8f1f14;border-radius:var(--r);padding:12px 14px;font-weight:600;font-size:14px}
+body.pause .paused{display:block}
+
+/* Kennzahlen */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}
+.kpi{background:var(--card);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+.kpi .l{font-size:13px;color:var(--muted);font-weight:500}
+.kpi .v{font-size:26px;font-weight:700;letter-spacing:-.01em;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .d{font-size:12.5px;margin-top:2px;color:var(--muted)}
+.kpi .d.up{color:var(--green)} .kpi .d.down{color:var(--red)}
+
+/* Bestellungen */
+.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px;align-items:start}
+.col{background:#ecebe8;border-radius:18px;padding:10px;min-height:120px}
+.colh{display:flex;align-items:center;gap:8px;padding:4px 6px 10px;font-weight:700;font-size:15px}
+.colh .n{min-width:22px;height:22px;padding:0 7px;border-radius:999px;background:#fff;font-size:12.5px;display:inline-grid;place-items:center;color:var(--muted)}
+.col.new .colh .n{background:var(--acc);color:var(--on-acc)}
+.colh .hint{margin-left:auto;font-weight:500;font-size:12.5px;color:var(--muted)}
+.empty{color:var(--faint);text-align:center;padding:22px 8px;font-size:14px}
+.ord{background:#fff;border-radius:14px;padding:13px 14px;margin-bottom:10px;box-shadow:var(--shadow);border:1.5px solid transparent}
+.ord:last-child{margin-bottom:0}
+.ord.isnew{border-color:var(--acc);animation:glow 1.6s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 5px rgba(227,6,19,.16),var(--shadow)}}
+.ord.arrive{animation:arrive .5s ease-out, glow 1.6s ease-in-out .5s infinite}
+@keyframes arrive{from{transform:translateY(-8px) scale(.98);opacity:0}}
+.oh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.otime{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+.oago{font-size:12.5px;color:var(--muted)}
+.ono{margin-left:auto;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tg{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--soft);color:#3d3a37}
+.tg svg{width:14px;height:14px}
+.tg.liefer{background:var(--blue-soft);color:var(--blue)}
+.tg.abhol{background:#f1ecfa;color:#5b3fa0}
+.tg.paid{background:var(--green-soft);color:#0b6e2e}
+.tg.cash{background:#fff4e5;color:#8a4b00}
+.tg.web{background:var(--brown);color:#fff}
+.tg.auto{background:var(--green-soft);color:#0b6e2e}
+.autobar{display:flex;align-items:center;gap:10px 12px;flex-wrap:wrap;margin-top:16px;background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:12px 14px;border-left:5px solid var(--green)}
+body:not(.auto) .autobar{border-left-color:var(--acc)}
+.ab-ic{font-size:22px}
+.ab-t{flex:1;min-width:220px;font-size:14px;color:#4a4643}
+.ab-t b{display:block;color:var(--ink);font-size:15px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 13px;font-weight:600;font-size:13.5px;white-space:nowrap}
+.chip.on{background:var(--red-soft);border-color:#f3b7b0;color:#8f1f14}
+body.auto .col.new{display:none}
+body.auto .board{grid-template-columns:repeat(2,minmax(0,1fr))}
+.sel{border:1.5px solid var(--line);border-radius:10px;padding:7px 9px;font:600 14px Outfit,sans-serif;background:#fff;color:var(--ink)}
+.auto-hint{font-size:12px;color:var(--muted);margin-top:6px}
+.tg.late{background:var(--red-soft);color:#8f1f14}
+.cust{margin-top:10px;font-size:14px}
+.cust b{font-weight:600}
+.cust a{color:var(--brown);font-weight:600;text-decoration:none}
+.cust .addr{color:#4a4643;font-size:13.5px}
+.items{list-style:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);display:grid;gap:5px;font-size:14px}
+.items li{display:flex;gap:8px}
+.items .q{font-weight:700;min-width:24px}
+.items .nm{flex:1;min-width:0}
+.items .nm small{display:block;color:var(--muted);font-size:12.5px;line-height:1.35}
+.items .pr{white-space:nowrap;color:#4a4643;font-variant-numeric:tabular-nums}
+.onote{margin-top:8px;background:#fff8e6;border-radius:10px;padding:7px 10px;font-size:13px;color:#6b4b00}
+.ofoot{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.otot{font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+.ready{font-size:12.5px;color:var(--muted)}
+.acts{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:0;border-radius:999px;padding:10px 16px;font-weight:600;font-size:14px;transition:background .15s,transform .1s}
+.btn:active{transform:scale(.97)}
+.btn svg{width:16px;height:16px}
+.btn-acc{background:var(--acc);color:var(--on-acc)} .btn-acc:hover{background:var(--acc-dk)}
+.btn-dark{background:var(--brown);color:#fff} .btn-dark:hover{background:#000}
+.btn-line{background:#fff;border:1.5px solid var(--line)} .btn-line:hover{border-color:#cfcac5}
+.btn-ghost{background:transparent;color:var(--muted);padding:10px 8px}
+.btn.grow{flex:1}
+.prep{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:10px;font-size:13px;color:var(--muted)}
+.prep button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:6px 10px;font-weight:600;font-size:13px;color:var(--ink)}
+.prep button.on{border-color:var(--brown);background:var(--acc-soft)}
+.done{margin-top:18px;background:#fff;border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.done summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.done summary::-webkit-details-marker{display:none}
+.done summary .chev{margin-left:auto;transition:transform .2s;color:var(--muted)}
+.done[open] summary .chev{transform:rotate(180deg)}
+.drow{display:grid;grid-template-columns:56px 1fr auto auto;gap:12px;align-items:center;padding:10px 16px;border-top:1px solid var(--line);font-size:14px;cursor:pointer}
+.drow:hover{background:var(--soft)}
+.drow .t{font-weight:600;font-variant-numeric:tabular-nums}
+.drow .s{color:var(--muted);font-size:13px}
+.drow .m{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.drow.cx{color:var(--faint);text-decoration:line-through}
+
+/* Umsatz */
+.seg{display:inline-flex;background:#fff;border-radius:999px;padding:4px;gap:2px;box-shadow:var(--shadow);margin-top:16px;overflow-x:auto;max-width:100%}
+.seg button{border:0;background:transparent;border-radius:999px;padding:8px 14px;font-weight:600;font-size:14px;color:var(--muted);white-space:nowrap}
+.seg button.on{background:var(--brown);color:#fff}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.row .sp{min-width:8px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.panel{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;min-width:0}
+.panel h3{font-size:16px;font-weight:700}
+.panel .sub{font-size:13px;color:var(--muted);margin-top:1px}
+.panel.big{margin-top:14px}
+.chart{margin-top:10px;position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .bar{fill:var(--chart)}
+.chart .bar:hover,.chart .bar.hl{fill:#9e1018}
+.chart .hit{fill:transparent}
+.chart .gl{stroke:var(--grid);stroke-width:1}
+.chart .ax{fill:var(--muted);font-size:11.5px;font-family:Outfit,sans-serif}
+.chart .vl{fill:var(--ink);font-size:12px;font-weight:600;font-family:Outfit,sans-serif}
+.hb{display:grid;gap:9px;margin-top:12px}
+.hb .r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;font-size:14px}
+.hb .r .tr{grid-column:1/-1;height:10px;background:#f2f0ec;border-radius:5px;overflow:hidden}
+.hb .r .fl{height:100%;background:var(--chart);border-radius:0 5px 5px 0}
+.hb .r .vv{font-weight:600;font-variant-numeric:tabular-nums;color:#3d3a37}
+.hb .r .vv small{color:var(--muted);font-weight:500}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:#fff;border-radius:10px;padding:7px 10px;font-size:13px;line-height:1.35;z-index:200;opacity:0;transition:opacity .1s;white-space:nowrap;transform:translate(-50%,-110%)}
+.tip b{font-weight:700}
+.tip.on{opacity:1}
+.tview{margin-top:10px;font-size:13px}
+.tview summary{cursor:pointer;color:var(--acc);font-weight:600}
+.tview table{border-collapse:collapse;margin-top:8px;width:100%}
+.tview td,.tview th{padding:5px 8px;border-bottom:1px solid var(--line);text-align:left;font-variant-numeric:tabular-nums}
+.tview th{color:var(--muted);font-weight:600}
+.tview td:last-child,.tview th:last-child{text-align:right}
+
+/* Speisekarte */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-top:14px;align-items:start}
+.mcat h3{display:flex;align-items:center;gap:8px}
+.mitem{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.mitem:first-of-type{border-top:0}
+.mitem .nm{flex:1;min-width:0}
+.mitem .nm small{color:var(--muted)}
+.mitem.out .nm{color:var(--faint);text-decoration:line-through}
+.sw{position:relative;width:46px;height:28px;flex:none}
+.sw input{position:absolute;opacity:0;inset:0;cursor:pointer;z-index:1}
+.sw span{position:absolute;inset:0;border-radius:999px;background:#d9d5d0;transition:background .2s}
+.sw span::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:transform .2s}
+.sw input:checked + span{background:var(--green)}
+.sw input:checked + span::after{transform:translateX(18px)}
+.fld{display:grid;gap:6px;margin-top:12px}
+.fld span{font-size:13px;font-weight:600;color:#3d3a37}
+.fld input{border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;font:400 15px Outfit,sans-serif;outline:none;width:100%}
+.fld input:focus{border-color:var(--brown)}
+.saved{font-size:12.5px;color:var(--green);margin-top:6px;min-height:18px}
+
+/* Fenster */
+.ov{position:fixed;inset:0;background:rgba(20,20,20,.5);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.ov.on{display:flex}
+.modal{background:#fff;border-radius:20px;max-width:420px;width:100%;max-height:92vh;max-height:92dvh;display:flex;flex-direction:column;overflow:hidden}
+.mh{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.mh h3{flex:1;font-size:17px}
+.mb{overflow:auto;padding:16px;background:#eceae6}
+.mf{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.mseg{display:flex;background:var(--soft);border-radius:12px;padding:3px;gap:3px;margin:12px 16px 0}
+.mseg button{flex:1;border:0;background:transparent;padding:8px;border-radius:9px;font-weight:600;font-size:13.5px;color:var(--muted)}
+.mseg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.bon{background:#fff;width:300px;max-width:100%;margin:0 auto;padding:18px 16px 26px;font:13px/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#111;box-shadow:0 2px 10px rgba(0,0,0,.12);white-space:pre-wrap;word-break:break-word;-webkit-mask-image:linear-gradient(#000 calc(100% - 10px),transparent)}
+.bon .c{text-align:center}
+.bon .big{font-size:20px;font-weight:700;letter-spacing:.06em}
+.bon .xl{font-size:17px;font-weight:700}
+.bon hr{border:0;border-top:1px dashed #555;margin:8px 0}
+.tg-chat{background:#cfe4d0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1.5' fill='%23b3d1b4'/%3E%3C/svg%3E");border-radius:14px;padding:14px;min-height:300px}
+.tg-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.tg-av{width:36px;height:36px;border-radius:50%;background:#fff url(../img/icon-192.png) center/cover}
+.tg-head b{font-size:14px}
+.tg-head small{display:block;color:#3d6b3f;font-size:12px}
+.bubble{background:#fff;border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:13.5px;line-height:1.45;white-space:pre-wrap;max-width:92%;box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.bubble .tm{display:block;text-align:right;font-size:11px;color:#8a8a8a;margin-top:4px}
+
+/* Meldung */
+/* Mitteilung im Apple-Stil: Handy wie iPhone (von oben), Computer wie Mac (von rechts) */
+.notes{position:fixed;z-index:150;top:calc(8px + env(safe-area-inset-top));left:8px;right:8px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.nt{--hide:translateY(-140%) scale(.94);pointer-events:auto;position:relative;width:100%;max-width:420px;display:flex;gap:11px;align-items:center;padding:11px 13px;border-radius:20px;
+  background:rgba(250,250,250,.76);-webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);box-shadow:0 10px 30px rgba(0,0,0,.16),0 0 0 .5px rgba(0,0,0,.08);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Outfit,sans-serif;color:#1d1d1f;cursor:pointer;touch-action:pan-x;user-select:none;-webkit-user-select:none;
+  transform:var(--hide);opacity:0;transition:transform .5s cubic-bezier(.2,1.25,.35,1),opacity .25s ease}
+.nt.on{transform:none;opacity:1}
+.nt.out{transform:var(--hide);opacity:0;transition:transform .38s cubic-bezier(.4,0,.8,.3),opacity .3s ease .08s}
+.nt img{width:38px;height:38px;border-radius:9px;flex:none;background:#fff}
+.nt .tx{flex:1;min-width:0;font-size:13px;line-height:1.3}
+.nt .r1{display:flex;gap:6px;align-items:baseline}
+.nt .r1 b{font-weight:600;font-size:13.5px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nt .r1 small{color:#8a8a8e;font-size:12px;flex:none}
+.nt .r2,.nt .r3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nt .r3{color:#3c3c43;opacity:.75}
+.nt .x{position:absolute;left:-7px;top:-7px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(250,250,250,.95);box-shadow:0 1px 4px rgba(0,0,0,.25);color:#555;font-size:14px;line-height:1;display:none;place-items:center;padding:0}
+@media (min-width:761px){
+  .notes{left:auto;right:16px;top:14px;width:356px;align-items:stretch}
+  .nt{--hide:translateX(calc(100% + 28px));border-radius:16px;padding:10px 12px}
+  .nt:hover .x{display:grid}
+}
+.ord.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%,30%{box-shadow:0 0 0 4px rgba(227,6,19,.4),var(--shadow)}}
+
+.foot{color:var(--muted);font-size:12.5px;padding:28px 0 40px;text-align:center}
+.foot a{color:var(--brown)}
+[hidden]{display:none!important}
+
+@media (max-width:980px){
+  .board,body.auto .board{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid2{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .tbar .ttl{display:none}
+  .pill .lbl{display:none}
+  .pill{padding:7px 10px}
+  .kpi .v{font-size:22px}
+  .drow{grid-template-columns:48px 1fr auto}
+  .drow .s2{display:none}
+}
+@media print{
+  body *{visibility:hidden}
+  .bon,.bon *{visibility:visible}
+  .bon{position:absolute;left:0;top:0;box-shadow:none;-webkit-mask-image:none}
+}
+</style>
+</head>
+<body>
+<div class="stripe"></div>
+<div class="top">
+  <div class="wrap tbar">
+    <img src="../img/logo-900.png" alt="Pizzeria O la la" width="900" height="563">
+    <span class="ttl">Dashboard</span>
+    <span class="demo" title="Alle Zahlen sind ausgedacht">DEMO</span>
+    <span class="sp"></span>
+    <button class="pill" id="pauseBtn" aria-pressed="false"><span class="dot"></span><span class="lbl" id="pauseLbl">Nimmt Bestellungen an</span></button>
+    <button class="ibtn" id="soundBtn" aria-label="Ton an oder aus" title="Ton bei neuer Bestellung"></button>
+  </div>
+  <div class="wrap tabs" role="tablist">
+    <button class="tab on" data-tab="orders">Bestellungen <span class="cnt" id="openCnt"></span></button>
+    <button class="tab" data-tab="sales">Umsatz</button>
+    <button class="tab" data-tab="menu">Einstellungen</button>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="note" id="note">
+    <span style="font-size:20px">👋</span>
+    <div><b>Das ist eine Demo mit Beispieldaten.</b> Alle Zahlen und Namen sind ausgedacht, nichts wird gespeichert oder verschickt. Etwa jede Minute kommt eine Beispiel-Bestellung herein (mit Ton, wenn du ihn einschaltest).<br>
+    <b>Selbst ausprobieren:</b> <a href="../?demo=1" target="_blank" rel="noopener">auf der Website bestellen</a> – im selben Browser erscheint die Bestellung hier sofort.</div>
+    <button class="x" aria-label="Hinweis schließen" data-act="hidenote">×</button>
+  </div>
+  <div class="paused">Online-Bestellungen sind pausiert. Auf der Website sehen Kunden „Gerade keine Online-Bestellungen möglich – bitte anrufen“.</div>
+
+  <!-- Bestellungen -->
+  <section id="v-orders">
+    <div class="autobar"><span class="ab-ic" id="abIc">⚡</span><div class="ab-t"><b id="abTitle"></b><span id="abText"></span></div><button class="chip" id="rushChip" data-act="rush"></button><button class="chip" data-act="settings">Ändern</button></div>
+    <div class="kpis" id="todayKpis"></div>
+    <div class="board">
+      <div class="col new"><div class="colh">Neu <span class="n" id="n-neu">0</span><span class="hint">annehmen</span></div><div id="c-neu"></div></div>
+      <div class="col"><div class="colh">In Zubereitung <span class="n" id="n-zub">0</span></div><div id="c-zub"></div></div>
+      <div class="col"><div class="colh">Unterwegs / abholbereit <span class="n" id="n-fertig">0</span></div><div id="c-fertig"></div></div>
+    </div>
+    <details class="done" id="doneBox">
+      <summary>Erledigt heute <span class="tg" id="doneCnt">0</span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+      <div id="doneList"></div>
+    </details>
+  </section>
+
+  <!-- Umsatz -->
+  <section id="v-sales" hidden>
+    <div class="row">
+      <div class="seg" id="period">
+        <button data-p="today" class="on">Heute</button>
+        <button data-p="week">7 Tage</button>
+        <button data-p="month">30 Tage</button>
+        <button data-p="year">12 Monate</button>
+      </div>
+      <span class="sp"></span>
+      <button class="btn btn-line" data-act="csv" style="margin-top:16px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>Excel-Export</button>
+    </div>
+    <div class="kpis" id="salesKpis"></div>
+    <div class="panel big">
+      <h3 id="revTitle">Umsatz</h3><p class="sub" id="revSub"></p>
+      <div class="chart" id="revChart"></div>
+      <details class="tview"><summary>Als Tabelle anzeigen</summary><div id="revTable"></div></details>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Beliebteste Gerichte</h3><p class="sub">Anzahl verkauft</p><div class="hb" id="topItems"></div></div>
+      <div class="panel"><h3>Stoßzeiten</h3><p class="sub">Bestellungen nach Uhrzeit</p><div class="chart" id="hourChart"></div></div>
+      <div class="panel"><h3>Lieferung und Abholung</h3><p class="sub">Bestellungen nach Liefergebiet</p><div class="hb" id="areas"></div></div>
+      <div class="panel"><h3>Zahlungsarten</h3><p class="sub">Umsatz nach Zahlungsart</p><div class="hb" id="pays"></div></div>
+    </div>
+  </section>
+
+  <!-- Speisekarte -->
+  <section id="v-menu" hidden>
+    <div class="grid2">
+      <div class="panel">
+        <h3>Bestellannahme</h3><p class="sub">Einmal einstellen – gilt dann für alle Bestellungen.</p>
+        <div class="mitem" style="border:0"><div class="nm"><b>Automatisch annehmen</b><br><small>Kein Klick nötig: Bestellung wird sofort angenommen, der Bon gedruckt, der Kunde sieht die Zeit</small></div><label class="sw"><input type="checkbox" id="autoSw"><span></span></label></div>
+        <div class="mitem"><div class="nm"><b>Zeit für Lieferung</b><br><small>bis der Kunde sein Essen hat</small></div><select class="sel" id="tlSel"><option value="30">30 Min.</option><option value="45">45 Min.</option><option value="60">60 Min.</option><option value="75">75 Min.</option></select></div>
+        <div class="mitem"><div class="nm"><b>Zeit für Abholung</b><br><small>bis das Essen bereitliegt</small></div><select class="sel" id="taSel"><option value="10">10 Min.</option><option value="15">15 Min.</option><option value="20">20 Min.</option><option value="30">30 Min.</option></select></div>
+        <div class="mitem"><div class="nm"><b>Viel los</b><br><small>+15 Min. auf alle neuen Bestellungen, mit einem Tipp</small></div><label class="sw"><input type="checkbox" id="rushSw"><span></span></label></div>
+        <div class="mitem"><div class="nm"><b>Online-Bestellungen annehmen</b><br><small>Aus = Kunden sehen „bitte anrufen“</small></div><label class="sw"><input type="checkbox" id="acceptSw" checked><span></span></label></div>
+        <div class="mitem"><div class="nm"><b>Lieferung anbieten</b><br><small>Aus = nur Abholung möglich</small></div><label class="sw"><input type="checkbox" checked><span></span></label></div>
+      </div>
+      <div class="panel">
+        <h3>So kommt die Bestellung an</h3><p class="sub">Jede Online-Bestellung meldet sich auf drei Wegen.</p>
+        <div class="mitem" style="border:0"><div class="nm"><b>Bon drucken</b><br><small>Bondrucker in der Küche (Epson) druckt sofort</small></div><label class="sw"><input type="checkbox" checked><span></span></label></div>
+        <div class="mitem"><div class="nm"><b>Nachricht aufs Handy</b><br><small>Telegram an Inhaber und Fahrer – auch wenn das Dashboard zu ist</small></div><label class="sw"><input type="checkbox" checked><span></span></label></div>
+        <div class="mitem"><div class="nm"><b>Mitteilung hier im Dashboard</b><br><small>auf dem Handy von oben, am Computer oben rechts – mit Ton, wenn die Glocke an ist</small></div><label class="sw"><input type="checkbox" checked><span></span></label></div>
+        <p class="sub" style="margin-top:10px">Tipp: Mitteilung jetzt ansehen? <a href="#" data-act="testnote" style="color:var(--acc);font-weight:600">Beispiel-Bestellung auslösen</a></p>
+      </div>
+    </div>
+    <p class="sub" style="margin-top:18px">Ausverkauft? Einfach ausschalten – das Gericht ist auf der Website sofort nicht mehr bestellbar.</p>
+    <div class="mgrid" id="menuList"></div>
+  </section>
+
+  <p class="foot">Demo des O-la-la-Dashboards · Beispieldaten · <a href="../?demo=1">Zur Website</a></p>
+</main>
+
+<div class="ov" id="ov" data-act="close">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+    <div class="mh"><h3 id="mtitle">Bestellung</h3><button class="ibtn" data-act="close" aria-label="Schließen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="mseg" id="mseg"><button class="on" data-m="bon">Bon (Drucker)</button><button data-m="tg">Nachricht (Handy)</button></div>
+    <div class="mb" id="mbody"></div>
+    <div class="mf"><button class="btn btn-dark grow" data-act="print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2M7 14h10v7H7z"/></svg>Bon drucken</button><button class="btn btn-line" data-act="close">Schließen</button></div>
+  </div>
+</div>
+<div class="notes" id="notes" aria-live="polite"></div>
+<div class="tip" id="tip"></div>
+
+<script src="../menu.js"></script>
+<script>
+/* =========================================================
+   PIZZERIA O LA LA – DASHBOARD (DEMO)
+   Alle Daten sind Beispieldaten und werden im Browser erzeugt.
+   In der echten Version kommen sie aus der Datenbank bei Cloudflare.
+   ========================================================= */
+const AREAS = [   // Namen genau wie in SHOP.areas auf der Website
+  { name: "Ratingen West, Mitte, Tiefenbroich", short: "West/Mitte/Tiefenbroich", zip: "40880", city: "Ratingen", min: 12.5 },
+  { name: "Ratingen Ost", short: "Ratingen Ost", zip: "40882", city: "Ratingen", min: 15 },
+  { name: "Düsseldorf Oberrath, Rath, Lichtenbroich, Flughafen, Unterrath", short: "Düsseldorf Nord", zip: "40472", city: "Düsseldorf", min: 18.5 },
+  { name: "Ratingen Lintorf und Hösel", short: "Lintorf/Hösel", zip: "40885", city: "Ratingen", min: 25 }
+];
+const AREA_W = [45, 25, 18, 12];
+const PAYS = ["Bar", "Karte online", "PayPal"], PAY_W = [55, 33, 12];
+const OPEN_H = 11, LAST_H = 22;   // täglich 11–23 Uhr, letzte Bestellung vor 23 Uhr
+const HOURS = { 11: .8, 12: 2.6, 13: 2.4, 14: 1.2, 15: .8, 16: 1, 17: 2, 18: 3.4, 19: 3.6, 20: 3, 21: 1.8, 22: .8 };
+const WEEKDAY = [1.35, .75, .8, .85, 1, 1.4, 1.5];   // So … Sa
+const FIRST = ["Ali","Anna","Mehmet","Lena","Tim","Sara","Murat","Julia","Yusuf","Laura","Can","Elif","Jonas","Fatma","Lukas","Ayşe","Max","Hannah","Emre","Mia","Leon","Zeynep","Paul","Selin","Ben","Amira","Finn","Merve","David","Lea"];
+const LAST = "ABDEFGHKLMNOPRSTWYZ";
+const STREETS = ["Lindenstraße","Gartenstraße","Schulstraße","Bahnhofstraße","Kirchweg","Am Markt","Birkenweg","Feldstraße","Ahornweg","Mühlenweg","Rosenstraße","Talstraße","Wiesenweg","Bergstraße","Parkstraße"];
+const NOTES = ["Bitte klingeln, 2. Etage","Pizza bitte geschnitten","Gut durchgebacken","Ohne Zwiebeln","Bitte Besteck mitgeben","Hintereingang","Bitte Wechselgeld für 50 € mitbringen"];
+
+/* Speisekarte aus menu.js */
+const ITEMS = {}, CAT = {};
+MENU.forEach(c => { CAT[c.id] = c; c.items.forEach(([nr, name, codes, desc, price, tags, o]) => {
+  o = o || {};
+  const sizes = Array.isArray(price) ? SIZES[o.sizes || c.sizes] : null;
+  ITEMS[nr] = { nr, name, price, sizes, cat: c.id, catName: c.name, drink: !!c.drinks, groups: (o.groups || c.groups || []).map(id => ({ id, ...GROUPS[id] })) };
+}); });
+/* Wie oft etwas bestellt wird (ausgedacht): Grundwert je Kategorie, Renner extra */
+const CAT_W = { pizza: 1.6, pasta: 1.2, alforno: 1, salate: .8, antipasti: .4, broetchen: .7 };
+const TOP_W = { 1: 9, 2: 10, 3: 4, 4: 5, 6: 6, 9: 4, 12: 5, 15: 3, 18: 5, 19: 5, 24: 4, 28: 3, 36: 5, 38: 3, 54: 3, 61: 2 };
+const W_FOOD = {}, W_DRINK = { 101: 5, 102: 2, 103: 3, 104: 2, 105: 2 };
+MENU.forEach(c => { if (!c.drinks) c.items.forEach(([nr]) => W_FOOD[nr] = TOP_W[nr] ?? CAT_W[c.id] ?? 1); });
+
+/* Hilfen */
+const eur = n => n.toFixed(2).replace('.', ',') + ' €';
+const eur0 = n => Math.round(n).toLocaleString('de-DE') + ' €';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const plain = s => String(s).replace(/\^[0-9A-Za-z,]+/g, '');   // ^1,2 (Allergene) weglassen
+const exPrice = (e, s) => Array.isArray(e[2]) ? (s >= 0 ? e[2][s] : null) : e[2];
+const pad = n => String(n).padStart(2, '0');
+const hm = t => { const d = new Date(t); return pad(d.getHours()) + ':' + pad(d.getMinutes()); };
+const dkey = d => d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+const DAY = 864e5, MONTHS = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'], WD = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+function rng(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function pickW(r, w){ const ks = Object.keys(w); let s = 0; ks.forEach(k => s += w[k]); let x = r() * s; for (const k of ks) { x -= w[k]; if (x <= 0) return k; } return ks.at(-1); }
+const pickA = (r, a) => a[Math.floor(r() * a.length)];
+const store = { get(k, d){ try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch(e){ return d; } }, set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} } };
+
+/* Eine Bestellzeile erzeugen */
+function makeLine(r, nr){
+  const it = ITEMS[nr]; let s = -1, unit, parts = [];
+  if (it.sizes) {   // Pizza: meist Groß, Getränke: meist 0,33 l
+    const w = it.sizes.length === 3 ? [28, 56, 16] : [60, 40], ok = {};
+    it.price.forEach((p, i) => { if (p != null) ok[i] = w[i]; });
+    s = +pickW(r, ok); unit = it.price[s]; parts.push(it.sizes[s]);
+  }
+  else unit = it.price;
+  it.groups.forEach(g => {
+    if (g.one) parts.push(`${g.label}: ${plain(pickA(r, g.one))}`);
+    if (g.many && r() < .16) { const e = r() < .45 ? g.many[0] : pickA(r, g.many), x = exPrice(e, s); if (x != null) { unit += x; parts.push('+ ' + plain(e[1])); } }
+  });
+  return { nr, name: it.name, info: parts.join(' · '), qty: r() < .82 ? 1 : 2, unit };
+}
+function makeOrder(r, t){
+  const lines = [], add = l => { const same = lines.find(x => x.nr === l.nr && x.info === l.info); if (same) same.qty += l.qty; else lines.push(l); };
+  const nFood = r() < .55 ? 1 : r() < .75 ? 2 : 3;
+  for (let i = 0; i < nFood; i++) add(makeLine(r, +pickW(r, W_FOOD)));
+  if (r() < .5) add(makeLine(r, +pickW(r, W_DRINK)));
+  if (r() < .2) add(makeLine(r, +pickW(r, W_DRINK)));
+  if (r() < .08) add(makeLine(r, 75));   // Pizzabrötchen dazu
+  const liefer = r() < .7, area = liefer ? +pickW(r, AREA_W) : -1;
+  const food = () => lines.filter(l => !ITEMS[l.nr].drink).reduce((s, l) => s + l.qty * l.unit, 0);   // Mindestbestellwert ohne Getränke
+  while (liefer && food() < AREAS[area].min) add(makeLine(r, +pickW(r, W_FOOD)));
+  const total = lines.reduce((s, l) => s + l.qty * l.unit, 0);
+  const d = new Date(t);
+  return {
+    no: `OL-${pad(d.getDate())}${pad(d.getMonth() + 1)}-${pad(d.getHours())}${pad(d.getMinutes())}`,
+    t, mode: liefer ? 'liefer' : 'abhol', area,
+    name: `${pickA(r, FIRST)} ${LAST[Math.floor(r() * LAST.length)]}.`,
+    phone: `01${pickA(r, ['51','52','57','60','62','70','71','76','77'])} ••• ${Math.floor(10 + r() * 90)}`,   // erfundene Nummern bewusst unvollständig
+    street: liefer ? `${pickA(r, STREETS)} ${1 + Math.floor(r() * 60)}` : '', zip: liefer ? AREAS[area].zip : '', city: liefer ? AREAS[area].city : '',
+    pay: PAYS[+pickW(r, {0: PAY_W[0], 1: PAY_W[1], 2: PAY_W[2]})],
+    note: r() < .14 ? pickA(r, NOTES) : '', wish: r() < .08 ? 'time' : 'asap',
+    lines, total: Math.round(total * 100) / 100, status: 'erledigt', web: false
+  };
+}
+
+/* Beispieldaten: die letzten 12 Monate bis jetzt */
+const NOW = Date.now(), today0 = new Date(); today0.setHours(0, 0, 0, 0);
+let ORDERS = [];
+for (let i = 365; i >= 0; i--) {
+  const day = new Date(today0.getTime() - i * DAY + 3 * 36e5); day.setHours(0, 0, 0, 0);
+  const r = rng(dkey(day) * 7 + 13), wd = day.getDay(), open = OPEN_H;
+  const growth = .55 + .45 * (1 - i / 365);
+  const n = Math.round(18 * WEEKDAY.at(wd) * growth * (.78 + r() * .44));
+  const hw = {}; for (let h = open; h <= LAST_H; h++) hw[h] = HOURS[h];
+  for (let k = 0; k < n; k++) {
+    const h = +pickW(r, hw), t = day.getTime() + h * 36e5 + Math.floor(r() * 3600) * 1000;
+    const o = makeOrder(r, t);
+    if (t <= NOW - 60e3) ORDERS.push(o);
+  }
+}
+ORDERS.sort((a, b) => a.t - b.t);
+/* Automatik: Bestellungen werden sofort mit Standardzeit angenommen und schalten von selbst weiter */
+let AUTO = store.get('olala-demo-auto', true), TL = store.get('olala-demo-tl', 45), TA = store.get('olala-demo-ta', 20), RUSH = store.get('olala-demo-rush', false);
+const prepFor = o => (o.mode === 'liefer' ? TL : TA) + (RUSH ? 15 : 0);
+function autoAccept(o){ if (!AUTO || o.status !== 'neu') return; o.status = 'zub'; o.prep = prepFor(o); o.acc = o.t; o.auto = true; }
+function autoTick(){
+  if (!AUTO) return; const now = Date.now();
+  todays().forEach(o => {
+    if (o.status === 'neu') autoAccept(o);
+    const ready = (o.acc || o.t) + (o.prep || 30) * 60e3;
+    if (o.status === 'zub' && now >= ready) o.status = 'fertig';
+    if (o.status === 'fertig' && now >= ready + (o.mode === 'liefer' ? 20 : 15) * 60e3) o.status = 'erledigt';
+  });
+}
+/* Status heutiger Bestellungen nach Alter */
+ORDERS.filter(o => o.t >= today0.getTime()).forEach(o => {
+  const age = (NOW - o.t) / 60e3;
+  if (age < 4) { o.status = 'neu'; autoAccept(o); }
+  else if (age < 26) { o.status = 'zub'; o.prep = 30; o.acc = o.t + 2 * 60e3; }
+  else if (age < 48) { o.status = 'fertig'; o.prep = 30; o.acc = o.t + 2 * 60e3; }
+});
+/* Damit die Demo zu jeder Uhrzeit etwas zeigt: ein paar offene Bestellungen der letzten Minuten */
+(() => {
+  const r = rng(dkey(today0) * 31 + 7), T = ORDERS.filter(o => o.t >= today0.getTime());
+  const want = [['zub', 9, 2], ['zub', 16, 2], ['fertig', 33, 1]];
+  want.forEach(([st, min], i) => {
+    if (T.filter(o => o.status === st).length >= (st === 'zub' ? 2 : 1)) return;
+    const t = Math.max(today0.getTime() + 60e3, NOW - min * 60e3), o = makeOrder(r, t);
+    o.status = st; o.prep = 30; o.acc = t + 2 * 60e3; ORDERS.push(o); T.push(o);
+  });
+  ORDERS.sort((a, b) => a.t - b.t);
+})();
+/* Gespeicherte Status-Änderungen und Testbestellungen von der Website */
+const ST = store.get('olala-demo-status', {});
+function webOrders(){
+  return (store.get('olala-demo-orders', []) || []).filter(b => b && b.no && b.t >= today0.getTime()).map(b => ({
+    no: b.no, t: b.t, mode: b.o.mode, area: AREAS.findIndex(a => a.name === b.o.areaName),
+    name: b.o.name, phone: b.o.phone, street: b.o.street, zip: b.o.zip, city: b.o.city, extra: b.o.extra,
+    pay: /bar/i.test(b.o.pay) ? 'Bar' : b.o.pay, note: b.o.note, wish: b.o.when, wishTime: b.o.time,
+    lines: b.lines.map(l => ({ nr: l.nr, name: l.name, info: l.info, qty: l.qty, unit: l.unit, note: l.note })),
+    total: b.total, fee: b.fee, status: 'neu', web: true }));
+}
+function mergeWeb(announce){
+  let added = null;
+  webOrders().forEach(w => { if (!ORDERS.some(o => o.no === w.no && o.web)) { autoAccept(w); ORDERS.push(w); added = w; } });
+  ORDERS.sort((a, b) => a.t - b.t);
+  if (added && announce) arrived(added);
+}
+mergeWeb(false);
+ORDERS.forEach(o => { const s = ST[o.no]; if (s) Object.assign(o, s); });
+function saveSt(o){ ST[o.no] = { status: o.status, prep: o.prep, acc: o.acc }; store.set('olala-demo-status', ST); }
+
+/* ---------- Ansicht: Bestellungen ---------- */
+const ICON = {
+  bike: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h-2v-11a1 1 0 0 1 1-1h9v12m-4 0h6m4 0h2v-6h-8m0-5h5l3 5"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>',
+  bag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
+  receipt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v18l2.5-1.5L10 21l2-1.5 2 1.5 2.5-1.5L19 21V3l-2.5 1.5L14 3l-2 1.5L10 3 7.5 4.5z"/><path d="M9 9h6M9 13h6"/></svg>',
+  bellOn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>',
+  bellOff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 3A6 6 0 0 1 18 8a21 21 0 0 0 .6 5M17 17H3s3-2 3-9a4.7 4.7 0 0 1 .3-1.7M10.3 21a1.9 1.9 0 0 0 3.4 0M2 2l20 20"/></svg>'
+};
+const todays = () => ORDERS.filter(o => o.t >= today0.getTime());
+const ago = t => { const m = Math.max(0, Math.round((Date.now() - t) / 60e3)); return m < 1 ? 'gerade eben' : m < 60 ? `vor ${m} Min.` : `vor ${Math.floor(m / 60)} Std. ${m % 60} Min.`; };
+const showNr = nr => nr < 100;
+const nrTxt = nr => String(nr).padStart(2, '0');
+function card(o){
+  const liefer = o.mode === 'liefer', a = AREAS[o.area], paid = o.pay !== 'Bar';
+  const readyAt = o.acc ? o.acc + o.prep * 60e3 : 0, late = o.status === 'zub' && readyAt && Date.now() > readyAt;
+  let acts = '';
+  if (o.status === 'neu') acts = `<div class="prep">Fertig in <button data-act="prep" data-no="${o.no}" data-m="20" class="${(o.pick || 30) === 20 ? 'on' : ''}">20 Min.</button><button data-act="prep" data-no="${o.no}" data-m="30" class="${(o.pick || 30) === 30 ? 'on' : ''}">30 Min.</button><button data-act="prep" data-no="${o.no}" data-m="45" class="${(o.pick || 30) === 45 ? 'on' : ''}">45 Min.</button></div>
+    <div class="acts"><button class="btn btn-acc grow" data-act="accept" data-no="${o.no}">Annehmen</button><button class="btn btn-line" data-act="bon" data-no="${o.no}" aria-label="Bon ansehen">${ICON.receipt}</button><button class="btn btn-ghost" data-act="reject" data-no="${o.no}">Ablehnen</button></div>`;
+  else if (o.status === 'zub') acts = `${AUTO ? '<p class="auto-hint">Schaltet von selbst weiter – Tippen nur, wenn es früher fertig ist.</p>' : ''}<div class="acts"><button class="btn ${AUTO ? 'btn-line' : 'btn-dark'} grow" data-act="ready" data-no="${o.no}">${liefer ? 'Fertig – Fahrer los' : 'Fertig – abholbereit'}</button><button class="btn btn-line" data-act="bon" data-no="${o.no}" aria-label="Bon ansehen">${ICON.receipt}</button></div>`;
+  else if (o.status === 'fertig') acts = `${AUTO ? '<p class="auto-hint">Wird automatisch als erledigt markiert.</p>' : ''}<div class="acts"><button class="btn btn-line grow" data-act="finish" data-no="${o.no}">${liefer ? 'Zugestellt' : 'Abgeholt'} – erledigt</button><button class="btn btn-line" data-act="bon" data-no="${o.no}" aria-label="Bon ansehen">${ICON.receipt}</button></div>`;
+  return `<article class="ord${o.status === 'neu' ? ' isnew' : ''}${o.fresh ? ' arrive' : ''}" data-no="${o.no}">
+    <div class="oh"><span class="otime">${hm(o.t)}</span><span class="oago" data-ago="${o.t}">${ago(o.t)}</span><span class="ono">${o.no}</span></div>
+    <div class="tags">
+      <span class="tg ${liefer ? 'liefer' : 'abhol'}">${liefer ? ICON.bike + 'Lieferung' : ICON.bag + 'Abholung'}</span>
+      <span class="tg ${paid ? 'paid' : 'cash'}">${paid ? 'Bezahlt · ' + esc(o.pay) : 'Bar kassieren'}</span>
+      ${o.wish === 'time' ? `<span class="tg">Wunschzeit ${esc(o.wishTime || hm(o.t + 75 * 60e3))}</span>` : ''}
+      ${o.web ? '<span class="tg web">Deine Testbestellung</span>' : ''}
+      ${o.auto && o.status === 'zub' ? '<span class="tg auto">Automatisch angenommen · Bon gedruckt</span>' : ''}
+      ${late ? '<span class="tg late">Verspätet</span>' : ''}
+    </div>
+    <div class="cust"><b>${esc(o.name)}</b> · <a href="tel:${esc(o.phone.replace(/\s/g, ''))}">${esc(o.phone)}</a>
+      ${liefer ? `<div class="addr">${esc(o.street)}, ${esc(o.zip)} ${esc(o.city)}${a ? ' · ' + esc(a.short) : ''}${o.extra ? ' · ' + esc(o.extra) : ''}</div>` : ''}</div>
+    <ul class="items">${o.lines.map(l => `<li><span class="q">${l.qty}×</span><span class="nm">${esc(l.name)}${showNr(l.nr) ? ` <span style="color:var(--muted)">(${nrTxt(l.nr)})</span>` : ''}${l.info ? `<small>${esc(l.info)}</small>` : ''}${l.note ? `<small>„${esc(l.note)}“</small>` : ''}</span><span class="pr">${eur(l.qty * l.unit)}</span></li>`).join('')}</ul>
+    ${o.note ? `<div class="onote">${esc(o.note)}</div>` : ''}
+    <div class="ofoot"><span class="otot">${eur(o.total)}</span><span class="sp" style="flex:1"></span>${o.status === 'zub' ? `<span class="ready">fertig um ${hm(readyAt)}</span>` : o.status === 'fertig' ? `<span class="ready">${liefer ? 'Fahrer unterwegs' : 'liegt bereit'}</span>` : ''}</div>
+    ${acts}
+  </article>`;
+}
+function renderOrders(){
+  autoTick(); renderAutobar();
+  const T = todays().filter(o => o.status !== 'abgelehnt');
+  const by = s => T.filter(o => o.status === s).sort((a, b) => s === 'neu' ? a.t - b.t : a.t - b.t);
+  [['neu', 'Keine neuen Bestellungen'], ['zub', 'Gerade nichts in der Küche'], ['fertig', 'Nichts unterwegs']].forEach(([s, e]) => {
+    const list = by(s);
+    document.getElementById('c-' + s).innerHTML = list.length ? list.map(card).join('') : `<p class="empty">${e}</p>`;
+    document.getElementById('n-' + s).textContent = list.length;
+  });
+  T.forEach(o => delete o.fresh);
+  const done = todays().filter(o => o.status === 'erledigt' || o.status === 'abgelehnt').sort((a, b) => b.t - a.t);
+  document.getElementById('doneCnt').textContent = done.length;
+  document.getElementById('doneList').innerHTML = done.map(o => `<div class="drow${o.status === 'abgelehnt' ? ' cx' : ''}" data-act="bon" data-no="${o.no}"><span class="t">${hm(o.t)}</span><span><b>${esc(o.name)}</b> <span class="s">· ${o.lines.reduce((s, l) => s + l.qty, 0)} Artikel</span></span><span class="s s2">${o.mode === 'liefer' ? 'Lieferung' : 'Abholung'} · ${esc(o.pay)}</span><span class="m">${eur(o.total)}</span></div>`).join('') || '<p class="empty">Noch nichts erledigt</p>';
+  const open = T.filter(o => o.status === 'neu').length;
+  document.getElementById('openCnt').textContent = open || '';
+  document.title = (open ? `(${open}) Neue Bestellung – ` : '') + "O la la Dashboard – Demo";
+  renderTodayKpis();
+}
+function renderTodayKpis(){
+  const T = todays().filter(o => o.status !== 'abgelehnt'), rev = T.reduce((s, o) => s + o.total, 0);
+  const lastWeek = ORDERS.filter(o => o.t >= today0.getTime() - 7 * DAY && o.t <= Date.now() - 7 * DAY && o.status !== 'abgelehnt');
+  const lwRev = lastWeek.reduce((s, o) => s + o.total, 0);
+  const openN = T.filter(o => o.status !== 'erledigt').length;
+  document.getElementById('todayKpis').innerHTML = [
+    ['Umsatz heute', eur(rev), deltaHTML(rev, lwRev, WDL.at(new Date().getDay()) + ' letzter Woche')],
+    ['Bestellungen heute', T.length, `<span class="d">${T.filter(o => o.mode === 'liefer').length} Lieferung · ${T.filter(o => o.mode === 'abhol').length} Abholung</span>`],
+    ['Offen', openN, `<span class="d">neu, in Zubereitung oder unterwegs</span>`],
+    ['Ø Bestellwert', eur(T.length ? rev / T.length : 0), `<span class="d">pro Bestellung heute</span>`]
+  ].map(([l, v, d]) => `<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div>${d}</div>`).join('');
+}
+setInterval(() => { document.querySelectorAll('[data-ago]').forEach(e => e.textContent = ago(+e.dataset.ago)); }, 30e3);
+setInterval(() => { if (view === 'orders' && !document.getElementById('ov').classList.contains('on')) renderOrders(); }, 20e3);
+function renderAutobar(){
+  document.body.classList.toggle('auto', AUTO);
+  const r = RUSH ? 15 : 0;
+  document.getElementById('abIc').textContent = AUTO ? '⚡' : '✋';
+  document.getElementById('abTitle').textContent = AUTO ? 'Automatik an – kein Klick nötig' : 'Automatik aus – jede Bestellung selbst annehmen';
+  document.getElementById('abText').textContent = AUTO ? `Neue Bestellungen werden sofort angenommen und der Bon gedruckt. Kunden sehen: Lieferung ca. ${TL + r} Min., Abholung ca. ${TA + r} Min.` : 'Neue Bestellungen warten unter „Neu“, bis jemand sie annimmt und eine Zeit wählt.';
+  const c = document.getElementById('rushChip'); c.textContent = RUSH ? 'Viel los: +15 Min. ist an' : 'Viel los? +15 Min.'; c.classList.toggle('on', RUSH);
+  document.getElementById('autoSw').checked = AUTO; document.getElementById('rushSw').checked = RUSH;
+  document.getElementById('tlSel').value = String(TL); document.getElementById('taSel').value = String(TA);
+}
+function setAuto(v){ AUTO = v; store.set('olala-demo-auto', v); renderOrders(); }
+function setRush(v){ RUSH = v; store.set('olala-demo-rush', v); renderAutobar(); }
+document.getElementById('autoSw').addEventListener('change', e => setAuto(e.target.checked));
+document.getElementById('rushSw').addEventListener('change', e => setRush(e.target.checked));
+document.getElementById('tlSel').addEventListener('change', e => { TL = +e.target.value; store.set('olala-demo-tl', TL); renderAutobar(); });
+document.getElementById('taSel').addEventListener('change', e => { TA = +e.target.value; store.set('olala-demo-ta', TA); renderAutobar(); });
+
+/* ---------- Ton und Meldung ---------- */
+let sound = store.get('olala-demo-sound', false), actx = null;
+function setSoundBtn(){ const b = document.getElementById('soundBtn'); b.innerHTML = sound ? ICON.bellOn : ICON.bellOff; b.classList.toggle('on', sound); b.title = sound ? 'Ton ist an' : 'Ton ist aus – antippen zum Einschalten'; }
+setSoundBtn();
+function ding(){
+  if (!sound) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    [[880, 0], [1320, .16], [880, .45], [1320, .61]].forEach(([f, d]) => {
+      const o = actx.createOscillator(), g = actx.createGain(); o.type = 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(.0001, actx.currentTime + d); g.gain.exponentialRampToValueAtTime(.35, actx.currentTime + d + .02); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + d + .32);
+      o.connect(g).connect(actx.destination); o.start(actx.currentTime + d); o.stop(actx.currentTime + d + .35);
+    });
+  } catch(e){}
+}
+function notify(o){
+  const box = document.getElementById('notes'), n = document.createElement('div');
+  n.className = 'nt'; n.setAttribute('role', 'status');
+  n.innerHTML = `<button class="x" aria-label="Schließen">×</button><img src="../img/icon-192.png" alt="">
+    <div class="tx"><div class="r1"><b>${o.web ? 'Deine Testbestellung' : 'Neue Bestellung'}</b><small>jetzt</small></div>
+    <div class="r2">${esc(o.name)} · ${o.mode === 'liefer' ? 'Lieferung' : 'Abholung'} · ${eur(o.total)}</div>
+    <div class="r3">${o.auto ? `Angenommen · fertig um ${hm(o.acc + o.prep * 60e3)}` : 'Bitte annehmen'}</div></div>`;
+  box.prepend(n);
+  [...box.children].slice(3).forEach(x => x.remove());
+  requestAnimationFrame(() => requestAnimationFrame(() => n.classList.add('on')));
+  let timer, y0 = null;
+  const close = () => { clearTimeout(timer); n.classList.add('out'); n.classList.remove('on'); setTimeout(() => n.remove(), 450); };
+  const arm = () => { clearTimeout(timer); timer = setTimeout(close, 5000); };
+  arm();
+  n.addEventListener('mouseenter', () => clearTimeout(timer));
+  n.addEventListener('mouseleave', arm);
+  n.addEventListener('pointerdown', e => { y0 = e.clientY; });
+  n.addEventListener('pointerup', e => {
+    const dy = y0 == null ? 0 : e.clientY - y0; y0 = null;
+    if (e.target.closest('.x') || dy < -12) return close();
+    close(); show('orders');
+    setTimeout(() => { const c = document.querySelector(`.ord[data-no="${o.no}"]`); if (c) { c.scrollIntoView({ behavior: 'smooth', block: 'center' }); c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash'); } }, 60);
+  });
+}
+function arrived(o){
+  o.fresh = true; ding(); notify(o);
+  renderOrders(); if (view === 'sales') renderSales();
+}
+/* Etwa jede Minute eine Beispiel-Bestellung (max. 8 pro Besuch) */
+let simCount = 0, paused = false;
+function simulate(){
+  if (paused || simCount >= 8) return;
+  const o = makeOrder(rng(Date.now() % 1e9), Date.now()); o.status = 'neu'; autoAccept(o);
+  while (ORDERS.some(x => x.no === o.no)) o.no += 'b';
+  ORDERS.push(o); simCount++; arrived(o);
+}
+setTimeout(simulate, 12e3); setInterval(simulate, 60e3);
+addEventListener('storage', e => { if (e.key === 'olala-demo-orders') mergeWeb(true); });
+
+/* ---------- Ansicht: Umsatz ---------- */
+let period = 'today';
+const tip = document.getElementById('tip');
+function niceStep(v){ if (v <= 0) return 1; const p = Math.pow(10, Math.floor(Math.log10(v))), n = v / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10) * p; }
+const WDL = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+function deltaHTML(x, y, cmp){ if (!y) return ''; const pc = (x - y) / y * 100; if (Math.abs(pc) < .5) return `<span class="d">± 0 % gegenüber ${cmp}</span>`; return `<span class="d ${pc > 0 ? 'up' : 'down'}">${pc > 0 ? '▲' : '▼'} ${Math.abs(pc).toFixed(0)} % gegenüber ${cmp}</span>`; }
+function barChart(el, data, { money = true, height = 220, label = 'Umsatz' } = {}){
+  const W = Math.max(300, Math.round(el.clientWidth || 640)), H = height, L = 48, R = 8, T = 18, B = 26, step = niceStep(Math.max(...data.map(d => d.v), 1) * 1.08 / 4), max = step * 4;
+  const n = data.length, slot = (W - L - R) / n, bw = Math.max(3, Math.min(34, slot * .66)), y = v => T + (H - T - B) * (1 - v / max);
+  const ticks = [0, step, step * 2, step * 3, max];
+  const fmt = v => money ? (v >= 1000 ? (v / 1000).toLocaleString('de-DE', { maximumFractionDigits: 1 }) + ' T€' : Math.round(v) + ' €') : Math.round(v).toLocaleString('de-DE');
+  const every = n > 16 ? Math.ceil(n / 8) : 1, iMax = data.reduce((m, d, i) => d.v > data[m].v ? i : m, 0);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(label)}">`;
+  ticks.forEach(v => { s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`; });
+  data.forEach((d, i) => {
+    const cx = L + slot * i + slot / 2, x = cx - bw / 2, yy = y(d.v), h = H - B - yy, r = Math.min(4, bw / 2, h);
+    if (d.v > 0) s += `<path class="bar${i === iMax ? ' hl' : ''}" d="M${x} ${H - B}V${yy + r}Q${x} ${yy} ${x + r} ${yy}H${x + bw - r}Q${x + bw} ${yy} ${x + bw} ${yy + r}V${H - B}Z"/>`;
+    s += `<rect class="hit" x="${L + slot * i}" y="${T}" width="${slot}" height="${H - T - B}" data-tip="${esc(d.tip)}"/>`;
+    if (i % every === 0 || (i === n - 1 && (n - 1) % every >= every / 2)) s += `<text class="ax" x="${cx}" y="${H - 8}" text-anchor="middle">${esc(d.l)}</text>`;
+  });
+  const d = data.at(iMax), cx = L + slot * iMax + slot / 2;
+  if (d.v > 0) s += `<text class="vl" x="${cx}" y="${y(d.v) - 6}" text-anchor="middle">${money ? eur0(d.v) : d.v}</text>`;
+  el.innerHTML = s + '</svg>';
+}
+document.addEventListener('pointerover', e => { const r = e.target.closest('[data-tip]'); if (!r) return; tip.innerHTML = r.dataset.tip; tip.classList.add('on'); });
+document.addEventListener('pointermove', e => { if (tip.classList.contains('on')) { tip.style.left = Math.min(innerWidth - 90, Math.max(90, e.clientX)) + 'px'; tip.style.top = e.clientY - 8 + 'px'; } });
+document.addEventListener('pointerout', e => { if (e.target.closest('[data-tip]')) tip.classList.remove('on'); });
+function hbars(el, rows, fmtV){
+  const max = Math.max(...rows.map(r => r.v), 1);
+  el.innerHTML = rows.map(r => `<div class="r"><span>${esc(r.l)}</span><span class="vv">${fmtV(r)}</span><div class="tr"><div class="fl" style="width:${(r.v / max * 100).toFixed(1)}%"></div></div></div>`).join('') || '<p class="empty">Noch keine Daten</p>';
+}
+function range(p){
+  const now = Date.now(), t0 = today0.getTime();
+  if (p === 'today') return [t0, now, t0 - 7 * DAY, now - 7 * DAY, WDL.at(new Date().getDay()) + ' letzter Woche'];
+  if (p === 'week') return [t0 - 6 * DAY, now, t0 - 13 * DAY, t0 - 6 * DAY, 'den 7 Tagen davor'];
+  if (p === 'month') return [t0 - 29 * DAY, now, t0 - 59 * DAY, t0 - 29 * DAY, 'den 30 Tagen davor'];
+  const s = new Date(today0); s.setDate(1); s.setMonth(s.getMonth() - 11);
+  return [s.getTime(), now, 0, 0, ''];
+}
+let periodOrders = [];
+function renderSales(){
+  const [a, b, pa, pb, cmp] = range(period), ok = o => o.status !== 'abgelehnt';
+  const cur = ORDERS.filter(o => o.t >= a && o.t <= b && ok(o)), prev = pb ? ORDERS.filter(o => o.t >= pa && o.t < pb && ok(o)) : [];
+  periodOrders = cur;
+  const rev = cur.reduce((s, o) => s + o.total, 0), prevRev = prev.reduce((s, o) => s + o.total, 0);
+  const delta = (x, y) => y ? deltaHTML(x, y, cmp) : `<span class="d">seit ${MONTHS.at(new Date(a).getMonth())} ${new Date(a).getFullYear()}</span>`;
+  const lief = cur.filter(o => o.mode === 'liefer').length;
+  document.getElementById('salesKpis').innerHTML = [
+    ['Umsatz', rev >= 10000 ? eur0(rev) : eur(rev), delta(rev, prevRev)],
+    ['Bestellungen', cur.length.toLocaleString('de-DE'), delta(cur.length, prev.length)],
+    ['Ø Bestellwert', eur(cur.length ? rev / cur.length : 0), prev.length ? delta(rev / cur.length, prevRev / prev.length) : '<span class="d">pro Bestellung</span>'],
+    ['Anteil Lieferung', (cur.length ? Math.round(lief / cur.length * 100) : 0) + ' %', `<span class="d">${lief.toLocaleString('de-DE')} geliefert · ${(cur.length - lief).toLocaleString('de-DE')} abgeholt</span>`]
+  ].map(([l, v, d]) => `<div class="kpi"><div class="l">${l}</div><div class="v">${v}</div>${d}</div>`).join('');
+
+  let data = [], title = '', sub = '';
+  if (period === 'today') {
+    for (let h = OPEN_H; h <= LAST_H; h++) { const v = cur.filter(o => new Date(o.t).getHours() === h).reduce((s, o) => s + o.total, 0); data.push({ l: String(h), v, tip: `<b>${h}–${h + 1} Uhr</b><br>${eur(v)}` }); }
+    title = 'Umsatz heute nach Uhrzeit'; sub = 'Online-Bestellungen pro Stunde, Stand ' + hm(Date.now()) + ' Uhr';
+  } else if (period === 'year') {
+    const s = new Date(a);
+    for (let i = 0; i < 12; i++) { const m0 = new Date(s.getFullYear(), s.getMonth() + i, 1).getTime(), m1 = new Date(s.getFullYear(), s.getMonth() + i + 1, 1).getTime(), d = new Date(m0);
+      const os = cur.filter(o => o.t >= m0 && o.t < m1), v = os.reduce((x, o) => x + o.total, 0);
+      data.push({ l: MONTHS.at(d.getMonth()), v, tip: `<b>${MONTHS.at(d.getMonth())} ${d.getFullYear()}${i === 11 ? ' (bis heute)' : ''}</b><br>${eur(v)} · ${os.length} Bestellungen` }); }
+    title = 'Umsatz pro Monat'; sub = 'Die letzten 12 Monate, aktueller Monat bis heute';
+  } else {
+    const days = period === 'week' ? 7 : 30;
+    for (let i = days - 1; i >= 0; i--) { const d0 = today0.getTime() - i * DAY, d = new Date(d0), os = cur.filter(o => o.t >= d0 && o.t < d0 + DAY), v = os.reduce((x, o) => x + o.total, 0);
+      data.push({ l: days === 7 ? WD.at(d.getDay()) : String(d.getDate()), v, tip: `<b>${WD.at(d.getDay())}, ${d.getDate()}. ${MONTHS.at(d.getMonth())}${i === 0 ? ' (bis jetzt)' : ''}</b><br>${eur(v)} · ${os.length} Bestellungen` }); }
+    title = 'Umsatz pro Tag'; sub = days === 7 ? 'Die letzten 7 Tage' : 'Die letzten 30 Tage';
+  }
+  document.getElementById('revTitle').textContent = title; document.getElementById('revSub').textContent = sub;
+  barChart(document.getElementById('revChart'), data, { label: title });
+  document.getElementById('revTable').innerHTML = `<table><tr><th>Zeitraum</th><th>Umsatz</th></tr>${data.map(d => `<tr><td>${esc(d.tip.replace(/<[^>]+>/g, ' ').split('  ')[0])}</td><td>${eur(d.v)}</td></tr>`).join('')}</table>`;
+
+  const hours = []; for (let h = OPEN_H; h <= LAST_H; h++) { const n = cur.filter(o => new Date(o.t).getHours() === h).length; hours.push({ l: String(h), v: n, tip: `<b>${h}–${h + 1} Uhr</b><br>${n} Bestellungen` }); }
+  barChart(document.getElementById('hourChart'), hours, { money: false, height: 180, label: 'Bestellungen nach Uhrzeit' });
+
+  const cnt = {}; cur.forEach(o => o.lines.forEach(l => { const it = ITEMS[l.nr]; if (!it || it.drink) return; cnt[l.nr] = (cnt[l.nr] || 0) + l.qty; }));
+  hbars(document.getElementById('topItems'), Object.entries(cnt).sort((x, y) => y[1] - x[1]).slice(0, 6).map(([nr, v]) => ({ l: `${nrTxt(nr)} ${ITEMS[nr].name}${ITEMS[nr].cat === 'salate' ? ' (Salat)' : ''}`, v })), r => `${r.v.toLocaleString('de-DE')}×`);
+  const ar = AREAS.map((x, i) => ({ l: x.short, v: cur.filter(o => o.mode === 'liefer' && o.area === i).length })).concat([{ l: 'Abholung im Laden', v: cur.filter(o => o.mode === 'abhol').length }]).sort((x, y) => y.v - x.v);
+  hbars(document.getElementById('areas'), ar, r => `${r.v.toLocaleString('de-DE')} <small>(${cur.length ? Math.round(r.v / cur.length * 100) : 0} %)</small>`);
+  const pays = PAYS.map(p => { const os = cur.filter(o => o.pay === p); return { l: p, v: os.reduce((s, o) => s + o.total, 0), n: os.length }; }).sort((x, y) => y.v - x.v);
+  hbars(document.getElementById('pays'), pays, r => `${r.v >= 10000 ? eur0(r.v) : eur(r.v)} <small>(${r.n.toLocaleString('de-DE')}×)</small>`);
+}
+function csv(){
+  const rows = [['Bestellnummer', 'Datum', 'Uhrzeit', 'Art', 'Liefergebiet', 'Zahlung', 'Summe', 'Artikel']];
+  periodOrders.forEach(o => { const d = new Date(o.t); rows.push([o.no, `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`, hm(o.t), o.mode === 'liefer' ? 'Lieferung' : 'Abholung', o.mode === 'liefer' && AREAS[o.area] ? AREAS[o.area].name : '', o.pay, o.total.toFixed(2).replace('.', ','), o.lines.map(l => `${l.qty}x ${l.name}`).join(', ')]); });
+  const text = '﻿' + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(';')).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
+  a.download = `olala-bestellungen-demo-${{ today: 'heute', week: '7-tage', month: '30-tage', year: '12-monate' }[period]}.csv`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+/* ---------- Ansicht: Speisekarte ---------- */
+const OUT = new Set(store.get('olala-demo-out', []));
+function renderMenu(){
+  document.getElementById('menuList').innerHTML = MENU.map(c => `<div class="panel mcat"><h3><span>${c.icon}</span>${esc(c.name)}</h3>${c.items.map(([nr, name, , , price]) => {
+    const p = Array.isArray(price) ? price.filter(x => x != null).map(x => eur(x)).join(' / ') : eur(price);
+    return `<div class="mitem${OUT.has(nr) ? ' out' : ''}"><div class="nm">${nr < 100 ? `<small>${nrTxt(nr)}</small> ` : ''}${esc(name)}<br><small>${p}${OUT.has(nr) ? ' · ausverkauft' : ''}</small></div><label class="sw" title="${OUT.has(nr) ? 'Ausverkauft' : 'Verfügbar'}"><input type="checkbox" data-out="${nr}" ${OUT.has(nr) ? '' : 'checked'} aria-label="${esc(name)} verfügbar"><span></span></label></div>`; }).join('')}</div>`).join('');
+}
+document.getElementById('menuList').addEventListener('change', e => { const nr = +e.target.dataset.out; if (!nr) return; e.target.checked ? OUT.delete(nr) : OUT.add(nr); store.set('olala-demo-out', [...OUT]); renderMenu(); });
+
+/* ---------- Bon und Telegram-Nachricht ---------- */
+let modalNo = null, modalMode = 'bon';
+const col = (l, r, w = 32) => { l = String(l); r = String(r); const sp = Math.max(1, w - l.length - r.length); return l.length + r.length + 1 > w ? l + '\n' + ' '.repeat(Math.max(1, w - r.length)) + r : l + ' '.repeat(sp) + r; };
+function bonHTML(o){
+  const d = new Date(o.t), liefer = o.mode === 'liefer', a = AREAS[o.area];
+  let s = `<div class="c"><span class="big">PIZZERIA O LA LA</span>\nVolkardeyer Str. 23\n40878 Ratingen\nTel. 02102 44 44 74</div><hr><div class="c"><span class="xl">${liefer ? 'LIEFERUNG' : 'ABHOLUNG'}</span>\n${o.no}\n${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${hm(o.t)} Uhr\n${o.wish === 'time' ? 'WUNSCHZEIT: ' + esc(o.wishTime || hm(o.t + 75 * 60e3)) : 'So schnell wie möglich'}</div><hr>`;
+  o.lines.forEach(l => { s += esc(col(`${l.qty}x ${l.name}${showNr(l.nr) ? ' (' + nrTxt(l.nr) + ')' : ''}`, eur(l.qty * l.unit))) + '\n'; if (l.info) s += esc('   ' + l.info.split(' · ').join('\n   ')) + '\n'; if (l.note) s += esc(`   „${l.note}“`) + '\n'; });
+  s += `<hr>${o.fee ? esc(col('Liefergebühr', eur(o.fee))) + '\n' : ''}<b>${esc(col('GESAMT', eur(o.total)))}</b>\n<b>${o.pay === 'Bar' ? 'BAR – BEIM KUNDEN KASSIEREN' : 'BEZAHLT · ' + esc(o.pay.toUpperCase())}</b><hr>`;
+  s += `${esc(o.name)}\nTel. ${esc(o.phone)}\n${liefer ? esc(o.street) + '\n' + esc(o.zip + ' ' + o.city) + (a ? '\nGebiet: ' + esc(a.short) : '') + (o.extra ? '\n' + esc(o.extra) : '') : ''}${o.note ? '\n\nHINWEIS: ' + esc(o.note) : ''}`;
+  return `<div class="bon">${s}</div>`;
+}
+function tgHTML(o){
+  const liefer = o.mode === 'liefer';
+  const lines = o.lines.map(l => `${l.qty}× ${l.name}${l.info ? ' – ' + l.info : ''}`).join('\n');
+  const msg = `🔔 <b>Neue Bestellung ${o.no}</b>\n${liefer ? '🛵 Lieferung' : '🛍️ Abholung'} · ${o.wish === 'time' ? 'Wunschzeit ' + (o.wishTime || hm(o.t + 75 * 60e3)) : 'so schnell wie möglich'}\n\n${esc(lines)}\n\n<b>Gesamt: ${eur(o.total)}</b> · ${o.pay === 'Bar' ? 'bar kassieren' : 'bezahlt (' + esc(o.pay) + ')'}\n\n👤 ${esc(o.name)} · ${esc(o.phone)}${liefer ? '\n📍 ' + esc(o.street) + ', ' + esc(o.zip + ' ' + o.city) : ''}${o.note ? '\n📝 ' + esc(o.note) : ''}\n\n👉 Im Dashboard annehmen`;
+  return `<div class="tg-chat"><div class="tg-head"><span class="tg-av"></span><div><b>O la la Bestellungen</b><small>Bot</small></div></div><div class="bubble">${msg}<span class="tm">${hm(o.t)}</span></div></div>`;
+}
+function openModal(no){
+  modalNo = no; const o = ORDERS.find(x => x.no === no); if (!o) return;
+  document.getElementById('mtitle').textContent = `${o.name} · ${eur(o.total)}`;
+  document.querySelectorAll('#mseg button').forEach(b => b.classList.toggle('on', b.dataset.m === modalMode));
+  document.getElementById('mbody').innerHTML = modalMode === 'bon' ? bonHTML(o) : tgHTML(o);
+  document.querySelector('[data-act=print]').hidden = modalMode !== 'bon';
+  document.getElementById('ov').classList.add('on');
+}
+
+/* ---------- Klicks ---------- */
+let view = 'orders';
+function show(v){
+  view = v; document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.tab === v));
+  ['orders', 'sales', 'menu'].forEach(x => document.getElementById('v-' + x).hidden = x !== v);
+  if (v === 'sales') renderSales(); if (v === 'menu') renderMenu(); if (v === 'orders') renderOrders();
+  scrollTo({ top: 0 });
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('.tab'); if (t) return show(t.dataset.tab);
+  const p = e.target.closest('#period button'); if (p) { period = p.dataset.p; document.querySelectorAll('#period button').forEach(b => b.classList.toggle('on', b === p)); return renderSales(); }
+  const m = e.target.closest('#mseg button'); if (m) { modalMode = m.dataset.m; return openModal(modalNo); }
+  const a = e.target.closest('[data-act]'); if (!a) return;
+  if (a.dataset.act === 'close' && e.target.closest('.modal') && !e.target.closest('[data-act=close]')?.matches('button')) return;
+  const o = ORDERS.find(x => x.no === a.dataset.no);
+  switch (a.dataset.act) {
+    case 'prep': o.pick = +a.dataset.m; renderOrders(); break;
+    case 'accept': o.status = 'zub'; o.prep = o.pick || 30; o.acc = Date.now(); saveSt(o); renderOrders(); break;
+    case 'reject': o.status = 'abgelehnt'; saveSt(o); renderOrders(); break;
+    case 'ready': o.status = 'fertig'; saveSt(o); renderOrders(); break;
+    case 'finish': o.status = 'erledigt'; saveSt(o); renderOrders(); break;
+    case 'bon': openModal(a.dataset.no); break;
+    case 'close': document.getElementById('ov').classList.remove('on'); break;
+    case 'print': window.print(); break;
+    case 'csv': csv(); break;
+    case 'hidenote': document.getElementById('note').hidden = true; store.set('olala-demo-note', 1); break;
+    case 'rush': setRush(!RUSH); break;
+    case 'settings': show('menu'); break;
+    case 'testnote': e.preventDefault(); simCount = Math.min(simCount, 7); simulate(); break;
+  }
+});
+let rsz; addEventListener('resize', () => { clearTimeout(rsz); rsz = setTimeout(() => { if (view === 'sales') renderSales(); }, 150); });
+addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('ov').classList.remove('on'); });
+document.getElementById('soundBtn').addEventListener('click', () => { sound = !sound; store.set('olala-demo-sound', sound); setSoundBtn(); if (sound) ding(); });
+function setPause(v){
+  paused = v; document.body.classList.toggle('pause', v);
+  document.getElementById('pauseBtn').classList.toggle('off', v); document.getElementById('pauseBtn').setAttribute('aria-pressed', v);
+  document.getElementById('pauseLbl').textContent = v ? 'Pausiert' : 'Nimmt Bestellungen an';
+  document.getElementById('acceptSw').checked = !v;
+}
+document.getElementById('pauseBtn').addEventListener('click', () => setPause(!paused));
+document.getElementById('acceptSw').addEventListener('change', e => setPause(!e.target.checked));
+if (store.get('olala-demo-note', 0)) document.getElementById('note').hidden = true;
+if (location.hash === '#neu') { const w = ORDERS.filter(o => o.web).at(-1); if (w) w.fresh = true; }
+renderOrders();
+</script>
+</body>
+</html>

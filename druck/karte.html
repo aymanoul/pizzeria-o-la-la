@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Speisekarte Pizzeria O la la</title>
+<style>
+@font-face{font-family:Kaushan;src:url(fonts/courgette-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:300;src:url(fonts/outfit-latin-300-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:400;src:url(fonts/outfit-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:500;src:url(fonts/outfit-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:600;src:url(fonts/outfit-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:700;src:url(fonts/outfit-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:800;src:url(fonts/outfit-latin-800-normal.woff2) format("woff2")}
+
+@page{size:303mm 216mm;margin:0}
+:root{
+  --rot:#174d34; --rot2:#0f3b27; --signal:#d3121b; --akzent:#c8141c;
+  --creme:#fbf7ee; --creme2:#efe8d8; --tinte:#1c1816; --grau:#6d625a;
+  --gruen:#13843c;
+  --b:3mm;          /* Beschnitt */
+  --rand:7mm;       /* Abstand zum Endformat */
+  --falz:5.5mm;     /* Abstand zur Falz */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:Outfit,sans-serif;color:var(--tinte);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+sup{font-size:.62em;font-weight:500;line-height:0;vertical-align:.55em;letter-spacing:.02em;margin-left:.15em;opacity:.8}
+
+.sheet{width:303mm;height:216mm;position:relative;overflow:hidden;page-break-after:always;break-after:page}
+.sheet:last-child{page-break-after:auto;break-after:auto}
+.panel{position:absolute;top:0;height:216mm;overflow:hidden;
+  padding-top:calc(var(--b) + var(--rand));padding-bottom:calc(var(--b) + var(--rand))}
+/* Wickelfalz: außen 97 | 100 | 100, innen 100 | 100 | 97 */
+.aussen .p1{left:0;width:calc(var(--b) + 97mm);padding-left:calc(var(--b) + var(--rand));padding-right:var(--falz)}
+.aussen .p2{left:calc(var(--b) + 97mm);width:100mm;padding-left:var(--falz);padding-right:var(--falz)}
+.aussen .p3{left:calc(var(--b) + 197mm);width:calc(100mm + var(--b));padding-left:var(--falz);padding-right:calc(var(--b) + var(--rand))}
+.innen .p1{left:0;width:calc(var(--b) + 100mm);padding-left:calc(var(--b) + var(--rand));padding-right:var(--falz)}
+.innen .p2{left:calc(var(--b) + 100mm);width:100mm;padding-left:var(--falz);padding-right:var(--falz)}
+.innen .p3{left:calc(var(--b) + 200mm);width:calc(97mm + var(--b));padding-left:var(--falz);padding-right:calc(var(--b) + var(--rand))}
+
+.rot{background:var(--rot);color:#fff}
+.creme{background:var(--creme)}
+.inner{height:100%;display:flex;flex-direction:column}
+
+/* Überschriften */
+.h{display:flex;align-items:flex-end;gap:2.5mm;margin-bottom:1.2mm}
+.h h2{font-family:Kaushan;font-weight:400;font-size:27pt;line-height:1;letter-spacing:-.2pt}
+.creme .h h2{color:var(--rot)}
+.h .ico{width:8.5mm;height:8.5mm;flex:none;margin-bottom:.8mm}
+.tri{display:flex;height:1.1mm;width:16mm;border-radius:1mm;overflow:hidden;margin:1.6mm 0 2.4mm}
+.tri i{flex:1}.tri i:nth-child(1){background:var(--gruen)}.tri i:nth-child(2){background:#fff}.tri i:nth-child(3){background:var(--signal)}
+.creme .tri i:nth-child(2){background:#e3d6c0}
+.rot .tri i:nth-child(1){background:#6cc58a}
+.rot .tri i:nth-child(3){background:#ff5a52}
+.note{font-size:6.7pt;line-height:1.35;font-weight:400;opacity:.88;margin-bottom:2.4mm}
+.note b{font-weight:600}
+
+/* Gerichte */
+.list{display:flex;flex-direction:column}
+.it{display:grid;grid-template-columns:6.6mm 1fr auto;column-gap:1.6mm;align-items:baseline;padding:.66mm 0;break-inside:avoid}
+.innen .p3 .it{padding:1.05mm 0}
+.aussen .p1 .it{padding:.8mm 0}
+.it + .it{border-top:.2mm dotted rgba(28,24,22,.22)}
+.rot .it + .it{border-top-color:rgba(255,255,255,.22)}
+.nr{font-size:6.3pt;font-weight:600;letter-spacing:.02em;text-align:center;border-radius:1.2mm;padding:.35mm 0;background:var(--creme2);color:var(--grau);align-self:start;margin-top:.15mm}
+.rot .nr{background:rgba(255,255,255,.14);color:rgba(255,255,255,.88)}
+.nm{font-size:8.5pt;font-weight:700;line-height:1.22;letter-spacing:-.05pt}
+.tx{font-size:7.1pt;line-height:1.34}
+.tx .nm{display:inline}
+.tx .ds{display:inline;margin:0 0 0 .9mm}
+.ds{font-size:6.75pt;font-weight:400;line-height:1.28;color:var(--grau);margin-top:.25mm}
+.rot .ds{color:rgba(255,255,255,.78)}
+.pr{font-size:8.8pt;font-weight:700;white-space:nowrap;align-self:end;font-variant-numeric:tabular-nums}
+.pr3{display:grid;grid-template-columns:repeat(3,10.6mm);text-align:right;align-self:end}
+.pr3 span{font-size:8.6pt;font-weight:700;font-variant-numeric:tabular-nums}
+.pr3 span.e{opacity:0}
+.colhead{display:grid;grid-template-columns:6.6mm 1fr auto;column-gap:1.6mm;padding-bottom:1mm;border-bottom:.35mm solid rgba(255,255,255,.55);margin-bottom:.4mm}
+.colhead .pr3 span{font-size:6pt;font-weight:600;line-height:1.15;opacity:.95}
+.colhead .pr3 small{display:block;font-weight:400;font-size:5.4pt;opacity:.8}
+
+/* Kennzeichen */
+.tag{display:inline-flex;align-items:center;gap:.6mm;font-size:5.3pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:5mm;padding:.25mm 1.3mm .2mm;margin-left:1.2mm;vertical-align:.25mm}
+.tag svg{width:2.2mm;height:2.2mm}
+.t-neu{background:#f2c230;color:#1c1816}
+.t-haus{background:var(--akzent);color:#fff}
+.creme .t-haus{background:var(--akzent);color:#fff}
+.t-scharf{background:transparent;color:inherit;padding:0;margin-left:1mm}
+.t-veg{background:transparent;color:inherit;padding:0;margin-left:1mm}
+.rot .t-scharf svg path{fill:#ffd2c9}
+.creme .t-scharf svg path{fill:var(--signal)}
+.t-veg svg path{fill:#36b25b}
+.rot .t-veg svg path{fill:#8fe0a6}
+
+/* Kasten */
+.box{border-radius:3mm;padding:3mm 3.2mm}
+.rot .box{background:var(--rot2)}
+.creme .box{background:#fff;border:.25mm solid #eadfcb}
+.box h3{font-family:Kaushan;font-weight:400;font-size:17pt;line-height:1;margin-bottom:1.2mm}
+.creme .box h3{color:var(--rot)}
+.ex{display:grid;grid-template-columns:1fr auto;column-gap:2mm;align-items:baseline;padding:.8mm 0}
+.ex + .ex{border-top:.2mm dotted rgba(255,255,255,.25)}
+.ex .ds{font-size:6.8pt;color:rgba(255,255,255,.9);margin:0}
+
+.sub{display:grid;grid-template-columns:6.6mm 1fr auto;column-gap:1.6mm;align-items:baseline;padding:.25mm 0}
+.sub .l{font-size:6.6pt;font-weight:700;text-align:center;color:var(--akzent)}
+.sub .ds{margin:0;color:var(--tinte);font-size:7.1pt}
+.sub .pr{font-size:8pt}
+
+.spacer{flex:1}
+.gap{height:4mm;flex:none}
+.cover .inner{justify-content:space-between}
+.foot{font-size:5.6pt;line-height:1.4;color:var(--grau)}
+.rot .foot{color:rgba(255,255,255,.75)}
+
+/* ---- Cover ---- */
+.cover .inner{align-items:center;text-align:center}
+.cover .kicker{font-size:6.4pt;font-weight:600;letter-spacing:.32em;text-transform:uppercase;opacity:.85;margin-top:2mm}
+.cover .logo{width:76mm;margin:5mm auto 0;filter:drop-shadow(0 .6mm 1.2mm rgba(0,0,0,.25))}
+.cover .claim{font-family:Kaushan;font-size:16pt;line-height:1.15;margin-top:4.5mm}
+.cover .claim span{display:block;font-size:12pt;opacity:.85;margin-top:1mm}
+.halal{margin:5mm auto 0;width:24mm;height:24mm;border-radius:50%;border:.5mm solid rgba(255,255,255,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.halal::before{content:"";position:absolute;inset:1.2mm;border-radius:50%;border:.25mm dashed rgba(255,255,255,.55)}
+.halal b{font-size:15pt;font-weight:800;line-height:1}
+.halal span{font-size:7.4pt;font-weight:700;letter-spacing:.28em;margin-top:.6mm;margin-left:.28em}
+.halal small{font-size:5pt;letter-spacing:.14em;opacity:.8;margin-top:.6mm;text-transform:uppercase}
+.gouda{font-size:6.6pt;margin-top:3.2mm;opacity:.88;letter-spacing:.04em}
+.callcard{width:100%;background:var(--creme);color:var(--tinte);border-radius:3.5mm;padding:4.2mm 3mm 3.6mm}
+.callcard .lbl{font-size:6.4pt;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--grau)}
+.callcard .tel{display:flex;align-items:baseline;justify-content:center;gap:1.6mm;margin-top:1.4mm;color:var(--akzent)}
+.callcard .tel small{font-size:11pt;font-weight:600}
+.callcard .tel b{font-size:25pt;font-weight:800;letter-spacing:.02em;line-height:1}
+.callcard .fax{font-size:6.8pt;color:var(--grau);margin-top:1mm}
+.callcard hr{border:0;border-top:.25mm solid #eadfcb;margin:2.6mm 0}
+.callcard .adr{font-size:7.6pt;font-weight:600;line-height:1.35}
+.callcard .adr span{font-weight:400;color:var(--grau)}
+
+/* ---- Rückseite ---- */
+.callcard .open{font-size:8pt;margin-top:.8mm;color:var(--grau)}
+.callcard .open b{color:var(--tinte);font-weight:700}
+.callcard .lief{text-align:left}
+.callcard .lief .row{display:grid;grid-template-columns:12.5mm 1fr;column-gap:1.8mm;padding:.75mm 0;align-items:baseline}
+.callcard .lief .row + .row{border-top:.2mm dotted rgba(28,24,22,.22)}
+.callcard .lief b{font-size:7.6pt;font-weight:800;color:var(--rot);white-space:nowrap}
+.callcard .lief span{font-size:6.6pt;line-height:1.3}
+.drinks{display:flex;gap:2.6mm;align-items:flex-end;justify-content:center;margin:2mm 0 2.2mm}
+.drinks svg{height:21mm;width:auto}
+.dk{display:grid;grid-template-columns:1fr auto auto;column-gap:3mm;align-items:baseline;padding:.9mm 0}
+.dk + .dk{border-top:.2mm dotted rgba(28,24,22,.22)}
+.dk .nm{font-size:7.8pt}
+.dk .ml{font-size:6pt;color:var(--grau);text-align:right}
+.legend{font-size:5.5pt;line-height:1.42;color:var(--grau)}
+.legend b{color:var(--tinte);font-weight:700}
+.legend p + p{margin-top:1mm}
+
+/* Vorschau-Hilfslinien (nur Vorschau, nicht im Druck-PDF) */
+.guides .sheet::after{content:"";position:absolute;inset:var(--b);border:.25mm solid rgba(0,160,255,.9);pointer-events:none}
+.guides .fold{position:absolute;top:0;bottom:0;border-left:.3mm dashed rgba(0,160,255,.95);z-index:9}
+</style>
+</head>
+<body>
+<script src="daten.js"></script>
+
+<!-- ======================= AUSSENSEITE ======================= -->
+<section class="sheet aussen">
+
+  <!-- Innenklappe (erste Seite beim Aufklappen) -->
+  <div class="panel p1 creme"><div class="inner" id="o1"></div></div>
+
+  <!-- Rückseite -->
+  <div class="panel p2 creme"><div class="inner" id="o2"></div></div>
+
+  <!-- Titelseite -->
+  <div class="panel p3 rot cover"><div class="inner">
+    <div class="kicker">Lieferservice &amp; Abholung</div>
+    <img class="logo" src="../img/logo-hell.png" alt="Pizzeria O la la">
+    <div class="claim">Original italienische Pizza<span>frisch aus dem Steinofen</span></div>
+    <div class="halal"><b>100 %</b><span>HALAL</span><small>garantiert</small></div>
+    <div class="gouda">Mit echtem Gouda – jeden Tag frisch zubereitet</div>
+    <div class="callcard">
+      <div class="lbl">Jetzt bestellen</div>
+      <div class="tel"><small>02102</small><b>44 44 74</b></div>
+      <div class="fax">Fax 02102 740 69 93</div>
+      <hr>
+      <div class="adr">Volkardeyer Str. 23 · 40878 Ratingen</div>
+      <div class="open">Täglich <b>11 – 23 Uhr</b></div>
+      <hr>
+      <div class="lbl" style="margin-bottom:1.2mm">Liefergebiete · Mindestbestellwert</div>
+      <div class="lief">
+        <div class="row"><b>12,50 €</b><span>Ratingen West, Mitte, Tiefenbroich</span></div>
+        <div class="row"><b>15,00 €</b><span>Ratingen Ost</span></div>
+        <div class="row"><b>18,50 €</b><span>Düsseldorf Oberrath, Rath, Lichtenbroich, Flughafen, Unterrath</span></div>
+        <div class="row"><b>25,00 €</b><span>Ratingen Lintorf und Hösel</span></div>
+      </div>
+      <div class="fax" style="margin-top:1.2mm">Mindestbestellwert ohne Getränke</div>
+    </div>
+  </div></div>
+  <i class="fold" style="left:100mm"></i><i class="fold" style="left:200mm"></i>
+</section>
+
+<!-- ======================= INNENSEITE ======================= -->
+<section class="sheet innen">
+  <div class="panel p1 rot"><div class="inner" id="i1"></div></div>
+  <div class="panel p2 rot"><div class="inner" id="i2"></div></div>
+  <div class="panel p3 creme"><div class="inner" id="i3"></div></div>
+  <i class="fold" style="left:103mm"></i><i class="fold" style="left:203mm"></i>
+</section>
+
+<script>
+const K = window.KARTE;
+const eur = n => n == null ? '' : n.toFixed(2).replace('.', ',');
+const ICON = {
+  chili: '<svg viewBox="0 0 24 24"><path d="M16.5 3.2c.3-.9 1.6-.8 1.7.2.1.6-.1 1.2-.5 1.6 1.8 1 2.8 3 2.3 5.3-.8 4-4.6 7.6-9.4 9.6-3 1.3-6.4 1.8-8.6 1.3-.8-.2-.9-1.2-.2-1.6 3.4-1.8 6.2-4.4 7.8-7.6 1.1-2.2 3-3.9 5.3-4.1.5-1.1 1.1-2.6 1.6-4.7z"/></svg>',
+  leaf: '<svg viewBox="0 0 24 24"><path d="M20.5 3.5c-8.3-.4-14.6 2.6-16 9.2-.5 2.3-.1 4.4.9 6l-2.1 2.1c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0l2.1-2.1c1.6 1 3.7 1.4 6 .9 6.6-1.4 9.6-7.7 9.2-16 0-.8-.7-1.5-1.5-1.5zM9.2 16.2l-1.4-1.4c2.7-2.9 5.8-5.4 9.3-7.2-3 2.3-5.7 5.3-7.9 8.6z"/></svg>',
+  star: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>'
+};
+/* Kategorie-Symbole (eigene Strichzeichnungen) */
+function SYMS(c){return {
+  pizza:`<svg class="ico" viewBox="0 0 48 48" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14c11-6 25-6 36 0L24 44z"/><path d="M8.6 18.6c9.6-4.4 21.2-4.4 30.8 0"/><circle cx="20" cy="24" r="2.6"/><circle cx="29" cy="27" r="2.2"/><circle cx="23.5" cy="33.5" r="2"/></svg>`,
+  pasta:`<svg class="ico" viewBox="0 0 48 48" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 26h38c-1 8.5-8.6 14-19 14S6 34.5 5 26z"/><path d="M14 26c0-5 2-9 5-11M21 26c0-6 2-11 6-13M28 26c0-5 2-9 6-10"/><path d="M30 6l-4 14M36 7l-6 13"/></svg>`,
+  forno:`<svg class="ico" viewBox="0 0 48 48" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="18" width="34" height="20" rx="3"/><path d="M7 25h34M13 31h6M27 31h8"/><path d="M17 13c0-2 2-2 2-4M24 13c0-2 2-2 2-4M31 13c0-2 2-2 2-4"/></svg>`,
+  salat:`<svg class="ico" viewBox="0 0 48 48" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 24h38c0 9-8.5 16-19 16S5 33 5 24z"/><path d="M12 24c0-5 3-9 7-9 1-3 4-5 7-4 3-2 7 0 8 3 3 1 4 4 3 7"/><circle cx="22" cy="20" r="2.4"/></svg>`,
+  brot:`<svg class="ico" viewBox="0 0 48 48" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 30c0-7 4-12 9-12s9 5 9 12z"/><path d="M22 30c0-7 4-12 9-12s9 5 9 12z"/><path d="M5 30h38v3a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/></svg>`,
+  anti:`<svg class="ico" viewBox="0 0 48 48" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="24" cy="30" rx="19" ry="8"/><path d="M14 28c2-5 6-7 10-6M24 22c4-2 8 0 10 5"/><path d="M33 8v14M33 8l-3 4M33 8l3 4"/></svg>`,
+  drink:`<svg class="ico" viewBox="0 0 48 48" fill="none" stroke="${c}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 14h22l-3 28H16z"/><path d="M14 22h20"/><path d="M26 14l4-9h5"/></svg>`
+}}
+const W = 'rgba(255,255,255,.95)', R = '#174d34';
+
+const tag = t => !t ? '' : ({
+  neu:'<span class="tag t-neu">Neu</span>',
+  haus:`<span class="tag t-haus">${ICON.star}Haus-Tipp</span>`,
+  scharf:`<span class="tag t-scharf" title="scharf">${ICON.chili}</span>`,
+  veg:`<span class="tag t-veg" title="vegetarisch">${ICON.leaf}</span>`
+})[t];
+const nm = (name, k, t) => `<span class="nm">${name}${k ? `<sup>${k}</sup>` : ''}${tag(t)}</span>`;
+
+function head(title, symKey, color, note){
+  return `<div class="h">${SYMS(color)[symKey]}<h2>${title}</h2></div><div class="tri"><i></i><i></i><i></i></div>${note ? `<p class="note">${note}</p>` : ''}`;
+}
+function pizzaRow([nr,name,k,desc,a,b,c,t]){
+  return `<div class="it"><span class="nr">${nr}</span><div class="tx">${nm(name,k,t)}${desc ? `<span class="ds">${desc}</span>` : ''}</div>
+    <div class="pr3"><span class="${a==null?'e':''}">${eur(a)||'–'}</span><span>${eur(b)}</span><span class="${c==null?'e':''}">${eur(c)||'–'}</span></div></div>`;
+}
+function row([nr,name,k,desc,p,t]){
+  return `<div class="it"><span class="nr">${nr}</span><div class="tx">${nm(name,k,t)}${desc ? `<span class="ds">${desc}</span>` : ''}</div><span class="pr">${eur(p)}</span></div>`;
+}
+const colhead = `<div class="colhead"><span></span><span></span><div class="pr3">
+  <span>klein<small>Ø 24 cm</small></span><span>groß<small>Ø 29 cm</small></span><span>Family<small>Ø 41 cm</small></span></div></div>`;
+
+/* ---- Innen 1+2: Pizza ---- */
+const P = K.pizza, split = P.findIndex(p => p[1] === 'Scampi Special');
+document.getElementById('i1').innerHTML =
+  head('Pizza', 'pizza', W, 'Aus dem Steinofen – alle Pizzen<sup>D,G</sup> mit Tomatensauce und Käse<sup>1,2</sup> (außer Nr. 32).')
+  + colhead + `<div class="list">${P.slice(0, split).map(pizzaRow).join('')}</div>`;
+
+document.getElementById('i2').innerHTML =
+  `<div id="i2top" style="height:13.6mm"></div>` + colhead + `<div class="list">${P.slice(split).map(pizzaRow).join('')}</div>`
+  + `<div class="gap"></div><div class="box"><h3>Extra Zutaten</h3>
+      <div class="colhead" style="grid-template-columns:1fr auto;border-bottom-color:rgba(255,255,255,.35)"><span></span><div class="pr3"><span>klein</span><span>groß</span><span>Family</span></div></div>
+      ${K.extras.map(([n,_,a,b,c]) => `<div class="ex"><div class="ds">${n}</div><div class="pr3"><span>${eur(a)}</span><span>${eur(b)}</span><span class="${c==null?'e':''}">${eur(c)||'–'}</span></div></div>`).join('')}
+    </div>`;
+
+/* ---- Innen 3: Pasta + Al Forno ---- */
+document.getElementById('i3').innerHTML =
+  head('Pasta', 'pasta', R)
+  + `<div class="list">${K.pasta.map(row).join('')}</div>`
+  + `<p class="note" style="margin:1.6mm 0 0;color:var(--grau)">Alle Nudelgerichte<sup>D</sup> auf Wunsch mit Käse<sup>G,1,2</sup> überbacken: <b style="color:var(--akzent)">+ 2,00 €</b></p>`
+;
+
+/* ---- Außen 1: Antipasti, Salate, Pizzabrötchen ---- */
+const B = K.broetchen;
+document.getElementById('o1').innerHTML =
+  head('Al Forno', 'forno', R, '<b>Überbackene Gerichte</b> – heiß aus dem Ofen')
+  + `<div class="list">${K.forno.map(row).join('')}</div>`
+  + `<div class="gap"></div>` + head('Salate', 'salat', R, 'Alle Salate wahlweise mit <b>Cocktail-Dressing</b>, <b>Joghurt-Dressing<sup>G</sup></b> oder <b>Essig &amp; Öl</b>.')
+  + `<div class="list">${K.salate.map(row).join('')}</div>`;
+
+/* ---- Außen 2: Rückseite ---- */
+const bottle = (liq, label, cap, h=1) => `<svg viewBox="0 0 30 100" style="height:${21*h}mm">
+  <rect x="11" y="1" width="8" height="6" rx="1.2" fill="${cap}"/>
+  <path d="M11.5 7h7v5c0 3 6.5 6 6.5 14v62c0 4-3 7-7 7h-6c-4 0-7-3-7-7V26c0-8 6.5-11 6.5-14z" fill="${liq}"/>
+  <path d="M5 44h20v20H5z" fill="${label}"/>
+  <path d="M8 30c1-4 3-6 4-7" stroke="#fff" stroke-opacity=".35" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <path d="M7.5 70v14" stroke="#fff" stroke-opacity=".25" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+document.getElementById('o2').innerHTML = `
+  ${head('Antipasti', 'anti', R)}<div class="list">${K.antipasti.map(row).join('')}</div>
+  <div class="gap"></div>${head('Pizzabrötchen', 'brot', R)}
+  <div class="list">${row(B[0])}
+      <div class="it"><span class="nr" style="visibility:hidden">00</span><div class="tx">${nm(B[1][1],B[1][2])}<span class="ds">${B[1][3]}</span></div><span></span></div>
+      <div style="margin:-.2mm 0 .4mm">${B.slice(2,8).map(([l,_,k,d,p]) => `<div class="sub"><span class="nr">${l}</span><div class="ds">${d}${k?`<sup>${k}</sup>`:''}</div><span class="pr">${eur(p)}</span></div>`).join('')}</div>
+      ${row(B[8])}</div>
+  <div class="gap"></div>${head('Getränke', 'drink', R)}
+  <div class="drinks">
+    ${bottle('#3a1a10','#c8102e','#c8102e')}
+    ${bottle('#3a1a10','#c9ccd1','#b9bcc2')}
+    ${bottle('#f28a00','#1f4fa8','#1f4fa8')}
+    ${bottle('#d9efd8','#14823d','#14823d')}
+    ${bottle('#d6ebf7','#2a7fc4','#2a7fc4')}
+  </div>
+  <div class="dk"><div class="nm">Coca-Cola<sup>6</sup>, Cola light<sup>4,6</sup>, Fanta<sup>1</sup>, Sprite</div><div class="ml">0,33 l <b style="color:var(--tinte);font-size:8pt">2,50</b></div><div class="ml">1,0 l <b style="color:var(--tinte);font-size:8pt">3,50</b></div></div>
+  <div class="dk"><div class="nm">Mineralwasser <span style="font-weight:400;color:var(--grau)">mit Kohlensäure</span></div><div class="ml"></div><div class="ml">1,0 l <b style="color:var(--tinte);font-size:8pt">2,00</b></div></div>
+  <p class="foot" style="margin-top:.8mm">Alle Getränkepreise inkl. Pfand.</p>
+  <div class="gap"></div>
+  <div class="legend">
+    <p><b>Zusatzstoffe:</b> 1 Farbstoff · 2 Konservierungsstoff · 3 Geschmacksverstärker · 4 Süßungsmittel · 5 Antioxidationsmittel · 6 koffeinhaltig.
+    <b>Formfleisch-Truthahnschinken:</b> aus Truthahnfleischstücken zusammengefügt, geformt, gepökelt und gegart (85 % Fleischanteil).</p>
+    <p><b>Allergene:</b> A Eier · B Erdnüsse · C Fisch · D glutenhaltiges Getreide · E Krebstiere · F Lupine · G Milch · H Schalenfrüchte · I Sellerie · J Senf · K Sesam · L Soja · M Schwefeldioxid · N Weichtiere.
+    Fragen zu Allergenen? Sprich uns gern an.</p>
+    <p>${ICON.leaf.replace('<svg','<svg style="width:2.2mm;height:2.2mm;vertical-align:-.4mm;fill:#36b25b"')} vegetarisch &nbsp; ${ICON.chili.replace('<svg','<svg style="width:2.2mm;height:2.2mm;vertical-align:-.4mm;fill:#d80d18"')} scharf &nbsp; Alle Preise in Euro inkl. MwSt. Mit Erscheinen dieser Karte verlieren alle vorherigen ihre Gültigkeit. Irrtümer und Druckfehler vorbehalten.</p>
+  </div>`;
+
+/* ---- Gleichmäßig verteilen: Zeilenabstand und Abschnittsabstände je Spalte ---- */
+const MM = 96/25.4;
+window.balanced = document.fonts.ready.then(() => {
+  const c1 = document.querySelector('#i1 .colhead'), t2 = document.getElementById('i2top');
+  t2.style.height = (c1.getBoundingClientRect().top - t2.getBoundingClientRect().top) + 'px';
+}).then(() => document.querySelectorAll('.panel:not(.cover)').forEach(p => {
+  const inner = p.querySelector('.inner'), cs = getComputedStyle(p);
+  const avail = p.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+  const nat = () => { inner.style.height = 'auto'; const h = inner.scrollHeight; inner.style.height = ''; return h; };
+  const rows = [...inner.querySelectorAll('.it, .ex, .dk')], subs = [...inner.querySelectorAll('.sub')], gaps = [...inner.querySelectorAll('.gap')];
+  let left = avail - nat() - 0.5*MM;
+  const units = rows.length + subs.length * 0.5;
+  const extra = left <= 0 ? Math.max(left / units, -0.7*MM) : Math.min(left * 0.75 / units, 1.6*MM);   // max +1,6 mm pro Zeile
+  rows.forEach(r => { const cp = getComputedStyle(r); r.style.paddingTop = (parseFloat(cp.paddingTop) + extra/2) + 'px'; r.style.paddingBottom = (parseFloat(cp.paddingBottom) + extra/2) + 'px'; });
+  subs.forEach(r => { const cp = getComputedStyle(r); r.style.paddingTop = (parseFloat(cp.paddingTop) + extra/4) + 'px'; r.style.paddingBottom = (parseFloat(cp.paddingBottom) + extra/4) + 'px'; });
+  left = avail - nat() - 0.5*MM;
+  if (left > 0 && gaps.length) gaps.forEach(g => g.style.height = (g.getBoundingClientRect().height + left / gaps.length) + 'px');
+}));
+</script>
+</body>
+</html>

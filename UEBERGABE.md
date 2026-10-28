@@ -1,7 +1,7 @@
 # Übergabe: Website „Pizzeria O la la“
 
-> Diese Datei zu Beginn eines neuen Chats hochladen. Sie enthält alles, was im ersten Chat entschieden, gebaut und gelernt wurde.
-> Das Projekt ist **komplett getrennt** von Masjid As-Sunnah, Fahrstation und Dar as-Sunnah. Keine Farben, Logos, Repos oder Links von dort verwenden.
+> Diese Datei zu Beginn eines neuen Chats hochladen. Stand: 28.10.2026 (nach dem Übertrag von Kochy's).
+> Das Projekt ist **komplett getrennt** von Masjid As-Sunnah, Fahrstation, Dar as-Sunnah und Kochy's. Von Kochy's werden nur Aufbau und Technik übernommen, nie Farben, Logo oder Inhalte.
 
 ---
 
@@ -9,216 +9,132 @@
 
 | | |
 |---|---|
-| **Kunde** | Ein Kollege von Ayman, der die Pizzeria neu eröffnet hat (Nachfolger von „Pizza Ciao“) |
-| **Name** | Pizzeria O la la |
-| **Adresse** | Rather Broich 4, 40472 Düsseldorf (Rath) |
-| **Telefon** | 0211 71000977 (`tel:+4921171000977`), vorerst die Nummer des Vorbesitzers |
-| **Halal** | 100 % Halal. Ein Halal-Siegel kommt bald und soll dann sichtbar eingebaut werden |
-| **Alkohol** | **Kein Alkohol und kein Bier.** Diese Kategorie wurde gestrichen |
-| **Bestellsystem** | Noch offen. Ayman erkundigt sich, welches am besten passt. Bis dahin ruft „Bestellen“ an |
-| **Öffnungszeiten** | Noch unbekannt; auf der Seite steht „Werden in Kürze bekannt gegeben“ |
-| **Instagram / WhatsApp** | Noch nicht vorhanden bzw. noch nicht genannt |
+| **Kunde** | Kollege von Ayman, **neuer Inhaber** der bestehenden Pizzeria O la la (Name des Inhabers noch nicht bekannt) |
+| **Adresse** | Volkardeyer Str. 23, 40878 Ratingen (bestätigt) |
+| **Telefon / Fax** | 02102 44 44 74 (`tel:+492102444474`) · Fax 02102 740 69 93 |
+| **E-Mail** | noch keine. **Nicht** die E-Mail oder Impressumsdaten des Vorbesitzers verwenden |
+| **Küche** | Pizza, Pasta, Al Forno, Salate, Antipasti, Pizzabrötchen · **100 % Halal, kein Alkohol** |
+| **Öffnungszeiten** | täglich 11–23 Uhr (laut Karte) |
+| **Liefergebiete** | West/Mitte/Tiefenbroich ab 12,50 € · Ost ab 15 € · Düsseldorf Oberrath/Rath/Lichtenbroich/Flughafen/Unterrath ab 18,50 € · Lintorf/Hösel ab 25 € – **Mindestbestellwert ohne Getränke** |
+| **Domain** | pizzeriaolala.de gehört zur Pizzeria, liegt bei **Netlify** (Nameserver nsone.net, keine MX-Einträge). Zugang muss vom Vorbesitzer kommen (Auth-Code oder Netlify-Einladung) |
 
 ---
 
-## 2. Links und Hosting
+## 2. Links
 
-- **GitHub-Repo:** https://github.com/aymanoul/pizzeria-o-la-la (Account `aymanoul`, public, Branch `main`)
-- **Live-Link (GitHub Pages):** https://aymanoul.github.io/pizzeria-o-la-la/
-- **Vorschau als Artifact (claude.ai):** https://claude.ai/artifact/DPnngPCpPahgCEKoGf7D2g
-- **Vorlagen:**
-  - Inhalt und Speisekarte vom Vorbesitzer: https://pizzaciaorath.de
-  - Aufbau und Stil: https://via-pizzeria.order.app.hd.digital/menus
-- **Später möglich:** eine eigene Domain (z. B. `pizzeria-olala.de`). Dafür in GitHub unter *Settings → Pages → Custom domain* die Domain eintragen und beim Anbieter einen DNS-Eintrag anlegen (CNAME auf `aymanoul.github.io`).
+- Repo: https://github.com/aymanoul/pizzeria-o-la-la (Branch `main`)
+- Vorschau (GitHub Pages): https://aymanoul.github.io/pizzeria-o-la-la/
+- Dashboard-Demo: https://aymanoul.github.io/pizzeria-o-la-la/dashboard-demo/
+- Vorlage für Technik: https://github.com/aymanoul/kochys (nur lesen)
+- Sicherungen: Branch `vor-warenkorb`, Branch `vor-kochys-uebertrag` (Stand vor dem 28.10.2026)
 
-### Wichtig zu GitHub (Erfahrung aus dem ersten Chat)
-- **Claude kann keine neuen Repos anlegen.** Die Session ist an bestehende Repos gebunden. Ayman legt das Repo auf github.com/new an, leer und ohne README. Claude hängt es danach mit `add_repo` (Zugriff „push“) an und pusht.
-- **Claude kann GitHub Pages nicht selbst einschalten,** weil die API dafür gesperrt ist. Das macht Ayman einmalig: *Repo → Settings → Pages → Source: „Deploy from a branch“ → Branch `main`, Ordner `/ (root)` → Save*. Nach 1–2 Minuten ist die Seite live.
-- Pushen in ein bestehendes, angehängtes Repo funktioniert ganz normal. Spätere Änderungen sind also problemlos möglich.
-- Commit-Autor: `Ayman <aymanoulhaji@yahoo.com>`.
+GitHub Pages ist **nur Vorschau** (laut GitHub nicht für Online-Geschäfte gedacht) und hat `noindex`. Die echte Seite kommt auf Cloudflare Pages unter pizzeriaolala.de.
 
 ---
 
-## 3. Dateien im Repo
+## 3. Dateien
 
 ```
-index.html     Seite mit Design, Aufbau und Logik (ein File, kein Framework)
-menu.js        SPEISEKARTE: Gerichte und Preise nur hier ändern
-img/logo.png       Logo für weißen Hintergrund (transparent, 1273×790)
-img/logo-900.png   kleinere Version (für Social-Vorschau, og:image)
-img/favicon.png    Browser-Icon (das rote „O“)
-README.md
-.nojekyll      damit GitHub Pages nichts umbaut
+index.html                Website (Design, Warenkorb, Kasse – eine Datei, kein Framework)
+menu.js                   Speisekarte für die Website – NICHT von Hand ändern (wird erzeugt, siehe 4.)
+druck/daten.js            QUELLE der Speisekarte: Nummern, Namen, Allergene, Preise
+druck/menu-aus-daten.js   erzeugt ../menu.js aus daten.js:  node druck/menu-aus-daten.js
+druck/karte.html          gedruckte Karte (Wickelfalz 303 × 216 mm inkl. 3 mm Beschnitt)
+druck/render.py           Karte als PDF + Vorschaubilder:  cd druck && python3 render.py ausgabe/karte
+druck/fonts/              Schriften für die Druckkarte (Outfit statisch, Courgette)
+dashboard-demo/index.html Dashboard-Demo (eine Datei, Beispieldaten)
+impressum/, datenschutz/  Rechtstexte als eigene Seiten
+fonts/                    Outfit (variabel) + Courgette, lokal, mit OFL-Lizenzen
+img/                      logo.png (weißer Grund, 1341×840), logo-hell.png (dunkler Grund), logo-900.png,
+                          og-image.png (1200×630), App-Icons (grün, Variante B)
+sw.js                     Service Worker (Cache-Version bei jeder Änderung hochzählen, jetzt olala-v6)
+manifest.webmanifest      Web-App „O La La“
 ```
 
-### Speisekarte ändern (`menu.js`)
-Ein Gericht ist eine Zeile:
-```js
-[Nr, "Name", "Zutaten/Beschreibung", Preis, "Tags"]
-[4, "Pizza Salami", "Rindersalami", 9.90, "b"]
-```
-- Tags werden mit Leerzeichen getrennt: `v` = vegetarisch, `s` = scharf, `b` = beliebt (erscheint automatisch oben unter „Beliebt“).
-- Kategorien haben `id`, `name`, `icon` (Emoji) und `note` (Hinweis unter der Überschrift).
-- Neue Kategorie: ein neuer Block im Array. Die Kategorie-Leiste und die Suche aktualisieren sich automatisch.
+---
 
-### Online-Bestellung mit Warenkorb (seit 25.10.2026)
-Die Seite hat einen eigenen Warenkorb, ohne fremdes System:
-- Jedes Gericht hat einen roten **+**-Button. Nach dem ersten Tippen wird daraus ein Zähler **− 2 +**.
-- Tippt man auf die Karte selbst, öffnet sich ein Fenster mit Menge und **Anmerkung** (z. B. „ohne Zwiebeln“).
-- Unten erscheint die Leiste **„Warenkorb ansehen“** mit Anzahl und Summe; oben rechts ein Warenkorb-Button mit Zähler.
-- Ablauf: **Warenkorb** (Lieferung/Abholung, Mengen ändern) → **Kasse** (Name, Telefon, Adresse, Zeit, Zahlung, Anmerkung, mit Prüfung der Pflichtfelder) → **Fertig** (Bestell-Nr. und Übersicht).
-- Warenkorb und Kundendaten bleiben im Browser gespeichert (localStorage).
+## 4. Speisekarte
 
-**Wichtig:** Eine statische Seite kann die Bestellung nicht selbst an den Laden schicken. Deshalb gibt es im Script ganz oben die Einstellungen `SHOP`:
-```js
-whatsapp: "",   // Nummer eintragen, z. B. "4917612345678" → „Per WhatsApp senden“ mit fertiger Nachricht
-email: "",      // alternativ: Bestellung als E-Mail
-minOrder: 0, deliveryFee: 0,   // Mindestbestellwert / Liefergebühr
-payments: ["Barzahlung"],      // weitere Zahlungsarten ergänzen
-delivery: true, pickup: true
-```
-Solange `whatsapp` und `email` leer sind, zeigt die letzte Seite den Hinweis „Online-Übermittlung wird eingerichtet“ und einen Anruf-Button.
-Für echten Empfang mit Tablet/Drucker im Laden später ein Bestellsystem (Gloria Food, Foodbooking …) oder ein kleiner Server nötig.
-
-`ORDER_URL` gibt es weiterhin: Wird dort ein externes Bestellsystem eingetragen, führen die Buttons mit der Klasse `order-link` (rotes Banner, Kontakt, mobile Anruf-Leiste) dorthin.
-
-**Sicherung:** Der Stand vor dem Warenkorb liegt im Branch `vor-warenkorb`.
+- **Eine Quelle für Karte und Website:** `druck/daten.js`. Nach jeder Änderung `node druck/menu-aus-daten.js` ausführen, dann sind Website und Druckkarte gleich.
+- Nummern **01–82 fortlaufend** (Pizza 1–35, Pasta 36–53, Al Forno 54–60, Salate 61–71, Antipasti 72–74, Pizzabrötchen 75–82), zweistellig angezeigt. Getränke intern 101–105, ohne Nummer.
+- Format in `menu.js` (wie Kochy's): `SIZES` (Größen mit eigenem Preis), `GROUPS` (`one` = Pflichtauswahl, `many` = Extras mit Aufpreis), Gericht = `[Nr, Name, Allergene, Beschreibung, Preis oder [Klein, Groß, Family], Tags, {Optionen}]`, `^` = hochgestellt.
+- **O-la-la-Erweiterung:** Extra-Preis darf eine Liste je Größe sein, `null` = „nicht möglich“:
+  - Gefüllter Käserand 3 / 4 € (Family nicht möglich)
+  - Extra Käse, Thunfisch, Hähnchen, Mozzarella, Hirtenkäse, Scampi, Meeresfrüchte, Bolognese 2 / 3 / 5 €
+  - Weitere Zutat 1 / 1,50 / 3 €
+  - Pasta: mit Käse überbacken + 2 € · Salate: Dressing-Pflichtauswahl · Pizzabrötchen: Kräuterbutter oder Aioli
+- Calzone (10, 11) nur in Groß. Mineralwasser nur 1,0 l.
+- Warenkorb-Schlüssel `olala-cart4` – **hochzählen**, wenn sich Nummern ändern.
 
 ---
 
-## 4. Design-Entscheidungen
+## 5. Website (`SHOP` oben im Script von `index.html`)
 
-- **Weißer Hintergrund, schwarze Schrift.** Das hat Ayman ausdrücklich so gewollt, nicht Schwarz als Grund.
-- **Farben** (CSS-Variablen in `:root`):
-  - Rot `#e30613` (Hover `#b8000c`) für Akzente und Buttons
-  - Grün `#0f9d3f` nur im Flaggen-Streifen und beim Halal-Häkchen
-  - Text `#141414`, grau `#6b6763`, Flächen `#f6f5f3`, Linien `#ebe8e4`
-- **Schriften** (Google Fonts):
-  - „Kaushan Script“ für Überschriften (passt zum Schreibschrift-Logo)
-  - „Outfit“ für alles andere
-- **Flaggen-Streifen** grün-weiß-rot ganz oben (4 px).
-- **Logo:** Das Original ist weiß und rot auf schwarzem Grund. Für den weißen Grund wurde es umgewandelt:
-  - Schwarz wird transparent.
-  - „Pizzeria“ und die Kochmütze werden schwarz.
-  - Der weiße Teil des Swooshes wird hellgrau, damit er auf Weiß sichtbar bleibt.
-  - „O la la“ bleibt rot.
-
-### Aufbau der Seite (von oben nach unten)
-1. Kopfzeile, beim Scrollen fixiert: kleines Logo, Navigation (Speisekarte, Öffnungszeiten, Anfahrt, Kontakt), roter Button „Bestellen“.
-2. Hero: großes Logo, „Pizza, Pasta, Burger & mehr – 100 % Halal“, Adresse, Buttons „Jetzt bestellen“ und „Zur Speisekarte“, Chips (100 % Halal, Lieferung, Abholung, Frisch aus dem Ofen).
-3. Kategorie-Leiste, ebenfalls fixiert, mit Emoji-Pills und Suchfeld. Die aktive Kategorie wird beim Scrollen schwarz hervorgehoben.
-4. „Beliebt“ als schwarze Karten mit rotem Kreis.
-5. Speisekarte als Karten: Nummer, Name, Zutaten, Tags und Preis rechts.
-6. Rotes Banner „Hunger bekommen?“ mit Anruf-Button.
-7. Info: Karten für Öffnungszeiten, Anfahrt (mit „Route planen“) und Kontakt, darunter eine Google-Karte (iframe).
-8. Footer: Logo, Impressum, Datenschutz, Allergene (vorerst Platzhalter-Dialoge), Hinweis „Preise inkl. MwSt.“.
-9. Auf dem Handy zusätzlich: eine rote Leiste „Anrufen & bestellen“ unten. Sie erscheint erst, wenn man am Hero vorbeigescrollt hat.
+- Übernommen von Kochy's: Schriften lokal, Google-Karte erst nach Klick, Impressum/Datenschutz als Seiten, „Jetzt geöffnet · bis 23:00 Uhr“ aus `SHOP.hours`, Nummern, `measure()` für den Sprung zu Kategorien, kompakte Karten am Handy, ld+json (Restaurant), og-image, `noindex`.
+- `orderWhatsapp` / `orderEmail` leer → Button „Bestellübersicht anzeigen“, Kunde ruft an. Sobald eine Nummer/Adresse drinsteht, wird die Bestellung als fertige Nachricht geschickt (dann Datenschutz Punkt 4 anpassen). `email` = Kontaktadresse (noch leer).
+- `minOhneGetraenke: true`, Liefergebühr 0 €, Zahlung „Barzahlung“ (unbestätigt).
+- `demoDashboard` ist **nur** über `?demo=1` an (Link im Dashboard). Normale Besucher schicken nichts an die Demo.
+- **Beim Umzug auf pizzeriaolala.de:** `noindex` entfernen, Hosting-Abschnitt im Datenschutz auf Cloudflare ändern.
 
 ---
 
-## 5. Speisekarte: Stand und Änderungen gegenüber Pizza Ciao
+## 6. Design (feste Entscheidungen)
 
-Übernommen vom Vorbesitzer (pizzaciaorath.de), mit den **alten Normalpreisen** (nicht den 10-%-Rabattpreisen).
-
-Kategorien:
-- Pizza (1–44)
-- Party-Pizza (450)
-- Pasta (70–99)
-- Aufläufe (100–107)
-- Salate (161–172)
-- Pizzabrötchen (50–65)
-- Baguette (110–119)
-- Burger (180–193)
-- Schnitzel (120–128)
-- Fisch (210–214)
-- Snacks (140–152)
-- Dips & Extras (300–310)
-- Dessert (220–223)
-- Getränke (230–247)
-
-**Gestrichen:** die komplette Kategorie „Alkoholische Getränke“ (250–263).
-
-**Umbenannt** (Ayman soll das bestätigen oder zurückändern lassen):
-| Alt (Pizza Ciao) | Neu |
-|---|---|
-| Pizza Ciao (21) | Pizza O la la |
-| Pizza Ciao Spezial (22) | Pizza Spezial Hollandaise |
-| Pasta Ciao Spezial (74) | Pasta Spezial Hollandaise |
-| Pasta Ciao (82) | Pasta Pollo Funghi |
-| Ciao Burger XXL (189) | O la la Burger XXL |
-| Pizza Spezial (40): Parmaschinken | Schinken |
-| Bacon (190, 191, 193) | Rinderbacon |
-| Zigeunerschnitzel (122) | Paprikaschnitzel |
-| Pizza Pirate Spezial (11) | Pizza Pirata Spezial |
-
-Dazu kleine Schreibkorrekturen: Gamberetti, Greca, Calamari, Potato Wedges, Capricciosa.
-
-**Offene Frage:** Ist „Schinken“ Puten- oder Rinderschinken? Für die Halal-Kennzeichnung eventuell genauer angeben, z. B. „Putenschinken“.
+- Weißer Hintergrund, Schrift Schwarz `#141414`, Akzent Rot `#e30613` (Hover `#b8000c`), Grün `#0f9d3f` nur im Flaggen-Streifen (grün · weiß · rot).
+- Schriften: **Courgette** (Überschriften), **Outfit** (Text).
+- Kopfzeile mit Logo · Start: Logo, „Pizza, Pasta, Salate & mehr – 100 % Halal“, Adresse, „Jetzt geöffnet“, **ein** roter Button „Jetzt anrufen“.
+- Kategorie-Leiste wie Lieferando: fette Schrift, aktive Kategorie dunkel `#2b2b2b`, Verlauf rechts, runder Listen-Button, Suche „Suche Pizzeria O la la“.
+- **Nicht verwenden:** Hintergrundbild hinter dem Logo, „Beliebt“-Bereich, graue Chips unter dem Logo, zweiter Button, Ornamente, alles was nach Moena aussieht. Logo = Version mit verbundenem Strich.
 
 ---
 
-## 6. Offene Punkte (To-do)
+## 7. Dashboard-Demo (28.10.2026)
 
-- [ ] **GitHub Pages einschalten** (Ayman, einmalig, siehe Abschnitt 2), dann den Live-Link testen
-- [ ] Ayman bzw. der Kollege bestätigt die Speisekarte und die Preise
-- [ ] Öffnungszeiten (Lieferung und Abholung, eventuell Ruhetag)
-- [ ] Lieferinfos: Mindestbestellwert, Liefergebiet bzw. PLZ, Liefergebühr
-- [ ] Zahlungsarten (bar, Karte, PayPal …)
-- [ ] **Impressum** mit den echten Angaben: Inhaber, Rechtsform, Anschrift, Telefon, E-Mail, ggf. USt-IdNr. **Pflicht, bevor die Seite beworben wird**
-- [ ] **Datenschutzerklärung**, die Google Fonts und Google Maps erwähnt. Alternativ die Fonts lokal einbinden und die Karte erst nach Klick laden, das ist DSGVO-freundlicher
-- [ ] Allergene und Zusatzstoffe (Pflicht für Gastronomie, gern als Kennzahlen pro Gericht)
-- [ ] Halal-Siegel einbauen, sobald es da ist (Hero und Footer)
-- [ ] Bestellsystem auswählen und `ORDER_URL` setzen. Mögliche Optionen: Lieferando, ein eigenes System wie „app smart“ (das nutzte Pizza Ciao), Hd.digital (wie bei via-pizzeria), Gloria Food, Foodbooking
-- [ ] Eventuell Fotos von Pizzen und Laden (Hero-Bild, Kategorie-Bilder)
-- [ ] Eventuell Instagram, WhatsApp, Google-Maps-Eintrag, eigene Domain
-- [ ] Neue Telefonnummer, falls sie sich ändert (überall `+4921171000977` ersetzen)
+- Wie Kochy's, in O-la-la-Farben: Bestellungen (Neu → In Zubereitung → Unterwegs/abholbereit → erledigt), **Automatik an** (Lieferung 45 Min., Abholung 20 Min., „Viel los“ +15 Min.), **iPhone-Mitteilung** am Handy, **Mac-Mitteilung** oben rechts am Computer, Ton, Bon-Vorschau (80 mm) und Telegram-Vorschau, Umsatz (heute / 7 / 30 Tage / 12 Monate, Top-Gerichte, Stoßzeiten 11–22 Uhr, Liefergebiete, Zahlungsarten, CSV-Export), Einstellungen (Automatik, Zeiten, pausieren, Lieferung, ausverkauft-Schalter, „So kommt die Bestellung an“).
+- Beispieldaten aus `menu.js`: meist Größe Groß, Extras mit Preis je Größe, Mindestwert ohne Getränke, Telefonnummern gekürzt, Speicher `olala-demo-*`, Bestell-Nr. `OL-TTMM-HHMM`.
+- Diagrammfarbe `#d0202a` (Hover `#9e1018`) mit dem Dataviz-Prüfskript getestet.
+- Kein Tagesangebot (gibt es bei O la la nicht).
 
 ---
 
-## 7. Tipps und Tricks für Claude (Arbeitsweise)
+## 8. Plan für echte Bestellungen (Kurzfassung)
 
-**Allgemein**
-- Ayman arbeitet vom iPad bzw. Handy. Antworten auf Deutsch, kurz und konkret. Vorschauen als Artifact oder Screenshot schicken.
-- Ayman will zuerst einen **Plan** sehen, bevor größere Dinge gebaut werden.
-- Wenn Ayman schlafen geht oder „ohne Berechtigung“ sagt: keine Aktionen starten, die eine Bestätigung brauchen (neue Websites abrufen usw.).
+Website → Cloudflare Worker (rechnet Preise nach) → Datenbank D1 (EU) → Telegram aufs Laden-Handy + Epson TM-m30III (Server Direct Print) → Dashboard unter `/admin` mit Cloudflare Access (Einmal-Code per E-Mail). Online-Zahlung: **Stripe Checkout** (Weiterleitung, Apple Pay/Karte, 1,5 % + 0,25 €) und **PayPal** (2,99 % + 0,39 €). Konten gehören dem Inhaber, geheime Schlüssel trägt er selbst bei Cloudflare ein, nie per Chat.
 
-**Webseiten abrufen (WebFetch)**
-- Nur URLs, die Ayman selbst in den Chat geschrieben hat, lassen sich zuverlässig abrufen. Andere URLs werden oft blockiert oder brauchen eine Freigabe.
-- Shell-Zugriffe (curl usw.) auf normale Websites sind gesperrt. Nur Paket-Registries und GitHub gehen.
-
-**Vorschau prüfen**
-- Mit Playwright Screenshots machen: Desktop 1366×900 und Handy 390×844.
-- Vor `scrollIntoView` `scroll-behavior` auf `auto` setzen, sonst entsteht der Screenshot mitten im Scrollen.
-- Prüfen, dass `scrollWidth` gleich der Viewport-Breite ist, also kein seitliches Scrollen auf dem Handy.
-
-**Artifact-Vorschau**
-- Mit `files` (`menu.js`, `img/...`) veröffentlichen.
-- Die Google-Maps-Karte bleibt in der Artifact-Vorschau leer, weil fremde iframes blockiert werden. Auf GitHub Pages funktioniert sie.
-
-**Logo-Umwandlung** (Schwarz wird transparent, Weiß wird Schwarz, Rot bleibt):
-```python
-from PIL import Image; import numpy as np
-im=np.array(Image.open('logo_original.png').convert('RGB')).astype(float)
-H,W,_=im.shape; mx=im.max(2); mn=im.min(2); sat=(mx-mn)/np.maximum(mx,1)
-ceil=np.where(sat>0.35,110,235)                 # farbige Pixel früher deckend
-a=np.clip((mx-20)/(ceil-20),0,1)                # Alpha aus Helligkeit
-rgb=np.clip(im/np.maximum(a[...,None],1e-3),0,255)
-rgb=np.minimum(rgb,np.where(a[...,None]>=1,im,255))
-yy=np.arange(H)[:,None].repeat(W,1); low=sat<0.3
-rgb[(yy<435)&low]=[22,22,22]                    # "Pizzeria" + Mütze schwarz
-rgb[(yy>730)&low]=[205,205,205]                 # weißer Swoosh-Teil hellgrau
-img=Image.fromarray(np.dstack([rgb,a*255]).astype(np.uint8),'RGBA')
-img.crop(img.getbbox()).save('logo.png')
-```
-Die y-Grenzen 435 und 730 gelten für das Original-Logo (1536×1024).
-
-**Ablauf bei Änderungen**
-1. Repo klonen: `git clone https://github.com/aymanoul/pizzeria-o-la-la`. Vorher mit `add_repo` anhängen.
-2. Dateien ändern, Screenshots prüfen, Vorschau als Artifact zeigen.
-3. Wenn Ayman zufrieden ist: committen und pushen. GitHub Pages aktualisiert sich nach 1–2 Minuten von selbst.
+**Aber zuerst das Kassensystem klären** (Lehre aus Kochy's: Chef nutzt WinOrder und wollte kein zweites Dashboard). Wenn die Kasse eine Webshop-Schnittstelle hat, gehen Website-Bestellungen direkt dorthin.
 
 ---
 
-## 8. Startnachricht für den neuen Chat (zum Kopieren)
+## 9. Offene Fragen an den Inhaber
 
-> Hier die Übergabe-Datei zur Website „Pizzeria O la la“ (siehe Anhang). Das Projekt ist getrennt von Masjid As-Sunnah. Repo: aymanoul/pizzeria-o-la-la. Bitte lies die Datei und häng das Repo an. Als Nächstes möchte ich: …
+**Kasse**
+1. Welches Kassensystem nutzt er (WinOrder, orderbird, Gastrofix, Vectron, SumUp-Kasse, keins)?
+2. Kommen Lieferando-Bestellungen dort automatisch an? Nutzt er Lieferando überhaupt?
+3. Hat die Kasse eine Schnittstelle für einen eigenen Webshop? Was kostet sie?
+4. Will er ein eigenes Dashboard – oder soll alles in der Kasse landen?
+5. Bondrucker vorhanden? Welches Modell, WLAN/LAN?
+
+**Recht und Inhalt**
+6. Impressum: voller Name, Rechtsform, Kontakt-E-Mail, USt-ID (falls vorhanden)
+7. Allergene/Zusatzstoffe in `druck/daten.js` mit der Karte im Laden abgleichen (stehen schon an jedem Gericht)
+8. Getränke: Pfand gesondert angeben („2,50 € zzgl. 0,25 € Pfand“, § 7 PAngV) – Höhe des Pfands? Die Karte sagt bisher „inkl. Pfand“
+9. Preise überall gleich (Lieferando, Flyer, alte Seite)?
+10. Datenschutzerklärung vor dem Start mit einem Generator (eRecht24, IT-Recht-Kanzlei) erzeugen bzw. prüfen lassen
+11. Liefergebühr, Zahlungsarten (Karte an der Tür?), Lieferzeiten gleich wie Öffnungszeiten?
+12. Domain: Auth-Code oder Netlify-Zugang vom Vorbesitzer
+
+---
+
+## 10. Arbeitsweise mit Ayman
+
+- Arbeitet vom iPad/Handy, schreibt Deutsch, kennt sich mit Technik **nicht** aus → Einrichtungen als Schritt-für-Schritt-Anleitung mit genauen Klicks, wer was macht, was es kostet.
+- Kann keine Zugriffe/Freigaben geben, wenn er weg ist → nichts starten, was eine Bestätigung braucht.
+- Bei Design-Fragen mehrere Varianten zeigen; Apple-Stil bei Animationen und Meldungen.
+- Vorschau prüfen: Playwright, Handy 390×844 und Computer 1440×900, `scrollWidth == innerWidth`, keine JS-Fehler, `scroll-behavior:auto` vor `scrollIntoView`, für Screenshots die Uhrzeit auf den Abend stellen (`context.clock.setSystemTime`), Dateinamen eindeutig (Bildvorschau cacht).
+- Commit + Push, live prüfen, Screenshots schicken, diese Datei aktualisieren.
+
+---
+
+## 11. Startnachricht für den nächsten Chat
+
+> Hier die Übergabe-Datei zur Pizzeria O la la (Anhang). Bitte häng das Repo **aymanoul/pizzeria-o-la-la** (Zugriff push) an und lies `UEBERGABE.md`. Als Nächstes möchte ich: …
