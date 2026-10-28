@@ -135,7 +135,7 @@ Website → Cloudflare Worker (rechnet Preise nach) → Datenbank D1 (EU) → Te
 
 ---
 
-## 12. Sticker „10 % Rabatt“ (28.10.2026)
+## 11. Sticker „10 % Rabatt“ (28.10.2026)
 
 - Quelle: `druck/sticker/` – `qr.py` (QR-Code), `sticker.html` (Gestaltung, `?v=a|b|c`), `render.py` (Druck-PDF + Bilder), Schriften in `druck/sticker/fonts/` (OFL).
 - Format **180 × 100 mm** (nach Foto vom Moena-Sticker geschätzt – Maße vom Inhaber bestätigen lassen) + 3 mm Beschnitt.
@@ -147,6 +147,6 @@ Website → Cloudflare Worker (rechnet Preise nach) → Datenbank D1 (EU) → Te
 
 ---
 
-## 11. Startnachricht für den nächsten Chat
+## 12. Startnachricht für den nächsten Chat
 
 > Hier die Übergabe-Datei zur Pizzeria O la la (Anhang). Bitte häng das Repo **aymanoul/pizzeria-o-la-la** (Zugriff push) an und lies `UEBERGABE.md`. Als Nächstes möchte ich: …
