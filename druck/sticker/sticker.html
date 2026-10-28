@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Sticker – 10 % Rabatt – Pizzeria O la la</title>
+<!--
+  Druckdatei: Endformat 180 × 100 mm (quer) + 3 mm Beschnitt rundum = 186 × 106 mm.
+  Größe ändern: nur --w und --h unten anpassen, dann python3 render.py.
+  Wichtige Inhalte bleiben mindestens 7 mm vom Rand der Datei entfernt (3 mm Beschnitt + 4 mm Sicherheitsabstand).
+-->
+<style>
+/* statische Outfit-Schnitte → im PDF als echte Schriften eingebettet (nicht Type 3) */
+@font-face{font-family:Outfit;font-weight:400;src:url(../fonts/outfit-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:500;src:url(../fonts/outfit-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:600;src:url(../fonts/outfit-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:700;src:url(../fonts/outfit-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:800;src:url(../fonts/outfit-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:Courgette;src:url(../../fonts/courgette.woff2) format("woff2");font-weight:400}
+:root{--w:180mm;--h:100mm;--b:3mm;--green:#1b5b3d;--green-dk:#0f3b27;--red:#e30613;--ink:#123f2a}
+@page{size:calc(var(--w) + 2*var(--b)) calc(var(--h) + 2*var(--b));margin:0}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:#fff}
+body{font-family:Outfit,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{position:relative;width:calc(var(--w) + 2*var(--b));height:calc(var(--h) + 2*var(--b));overflow:hidden;
+  background:radial-gradient(120% 140% at 18% 0%,#22694a 0%,var(--green) 38%,var(--green-dk) 100%)}
+/* Endformat-Rahmen (nur in der Vorschau sichtbar) */
+.trim{position:absolute;left:var(--b);top:var(--b);width:var(--w);height:var(--h)}
+.guides .trim{outline:.25mm dashed rgba(255,255,255,.55)}
+.guides .safe{position:absolute;inset:4mm;outline:.2mm dotted rgba(255,255,255,.35)}
+
+/* linke Seite */
+.logo{position:absolute;left:9mm;top:7mm;width:50mm}
+.offer{position:absolute;left:9mm;top:41mm;display:flex;align-items:center;gap:4mm;color:#fff}
+.offer .pct{font-weight:800;font-size:31mm;line-height:.8;letter-spacing:-.02em}
+.offer .pct small{font-size:.62em;font-weight:700;margin-left:.6mm}
+.offer .txt{display:flex;flex-direction:column;gap:1.4mm;padding-top:1mm}
+.offer .rab{font-family:Courgette,cursive;font-size:12.5mm;line-height:1}
+.offer .sub{font-size:3.9mm;font-weight:500;line-height:1.25;opacity:.92}
+
+.ticket{position:absolute;left:9mm;top:73mm;width:92mm;height:17mm;display:flex;align-items:center;color:#fff}
+.ticket svg{position:absolute;inset:0;width:100%;height:100%}
+.ticket .lab{position:relative;width:27mm;text-align:center;font-size:3.3mm;font-weight:600;line-height:1.15;letter-spacing:.02em}
+.ticket .code{position:relative;flex:1;text-align:center;font-weight:800;font-size:9.6mm;letter-spacing:.09em;padding-right:2mm}
+
+/* rechte Seite */
+.qrbox{position:absolute;right:9mm;top:8mm;width:60mm;display:flex;flex-direction:column;align-items:center;color:#fff}
+.qr{width:60mm;height:60mm;background:#fff;border-radius:5mm;padding:2.2mm;box-shadow:0 0 0 1.2mm rgba(255,255,255,.14)}
+.qr img{display:block;width:100%;height:100%}
+.qrbox .cta{margin-top:4.2mm;font-size:4.6mm;font-weight:700;display:flex;align-items:center;gap:1.8mm}
+.qrbox .cta svg{width:4.6mm;height:4.6mm}
+.qrbox .url{margin-top:1.2mm;font-size:4mm;font-weight:500;opacity:.92;letter-spacing:.01em}
+.foot{position:absolute;left:9mm;right:9mm;bottom:4.6mm;font-size:2.6mm;color:rgba(255,255,255,.72);display:flex;justify-content:space-between}
+</style>
+</head>
+<body>
+<div class="page" id="page">
+  <div class="trim">
+    <div class="safe"></div>
+
+    <img class="logo" src="../../img/logo-hell.png" alt="Pizzeria O la la">
+
+    <div class="offer">
+      <div class="pct">10<small>%</small></div>
+      <div class="txt">
+        <div class="rab">Rabatt</div>
+        <div class="sub">auf deine Bestellung<br>in unserem Webshop</div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <svg viewBox="0 0 92 17" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M2.5 0H89.5A2.5 2.5 0 0 1 92 2.5V5.5A3 3 0 0 0 92 11.5V14.5A2.5 2.5 0 0 1 89.5 17H2.5A2.5 2.5 0 0 1 0 14.5V11.5A3 3 0 0 0 0 5.5V2.5A2.5 2.5 0 0 1 2.5 0Z" fill="#e30613"/>
+        <line x1="27" y1="2.6" x2="27" y2="14.4" stroke="#fff" stroke-width=".35" stroke-dasharray="1 1" opacity=".75"/>
+      </svg>
+      <div class="lab">Dein<br>Rabatt-Code</div>
+      <div class="code">OLALA10</div>
+    </div>
+
+    <div class="qrbox">
+      <div class="qr"><img src="qr-pizzeriaolala.svg" alt="QR-Code www.pizzeriaolala.de"></div>
+      <div class="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/></svg>Scannen &amp; bestellen</div>
+      <div class="url">www.pizzeriaolala.de</div>
+    </div>
+
+    <div class="foot"><span>Pizza · Pasta · Salate · 100 % Halal</span><span>Volkardeyer Str. 23 · Ratingen · 02102 44 44 74</span></div>
+  </div>
+</div>
+</body>
+</html>
